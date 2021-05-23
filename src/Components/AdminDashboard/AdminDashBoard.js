@@ -1,11 +1,87 @@
 import React, {Component} from 'react';
-import {Button, Card, Container} from "react-bootstrap";
 import AuthenticationService from '../Authentication/AuthenticationService';
+import {Button, Card, Col, Container, Nav, Row} from "react-bootstrap";
+import swal from "sweetalert";
+import UserService from "../../API/UserService";
+import * as Swal from "sweetalert2";
+import {FaUserPlus} from 'react-icons/fa';
+import SignUp from "../Login/Signup";
+import GetAllUsers from "../AdminDashboard/GettAllUsers"
+import TabContainer from 'react-bootstrap/TabContainer'
+import Tab from 'react-bootstrap/Tab'
+import Tabs from 'react-bootstrap/Tabs'
+import TabPane from 'react-bootstrap/TabPane'
+import TabContent from 'react-bootstrap/TabContent'
+import {colors} from "@material-ui/core";
 
 class AdminDashBoard extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            name: '',
+            password: '',
+            email: '',
+            mobile_no: '',
+            role: 'role'
+        }
 
-    state = {}
+    }
+
+    componentDidMount() {
+    }
+
+    handleChange = (e) => {
+        e.preventDefault();
+
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (this.state.role !== "role") {
+
+            let newuser = {
+                username: this.state.username,
+                password: this.state.password,
+                name: this.state.name,
+                role: this.state.role,
+                mobileNo: this.state.mobile_no,
+                email: this.state.email
+            }
+
+            UserService.createUser(newuser)
+                .then(res => {
+                    console.log(res.data)
+
+                    Swal.fire({
+                        position: 'top-center',
+                        icon: 'success',
+                        title: 'Happy Shopping!',
+                        showConfirmButton: false,
+                        timer: 1000
+                    }).then(() => {
+                        this.props.history.push('/');
+                    })
+                })
+                .catch(err => {
+                    console.log(err.data)
+                })
+
+        } else {
+            swal({
+                title: "Please select a Role!",
+                icon: "warning",
+                buttons: "Ok"
+            })
+        }
+
+
+    }
 
 
     render() {
@@ -30,19 +106,49 @@ class AdminDashBoard extends Component {
 
         return (
             <div>
+
+
                 <h1>
                     <center>Admin Dashboard</center>
                 </h1>
                 {loggedAsAdmin &&
-                <>
-                    <h1>login as an admin</h1>
 
-                </>
+
+                <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                    <Row>
+                        <Col sm={3} style={{background:''}}>
+                            <Nav variant="pills" className="flex-column">
+                                <Nav.Item>
+                                    <Nav.Link eventKey="first"> Add User</Nav.Link>
+                                </Nav.Item>
+                                <Nav.Item>
+                                    <Nav.Link eventKey="second"> All User</Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Col>
+                        <Col sm={9}>
+                            <Tab.Content>
+                                <Tab.Pane eventKey="first">
+                                 <SignUp></SignUp>
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="second">
+                                 <GetAllUsers></GetAllUsers>
+                                </Tab.Pane>
+
+
+
+
+
+                            </Tab.Content>
+                        </Col>
+                    </Row>
+                </Tab.Container>
 
                 }
                 {loggedAsReviever &&
                 <>
                     <h1>login as a reviver</h1>
+
 
                 </>
 
@@ -51,13 +157,16 @@ class AdminDashBoard extends Component {
                 <>
                     <h1>login as a Editor</h1>
 
+
                 </>
 
                 }
 
 
             </div>
-        )
+
+
+        );
     }
 
 }
