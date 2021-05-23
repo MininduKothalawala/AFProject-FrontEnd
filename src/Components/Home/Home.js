@@ -15,6 +15,12 @@ class Home extends Component {
 
     render() {
         return(
+
+
+
+
+
+
             <Container>
                 <Card style={{ width: '18rem' }}>
                     <Card.Body>
