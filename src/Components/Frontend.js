@@ -7,6 +7,14 @@ import Login from "./Login/Login";
 import AdminDashBoard from "./AdminDashboard/AdminDashBoard";
 // import Footer from "./Header-Footer/Footer";
 
+import ConferenceDetailsListComponent from './Editor/Conference-Details-List.Component';
+import UpdateConferenceDetailsComponent from "./Editor/Update-ConferenceDetails.Component";
+import AddConferenceDetailsComponent from "./Editor/Add-ConferenceDetails.Component";
+
+import ListAllConferenceDetailsComponent from "./Admin/List-AllConferenceDetails.Component";
+import ListPendingConferenceDetails from "./Admin/List-PendingConferenceDetails";
+import ListApprovedConferenceDetailsComponent from "./Admin/List-ApprovedConferenceDetails.Component";
+
 class Frontend extends Component {
 
     render() {
@@ -19,8 +27,17 @@ class Frontend extends Component {
 
                     <Switch>
                         <Route path="/" exact component={Home}/>
+
+                        <Route path="/conferenceList"   component={ConferenceDetailsListComponent}/>
+                        <Route path="/updateConference/:id"   component={UpdateConferenceDetailsComponent}/>
+                        <Route path="/addConference"   component={AddConferenceDetailsComponent}/>
+                        <Route path = "/listAllConference" component = {ListAllConferenceDetailsComponent} />
+                        <Route path = "/listPendingConference" component = {ListPendingConferenceDetails} />
+                        <Route path = "/listApprovedConference" component = {ListApprovedConferenceDetailsComponent} />
+
                         <Route path="/Login" exact component={Login}/>
                         <Route path="/Admindashboard" exact component={AdminDashBoard}/>
+
                     </Switch>
 
                     {/*<Footer/>*/}
