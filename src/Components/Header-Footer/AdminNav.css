@@ -1,0 +1,52 @@
+.dashboard-outer-div {
+    /*width: 300px;*/
+    padding: 30px 0 ;
+    color: #cdcdcd;
+    background-color: #454545;
+}
+.dashboard-items {
+    padding: 20px 30px ;
+    color: #cdcdcd;
+    /*background-color: #454545;*/
+}
+
+.dashboard-items:hover {
+    color: #ffffff;
+    background-color: #0e0e0e;
+}
+
+.dashboard-collapse {
+    /*padding: 10px;*/
+    /*padding: 20px 30px ;*/
+    /*background-color: #6c6c6c;*/
+}
+
+.dashboard-links {
+    display: block;
+    padding: 20px 50px;
+    color: #cdcdcd;
+    text-decoration: none;
+    background-color: #454545;
+}
+
+.dashboard-links:hover {
+    color: #cdcdcd;
+    text-decoration: none;
+    background-color: #0e0e0e;
+}
+
+.dashboard-single-links {
+    background-color: transparent;
+    padding: 0;
+}
+
+/*custom pill design*/
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: red !important; ;
+}
+
+.dashboard-footer {
+    padding: 20px 30px ;
+    color: #cdcdcd;
+    background-color: #454545;
+}
