@@ -6,7 +6,6 @@ import Header from "./Header-Footer/Header";
 import Login from "./Login/Login";
 import AdminNav from "./Header-Footer/AdminNav";
 import AddTemplates from "./AdminDashboard/Templates/AddTemplates";
-import OtherTemplates from "./AdminDashboard/Templates/OtherTemplates";
 // import Footer from "./Header-Footer/Footer";
 
 import ConferenceDetailsListComponent from './Editor/Conference-Details-List.Component';
@@ -17,6 +16,9 @@ import ListAllConferenceDetailsComponent from "./Admin/List-AllConferenceDetails
 import ListPendingConferenceDetails from "./Admin/List-PendingConferenceDetails.Component";
 import ListApprovedConferenceDetailsComponent from "./Admin/List-ApprovedConferenceDetails.Component";
 import TemplateList from "./AdminDashboard/Templates/TemplateList";
+import GettAllUsers from "./AdminDashboard/GettAllUsers";
+import SignUp from "./Login/Signup";
+
 
 class Frontend extends Component {
 
@@ -29,6 +31,7 @@ class Frontend extends Component {
 
                     <Switch>
                         <Route path="/" exact component={Home}/>
+                        <Route path="/signup" exact component={SignUp}/>
 
                         <Route path="/conferenceList"   component={ConferenceDetailsListComponent}/>
                         <Route path="/updateConference/:id"   component={UpdateConferenceDetailsComponent}/>
@@ -42,6 +45,9 @@ class Frontend extends Component {
                         <Route path="/admin-template/add/:id" exact component={AddTemplates}/>
                         <Route path="/admin-template/list" exact component={TemplateList}/>
                         <Route path="/admin-template/other" exact component={OtherTemplates}/>
+                        <Route path="/user/getallusers" exact component={GettAllUsers}/>
+                        <Route path="/admin-template/add" exact component={AddTemplates}/>
+
 
                     </Switch>
 
