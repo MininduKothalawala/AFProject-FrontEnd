@@ -39,9 +39,8 @@ class AdminNav extends Component {
                                     </Accordion.Toggle>
                                     <Accordion.Collapse eventKey="0" className={"dashboard-collapse"}>
                                         <div>
-                                            <Link to="#" className={"dashboard-links"}>Add User</Link>
-                                            <Link to="#" className={"dashboard-links"}>Edit User</Link>
-                                            <Link to="#" className={"dashboard-links"}>User List</Link>
+                                            <Link to="/signup" className={"dashboard-links"}>Add User</Link>
+                                            <Link to="/user/etallusers" className={"dashboard-links"}>User List</Link>
                                         </div>
                                     </Accordion.Collapse>
                                 </Accordion>
