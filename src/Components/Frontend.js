@@ -5,9 +5,7 @@ import Home from './Home/Home';
 import Header from "./Header-Footer/Header";
 import Login from "./Login/Login";
 import AdminNav from "./Header-Footer/AdminNav";
-// import PowerpointTemplates from "./AdminDashboard/Templates/PowerpointTemplates";
 import AddTemplates from "./AdminDashboard/Templates/AddTemplates";
-// import OtherTemplates from "./AdminDashboard/Templates/O";
 // import Footer from "./Header-Footer/Footer";
 
 import ConferenceDetailsListComponent from './Editor/Conference-Details-List.Component';
@@ -17,9 +15,9 @@ import AddConferenceDetailsComponent from "./Editor/Add-ConferenceDetails.Compon
 import ListAllConferenceDetailsComponent from "./Admin/List-AllConferenceDetails.Component";
 import ListPendingConferenceDetails from "./Admin/List-PendingConferenceDetails.Component";
 import ListApprovedConferenceDetailsComponent from "./Admin/List-ApprovedConferenceDetails.Component";
+import TemplateList from "./AdminDashboard/Templates/TemplateList";
 import GettAllUsers from "./AdminDashboard/GettAllUsers";
 import SignUp from "./Login/Signup";
-
 
 
 class Frontend extends Component {
@@ -44,12 +42,12 @@ class Frontend extends Component {
 
                         <Route path="/Login" exact component={Login}/>
                         <Route path="/Admindashboard" exact component={AdminNav}/>
+                        <Route path="/admin-template/add/:id" exact component={AddTemplates}/>
+                        <Route path="/admin-template/list" exact component={TemplateList}/>
+                        <Route path="/admin-template/other" exact component={OtherTemplates}/>
                         <Route path="/user/getallusers" exact component={GettAllUsers}/>
                         <Route path="/admin-template/add" exact component={AddTemplates}/>
 
-
-                        {/*<Route path="/admin-template/powerpoint" exact component={PowerpointTemplates}/>*/}
-                        {/*<Route path="/admin-template/other" exact component={OtherTemplates}/>*/}
 
                     </Switch>
 
