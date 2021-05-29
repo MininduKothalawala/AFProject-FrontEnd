@@ -10,6 +10,14 @@ import AddTemplates from "./AdminDashboard/Templates/AddTemplates";
 import OtherTemplates from "./AdminDashboard/Templates/OtherTemplates";
 // import Footer from "./Header-Footer/Footer";
 
+import ConferenceDetailsListComponent from './Editor/Conference-Details-List.Component';
+import UpdateConferenceDetailsComponent from "./Editor/Update-ConferenceDetails.Component";
+import AddConferenceDetailsComponent from "./Editor/Add-ConferenceDetails.Component";
+
+import ListAllConferenceDetailsComponent from "./Admin/List-AllConferenceDetails.Component";
+import ListPendingConferenceDetails from "./Admin/List-PendingConferenceDetails";
+import ListApprovedConferenceDetailsComponent from "./Admin/List-ApprovedConferenceDetails.Component";
+
 class Frontend extends Component {
 
     render() {
@@ -21,11 +29,20 @@ class Frontend extends Component {
 
                     <Switch>
                         <Route path="/" exact component={Home}/>
+
+                        <Route path="/conferenceList"   component={ConferenceDetailsListComponent}/>
+                        <Route path="/updateConference/:id"   component={UpdateConferenceDetailsComponent}/>
+                        <Route path="/addConference"   component={AddConferenceDetailsComponent}/>
+                        <Route path = "/listAllConference" component = {ListAllConferenceDetailsComponent} />
+                        <Route path = "/listPendingConference" component = {ListPendingConferenceDetails} />
+                        <Route path = "/listApprovedConference" component = {ListApprovedConferenceDetailsComponent} />
+
                         <Route path="/Login" exact component={Login}/>
                         <Route path="/Admindashboard" exact component={AdminNav}/>
                         <Route path="/admin-template/add" exact component={AddTemplates}/>
                         <Route path="/admin-template/powerpoint" exact component={PowerpointTemplates}/>
                         <Route path="/admin-template/other" exact component={OtherTemplates}/>
+
                     </Switch>
 
                     {/*<Footer/>*/}
