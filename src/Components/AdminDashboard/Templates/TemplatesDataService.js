@@ -4,10 +4,6 @@ const API_URL = 'http://localhost:8080/templates';
 
 class TemplatesDataService {
 
-    getAllResearchTemplates(type) {
-        return axios.get(`${API_URL}/${type}`)
-    }
-
     //get all types of templates
     getAllTemplates() {
         return axios.get(`${API_URL}/all`)
@@ -36,8 +32,12 @@ class TemplatesDataService {
         return axios.post(`${API_URL}/upload`, data)
     }
 
-    editTemplate(data) {
+    editDescription(data) {
+        return axios.put(`${API_URL}/updateDesc/`, data)
+    }
 
+    editTemplate(data) {
+        return axios.put(`${API_URL}/update`, data)
     }
 
     deleteTemplate(id, fileId) {
