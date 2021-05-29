@@ -5,9 +5,9 @@ import Home from './Home/Home';
 import Header from "./Header-Footer/Header";
 import Login from "./Login/Login";
 import AdminNav from "./Header-Footer/AdminNav";
-import PowerpointTemplates from "./AdminDashboard/Templates/PowerpointTemplates";
+// import PowerpointTemplates from "./AdminDashboard/Templates/PowerpointTemplates";
 import AddTemplates from "./AdminDashboard/Templates/AddTemplates";
-import OtherTemplates from "./AdminDashboard/Templates/OtherTemplates";
+// import OtherTemplates from "./AdminDashboard/Templates/O";
 // import Footer from "./Header-Footer/Footer";
 
 import ConferenceDetailsListComponent from './Editor/Conference-Details-List.Component';
@@ -15,8 +15,12 @@ import UpdateConferenceDetailsComponent from "./Editor/Update-ConferenceDetails.
 import AddConferenceDetailsComponent from "./Editor/Add-ConferenceDetails.Component";
 
 import ListAllConferenceDetailsComponent from "./Admin/List-AllConferenceDetails.Component";
-import ListPendingConferenceDetails from "./Admin/List-PendingConferenceDetails";
+import ListPendingConferenceDetails from "./Admin/List-PendingConferenceDetails.Component";
 import ListApprovedConferenceDetailsComponent from "./Admin/List-ApprovedConferenceDetails.Component";
+import GettAllUsers from "./AdminDashboard/GettAllUsers";
+import SignUp from "./Login/Signup";
+
+
 
 class Frontend extends Component {
 
@@ -29,6 +33,7 @@ class Frontend extends Component {
 
                     <Switch>
                         <Route path="/" exact component={Home}/>
+                        <Route path="/signup" exact component={SignUp}/>
 
                         <Route path="/conferenceList"   component={ConferenceDetailsListComponent}/>
                         <Route path="/updateConference/:id"   component={UpdateConferenceDetailsComponent}/>
@@ -39,9 +44,12 @@ class Frontend extends Component {
 
                         <Route path="/Login" exact component={Login}/>
                         <Route path="/Admindashboard" exact component={AdminNav}/>
+                        <Route path="/user/getallusers" exact component={GettAllUsers}/>
                         <Route path="/admin-template/add" exact component={AddTemplates}/>
-                        <Route path="/admin-template/powerpoint" exact component={PowerpointTemplates}/>
-                        <Route path="/admin-template/other" exact component={OtherTemplates}/>
+
+
+                        {/*<Route path="/admin-template/powerpoint" exact component={PowerpointTemplates}/>*/}
+                        {/*<Route path="/admin-template/other" exact component={OtherTemplates}/>*/}
 
                     </Switch>
 

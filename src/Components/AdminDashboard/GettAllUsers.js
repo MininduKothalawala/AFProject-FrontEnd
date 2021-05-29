@@ -7,6 +7,9 @@ import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import swal from "sweetalert";
 
+export let getAllUsers;
+
+
 class gettAllUsers extends Component {
 
     constructor(props) {
@@ -29,7 +32,7 @@ class gettAllUsers extends Component {
     }
 
 
-    getAllUsers() {
+     getAllUsers = () => {
         axios.get('http://localhost:8080/api/adminuser/alladmin').then(response => {
             // console.log(response.data)
             this.setState({
@@ -77,7 +80,7 @@ class gettAllUsers extends Component {
             <div>
                 <Container className={"my-5 py-4"} style={{width: '60rem'}}>
                     <Card className={"adminCard"}>
-                        <div className={"text-center adminCardTitle"}>Order List</div>
+                        <div className={"text-center adminCardTitle"}>User List</div>
                         <Card.Body className={"m-3"}>
 
                             <div className={"mb-5 table-responsive tableFixHead"}>
