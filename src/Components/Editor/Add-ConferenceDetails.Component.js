@@ -1,5 +1,6 @@
 import {Component} from "react";
 import axios from "axios";
+import {Button} from "react-bootstrap";
 
 class AddConferenceDetailsComponent extends Component{
 
@@ -8,6 +9,7 @@ class AddConferenceDetailsComponent extends Component{
 
         this.onChangeID = this.onChangeID.bind(this);
         this.onChangeConferenceName = this.onChangeConferenceName.bind(this);
+        this.onChangeConferenceDesc = this.onChangeConferenceDesc.bind(this);
         this.onChangeConferenceDate = this.onChangeConferenceDate.bind(this);
         this.onChangeStartingTime = this.onChangeStartingTime.bind(this);
         this.onChangeEndingTime = this.onChangeEndingTime.bind(this);
@@ -18,11 +20,12 @@ class AddConferenceDetailsComponent extends Component{
         this.state = {
             id : '',
             conferenceName : '',
+            description:'',
             date : '',
             startingTime : '',
             endingTime: '',
             venue : '',
-            status :''
+            status :'Pending'  //initial state is 'pending'
 
 
         }
@@ -37,6 +40,12 @@ class AddConferenceDetailsComponent extends Component{
     onChangeConferenceName(e){
         this.setState({
             conferenceName : e.target.value
+        });
+    }
+
+    onChangeConferenceDesc(e){
+        this.setState({
+            description : e.target.value
         });
     }
 
@@ -74,6 +83,7 @@ class AddConferenceDetailsComponent extends Component{
         const conferences = {
             id: this.state.id,
             conferenceName: this.state.conferenceName,
+            description: this.state.description,
             date: this.state.date,
             startingTime: this.state.startingTime,
             endingTime: this.state.endingTime,
@@ -93,7 +103,7 @@ class AddConferenceDetailsComponent extends Component{
 
     render(){
         return(
-            <div>
+            <div className={"container"}>
                 <form onSubmit = {this.onSubmit2}>
                     <div className = "form-group">
                         <label>ID : </label>
@@ -112,6 +122,16 @@ class AddConferenceDetailsComponent extends Component{
                                className = "form-control"
                                value = {this.state.conferenceName}
                                onChange = {this.onChangeConferenceName}
+                        />
+                    </div>
+
+                    <div className = "form-group">
+                        <label>Description : </label>
+                        <textarea
+                               required
+                               className = "form-control"
+                               value = {this.state.description}
+                               onChange = {this.onChangeConferenceDesc}
                         />
                     </div>
 
@@ -154,18 +174,18 @@ class AddConferenceDetailsComponent extends Component{
                         />
                     </div>
 
-                    <div className = "form-group">
-                        <label>Status : </label>
-                        <input type = "text"
-                               required
-                               className = "form-control"
-                               value = {this.state.status}
-                               onChange = {this.onChangeStatus}
-                        />
-                    </div>
+                    {/*<div className = "form-group">*/}
+                    {/*    <label>Status : </label>*/}
+                    {/*    <input type = "text"*/}
+                    {/*           required*/}
+                    {/*           className = "form-control"*/}
+                    {/*           value = {this.state.status}*/}
+                    {/*           onChange = {this.onChangeStatus}*/}
+                    {/*    />*/}
+                    {/*</div>*/}
 
                     <div className = "form-group">
-                        <input type = "submit" value = "Add Conference" />
+                        <Button type={"submit"}>Add Conference</Button>
                     </div>
                 </form>
             </div>
