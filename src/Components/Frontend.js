@@ -18,6 +18,8 @@ import ListApprovedConferenceDetailsComponent from "./Admin/List-ApprovedConfere
 import TemplateList from "./AdminDashboard/Templates/TemplateList";
 import GettAllUsers from "./AdminDashboard/GettAllUsers";
 import SignUp from "./Login/Signup";
+import ConferenceRegistration from "./Conference/ConferenceRegistration";
+import EditTemplate from "./AdminDashboard/Templates/EditTemplates";
 
 
 class Frontend extends Component {
@@ -35,18 +37,18 @@ class Frontend extends Component {
 
                         <Route path="/conferenceList"   component={ConferenceDetailsListComponent}/>
                         <Route path="/updateConference/:id"   component={UpdateConferenceDetailsComponent}/>
-                        <Route path="/addConference"   component={AddConferenceDetailsComponent}/>
+                        <Route path="/addConference" component={AddConferenceDetailsComponent}/>
                         <Route path = "/listAllConference" component = {ListAllConferenceDetailsComponent} />
                         <Route path = "/listPendingConference" component = {ListPendingConferenceDetails} />
                         <Route path = "/listApprovedConference" component = {ListApprovedConferenceDetailsComponent} />
+                        <Route path = "/conference/reg" component = {ConferenceRegistration} />
 
                         <Route path="/Login" exact component={Login}/>
                         <Route path="/Admindashboard" exact component={AdminNav}/>
-                        <Route path="/admin-template/add/:id" exact component={AddTemplates}/>
+                        <Route path="/admin-template/add/" exact component={AddTemplates}/>
+                        <Route path="/admin-template/edit/:id" exact component={EditTemplate}/>
                         <Route path="/admin-template/list" exact component={TemplateList}/>
-                        <Route path="/admin-template/other" exact component={OtherTemplates}/>
                         <Route path="/user/getallusers" exact component={GettAllUsers}/>
-                        <Route path="/admin-template/add" exact component={AddTemplates}/>
 
 
                     </Switch>

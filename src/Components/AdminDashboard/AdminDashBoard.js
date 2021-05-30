@@ -82,10 +82,7 @@ class AdminDashBoard extends Component {
 
     render() {
 
-
-        const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         const loggedUserRole = AuthenticationService.loggedUserRole();
-        const loggedUser = AuthenticationService.loggedUserName();
         let loggedAsAdmin = false;
         let loggedAsReviever = false;
         let loggedAsEditor = false;
@@ -126,10 +123,10 @@ class AdminDashBoard extends Component {
                         <Col sm={9}>
                             <Tab.Content>
                                 <Tab.Pane eventKey="first">
-                                 <SignUp></SignUp>
+                                 <SignUp />
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
-                                 <GetAllUsers></GetAllUsers>
+                                 <GetAllUsers />
                                 </Tab.Pane>
 
 
