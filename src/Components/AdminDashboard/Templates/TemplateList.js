@@ -38,7 +38,7 @@ export default class TemplateList extends Component {
     }
 
     handleUpdate = (tempId) => {
-        this.props.history.push(`/admin-template/add/${tempId}`)
+        this.props.history.push(`/admin-template/edit/${tempId}`)
         console.log("UPDATE")
     }
 

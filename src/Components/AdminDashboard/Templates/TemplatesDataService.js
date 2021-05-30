@@ -33,7 +33,7 @@ class TemplatesDataService {
     }
 
     editDescription(data) {
-        return axios.put(`${API_URL}/updateDesc/`, data)
+        return axios.put(`${API_URL}/updateDesc`, data)
     }
 
     editTemplate(data) {

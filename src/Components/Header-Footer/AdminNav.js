@@ -50,10 +50,8 @@ class AdminNav extends Component {
                                     </Accordion.Toggle>
                                     <Accordion.Collapse eventKey="1" className={"dashboard-collapse"}>
                                         <div>
-                                            <Link to="/admin-template/add/-1" className={"dashboard-links"}>Add Template</Link> <br/>
-                                            <Link to="/admin-template/research" className={"dashboard-links"}>Research Template</Link> <br/>
-                                            <Link to="/admin-template/powerpoint" className={"dashboard-links"}>Powerpoint Template</Link> <br/>
-                                            <Link to="/admin-template/other" className={"dashboard-links"}>Other Template</Link>
+                                            <Link to="/admin-template/add" className={"dashboard-links"}>Add Template</Link> <br/>
+                                            <Link to="/admin-template/list" className={"dashboard-links"}>Template List</Link>
                                         </div>
                                     </Accordion.Collapse>
                                 </Accordion>
