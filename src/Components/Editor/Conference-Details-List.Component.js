@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Card, Container} from "react-bootstrap";
+import {Button, ButtonGroup, Card, Container, Table} from "react-bootstrap";
 import axios from "axios";
 import {Link} from "react-router-dom";
 
@@ -13,7 +13,13 @@ const Conference = props => (
         <td>{props.conference.venue}</td>
         <td>{props.conference.status}</td>
         <td>
-            <button ><Link to = {"/updateConference/" +props.conference._id } >Edit</Link></button> <button  onClick ={() => {props.deleteConference(props.conference.id)}}>Delete</button>
+            <ButtonGroup>
+                <Button variant={"outline-warning"}>
+                    <Link to = {`/updateConference/` +props.conference.id }>Edit</Link>
+                </Button>
+                {/*<Button onClick ={() => {props.editConference(props.conference.id)}}>Edit</Button>*/}
+                <Button variant={"outline-danger"} onClick ={() => {props.deleteConference(props.conference.id)}}>Delete</Button>
+            </ButtonGroup>
         </td>
     </tr>
 )
@@ -23,6 +29,7 @@ class ConferenceDetailsListComponent extends Component{
     constructor(props) {
         super(props);
 
+        this.editConference = this.editConference.bind(this);
         this.deleteConference = this.deleteConference.bind(this);
 
         this.state = { conferences : []
@@ -40,7 +47,11 @@ class ConferenceDetailsListComponent extends Component{
 
     }
 
-    deleteConference(id){
+    editConference(id) {
+        // this.props.history.push('/updateConference' + id);
+    }
+
+    deleteConference(id) {
         axios.delete('http://localhost:8080/api/conference/deleteConference' +id)
             .then(res => console.log(res.data));
         this.setState({
@@ -49,7 +60,7 @@ class ConferenceDetailsListComponent extends Component{
 
     }
 
-    conferenceList(){
+    conferenceList() {
         return this.state.conferences.map(currentconference => {
             return <Conference conference = {currentconference} deleteConference = {this.deleteConference} key = {currentconference.id}/>
         })
@@ -73,9 +84,9 @@ class ConferenceDetailsListComponent extends Component{
 
     render() {
         return(
-            <div>
+            <Container>
 
-                <table>
+                <Table bordered responsive hover striped>
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -85,14 +96,15 @@ class ConferenceDetailsListComponent extends Component{
                         <th>Ending Time</th>
                         <th>Venue</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     {this.conferenceList()}
                     </tbody>
-                </table>
-            </div>
+                </Table>
+            </Container>
         )
     }
 }

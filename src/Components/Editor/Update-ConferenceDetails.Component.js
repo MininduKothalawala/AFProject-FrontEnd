@@ -16,7 +16,7 @@ class UpdateConferenceDetailsComponent extends Component{
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            id : '',
+            id : this.props.match.params.id,
             conferenceName : '',
             date : '',
             startingTime : '',
