@@ -17,7 +17,7 @@ class ConferenceRegistration extends Component {
 
         return (
             <Container>
-                <Tabs defaultActiveKey="workshop">
+                <Tabs defaultActiveKey="research">
                     <Tab eventKey="research" title="For Researchers">
                        <RegResearcher />
                     </Tab>

@@ -12,7 +12,7 @@ class RegResearcher extends Component {
             email: '',
             mobile: '',
             file: undefined,
-            filename: 'Upload Research Paper'
+            filename: 'Upload Workshop Proposal'
         }
     }
 
@@ -45,39 +45,39 @@ class RegResearcher extends Component {
         const mobile = this.state.mobile;
         const file = this.state.file[0];
 
-                const formData = new FormData();
-                formData.append('name', name)
-                formData.append('mail', mail)
-                formData.append('mobile', mobile)
-                formData.append('file', file)
-                const config = {
-                    headers: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                }
-
-                ConferenceRegDataService.regAsResearcher(formData, config)
-                    .then(res => {
-                        console.log(formData);
-                        console.log(res);
-
-                        if (res.status === 201) {
-                            console.log("CREATED");
-
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'SUCCESS',
-                                html: '<p>Your have successfully registered!</p>',
-                                background: '#041c3d',
-                                showConfirmButton: false,
-                                iconColor: '#58b7ff',
-                                timer: 1500
-                            });
-
-                            this.props.history.push("/");
-                        }
-                    })
+        const formData = new FormData();
+        formData.append('name', name)
+        formData.append('mail', mail)
+        formData.append('mobile', mobile)
+        formData.append('file', file)
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data"
             }
+        }
+
+        ConferenceRegDataService.regAsConductor(formData, config)
+            .then(res => {
+                console.log(formData);
+                console.log(res);
+
+                if (res.status === 201) {
+                    console.log("CREATED");
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'SUCCESS',
+                        html: '<p>Your have successfully registered!</p>',
+                        background: '#041c3d',
+                        showConfirmButton: false,
+                        iconColor: '#58b7ff',
+                        timer: 1500
+                    });
+
+                    this.props.history.push("/");
+                }
+            })
+    }
 
     render() {
         const {name, email, mobile, filename} = this.state;
@@ -109,8 +109,7 @@ class RegResearcher extends Component {
 
                         <hr className={"my-5"}/>
 
-                        <Form.Group controlId={"regFile"} >
-
+                        <Form.Group controlId={"regFile"}>
                             <Form.File id={"fileUpload"} name={"file"} custom label={filename}
                                        accept={".docx, .doc"} required
                                        onChange={this.handleFileChange} />
