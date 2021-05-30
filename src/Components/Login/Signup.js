@@ -54,7 +54,7 @@ class SignUp extends Component {
                     Swal.fire({
                         position: 'top-center',
                         icon: 'success',
-                        title: 'User Adede!',
+                        title: 'User Added!',
                         showConfirmButton: false,
                         timer: 1000
                     }).then(() => {
@@ -138,9 +138,9 @@ class SignUp extends Component {
                                     <select className="form-control" id="role" name={"role"} value={this.state.role}
                                             required={true} onChange={this.handleChange}>
                                         <option value={"role"}>Select role</option>
-                                        <option value={"reviever"}>Reviever</option>
                                         <option value={"admin"}>Admin</option>
                                         <option value={"editor"}>Editor</option>
+                                        <option value={"reviewer"}>Reviewer</option>
                                     </select>
                                 </Col>
                             </Row>

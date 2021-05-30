@@ -21,6 +21,7 @@ import SignUp from "./Login/Signup";
 import ConferenceRegistration from "./MainUIs/Conference/ConferenceRegistration";
 import EditTemplate from "./AdminDashboard/Templates/EditTemplates";
 import ConferenceDetails from "./MainUIs/Conference/ConferenceDetails";
+import Templates from "./MainUIs/Templates";
 
 
 class Frontend extends Component {
@@ -46,6 +47,7 @@ class Frontend extends Component {
                         <Route path = "/conference/:id" exact component = {ConferenceDetails} />
 
                         <Route path="/Login" exact component={Login}/>
+                        <Route path="/templates" exact component={Templates}/>
                         <Route path="/Admindashboard" exact component={AdminNav}/>
                         <Route path="/admin-template/add/" exact component={AddTemplates}/>
                         <Route path="/admin-template/edit/:id" exact component={EditTemplate}/>

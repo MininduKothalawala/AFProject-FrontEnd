@@ -46,7 +46,8 @@ class RegAttendee extends Component {
             a_conferenceId: this.state.conferenceId,
             a_name: this.state.name,
             a_email: this.state.email,
-            a_mobileNo: this.state.mobile
+            a_mobileNo: this.state.mobile,
+            a_payment_status: "pending"
         }
 
         ConferenceRegDataService.regAsAttendee(data)

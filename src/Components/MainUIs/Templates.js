@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {Container} from "react-bootstrap";
-import ConferencePage from "../Conference/Conference";
 
-class Home extends Component {
+class Templates extends Component {
     constructor(props) {
         super(props);
 
@@ -13,11 +12,11 @@ class Home extends Component {
     render() {
         return(
             <Container>
-                <ConferencePage/>
+                <h3 className={"text-center"}>No Templates Available</h3>
             </Container>
         )
     }
 
 }
 
-export default Home;
+export default Templates;

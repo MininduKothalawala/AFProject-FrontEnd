@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, ButtonGroup, Card, Container, Table} from "react-bootstrap";
+import {Badge, Button, ButtonGroup, Container, Table} from "react-bootstrap";
 import axios from "axios";
 import {Link} from "react-router-dom";
 
@@ -11,7 +11,19 @@ const Conference = props => (
         <td>{props.conference.startingTime}</td>
         <td>{props.conference.endingTime}</td>
         <td>{props.conference.venue}</td>
-        <td>{props.conference.status}</td>
+        <td>
+            { props.conference.status === "Approved" ?
+                <Badge variant="success" className={"px-3 py-2"} key={"0"}>APPROVED</Badge>
+                : [ props.conference.status === "Rejected" ?
+                    <Badge variant="danger" className={"px-3 py-2"} key={"0"}>REJECTED</Badge>
+                    : [ props.conference.status === "Pending" ?
+                        <Badge variant="warning" className={"px-3 py-2"} key={"0"}>PENDING</Badge> : ''
+                    ]
+                ]
+
+            }
+
+        </td>
         <td>
             <ButtonGroup>
                 <Button variant={"outline-warning"}>
