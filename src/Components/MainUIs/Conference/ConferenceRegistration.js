@@ -1,15 +1,15 @@
 import React, {Component} from "react";
-import {Accordion, Button, Card, Container, Form, Tab, Tabs} from "react-bootstrap";
-import * as Swal from "sweetalert2";
-import ConferenceRegDataService from "./ConferenceRegDataService";
+import {Container, Tab, Tabs} from "react-bootstrap";
 import RegResearcher from "./RegResearcher";
 import RegConductor from "./RegConductor";
+import RegAttendee from "./RegAttendee";
 
 class ConferenceRegistration extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            conference_id: this.props.match.params.id
         }
     }
 
@@ -19,11 +19,15 @@ class ConferenceRegistration extends Component {
             <Container>
                 <Tabs defaultActiveKey="research">
                     <Tab eventKey="research" title="For Researchers">
-                       <RegResearcher />
+                       <RegResearcher id={this.state.conference_id} />
                     </Tab>
 
                     <Tab eventKey="workshop" title="For Workshop Conductors">
-                        <RegConductor />
+                        <RegConductor id={this.state.conference_id} />
+                    </Tab>
+
+                    <Tab eventKey="attendee" title="For Attendees">
+                        <RegAttendee id={this.state.conference_id} />
                     </Tab>
                 </Tabs>
             </Container>

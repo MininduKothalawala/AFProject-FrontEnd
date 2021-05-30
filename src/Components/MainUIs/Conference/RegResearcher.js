@@ -2,17 +2,19 @@ import React, {Component} from "react";
 import {Button, Card, Form} from "react-bootstrap";
 import * as Swal from "sweetalert2";
 import ConferenceRegDataService from "./ConferenceRegDataService";
+import {withRouter} from "react-router-dom";
 
 class RegResearcher extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            conferenceId: props.id,
             name: '',
             email: '',
             mobile: '',
             file: undefined,
-            filename: 'Upload Workshop Proposal'
+            filename: 'Upload Research Paper'
         }
     }
 
@@ -40,44 +42,46 @@ class RegResearcher extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
+        const confId = this.state.conferenceId;
         const name = this.state.name;
         const mail = this.state.email;
         const mobile = this.state.mobile;
         const file = this.state.file[0];
 
-        const formData = new FormData();
-        formData.append('name', name)
-        formData.append('mail', mail)
-        formData.append('mobile', mobile)
-        formData.append('file', file)
-        const config = {
-            headers: {
-                "Content-Type": "multipart/form-data"
-            }
-        }
-
-        ConferenceRegDataService.regAsConductor(formData, config)
-            .then(res => {
-                console.log(formData);
-                console.log(res);
-
-                if (res.status === 201) {
-                    console.log("CREATED");
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'SUCCESS',
-                        html: '<p>Your have successfully registered!</p>',
-                        background: '#041c3d',
-                        showConfirmButton: false,
-                        iconColor: '#58b7ff',
-                        timer: 1500
-                    });
-
-                    this.props.history.push("/");
+                const formData = new FormData();
+                formData.append('c_id', confId)
+                formData.append('name', name)
+                formData.append('mail', mail)
+                formData.append('mobile', mobile)
+                formData.append('file', file)
+                const config = {
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
                 }
-            })
-    }
+
+                ConferenceRegDataService.regAsResearcher(formData, config)
+                    .then(res => {
+                        console.log(formData);
+                        console.log(res);
+
+                        if (res.status === 201) {
+                            console.log("CREATED");
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'SUCCESS',
+                                html: '<p>Your have successfully registered!</p>',
+                                background: '#041c3d',
+                                showConfirmButton: false,
+                                iconColor: '#58b7ff',
+                                timer: 1500
+                            });
+
+                            this.props.history.push("/");
+                        }
+                    })
+            }
 
     render() {
         const {name, email, mobile, filename} = this.state;
@@ -109,9 +113,10 @@ class RegResearcher extends Component {
 
                         <hr className={"my-5"}/>
 
-                        <Form.Group controlId={"regFile"}>
+                        <Form.Group controlId={"regFile"} >
+
                             <Form.File id={"fileUpload"} name={"file"} custom label={filename}
-                                       accept={".docx, .doc"} required
+                                       accept={".docx, .doc, .pdf"} required
                                        onChange={this.handleFileChange} />
                             <Form.Text className="text-muted">
                                 <i>Note: You cannot change once it is uploaded.</i>
@@ -131,4 +136,4 @@ class RegResearcher extends Component {
 
 }
 
-export default RegResearcher;
+export default withRouter(RegResearcher);

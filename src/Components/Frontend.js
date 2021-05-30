@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
-import Home from './Home/Home';
+import Home from './MainUIs/Home/Home';
 import Header from "./Header-Footer/Header";
 import Login from "./Login/Login";
 import AdminNav from "./Header-Footer/AdminNav";
@@ -18,8 +18,9 @@ import ListApprovedConferenceDetailsComponent from "./Admin/List-ApprovedConfere
 import TemplateList from "./AdminDashboard/Templates/TemplateList";
 import GettAllUsers from "./AdminDashboard/GettAllUsers";
 import SignUp from "./Login/Signup";
-import ConferenceRegistration from "./Conference/ConferenceRegistration";
+import ConferenceRegistration from "./MainUIs/Conference/ConferenceRegistration";
 import EditTemplate from "./AdminDashboard/Templates/EditTemplates";
+import ConferenceDetails from "./MainUIs/Conference/ConferenceDetails";
 
 
 class Frontend extends Component {
@@ -41,7 +42,8 @@ class Frontend extends Component {
                         <Route path = "/listAllConference" component = {ListAllConferenceDetailsComponent} />
                         <Route path = "/listPendingConference" component = {ListPendingConferenceDetails} />
                         <Route path = "/listApprovedConference" component = {ListApprovedConferenceDetailsComponent} />
-                        <Route path = "/conference/reg" component = {ConferenceRegistration} />
+                        <Route path = "/conference/reg/:id" component = {ConferenceRegistration} />
+                        <Route path = "/conference/:id" exact component = {ConferenceDetails} />
 
                         <Route path="/Login" exact component={Login}/>
                         <Route path="/Admindashboard" exact component={AdminNav}/>
