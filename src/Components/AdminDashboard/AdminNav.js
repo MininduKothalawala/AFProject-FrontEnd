@@ -3,7 +3,7 @@ import {withRouter} from "react-router";
 import './AdminNav.css';
 import {ListGroup, Navbar, Tab} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import AuthenticationService from "../Authentication/AuthenticationService";
+import AuthenticationService from "../Login/AuthenticationService";
 import {
     faBars, faBell,
     faChalkboardTeacher, faDollarSign, faFileAlt, faFileContract, faFileSignature,
@@ -14,7 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import SignUp from "../Login/Signup";
-import GettAllUsers from "./GettAllUsers";
+import GettAllUsers from "./User/GettAllUsers";
 import AddTemplates from "./Templates/AddTemplates";
 import AddConferenceDetailsComponent from "../Editor/Add-ConferenceDetails.Component";
 import ListAllConferenceDetailsComponent from "../Admin/List-AllConferenceDetails.Component";
@@ -23,6 +23,7 @@ import Dashboard from "./Dashboard";
 import ProposalReview from "./Review/ProposalReview";
 import ResearchPaperReview from "./Review/ResearchPaperReview";
 import Payment from "./Payment/Payment";
+import MyAccount from "./User/AdminProfile";
 
 class AdminNav extends Component {
     constructor(props) {
@@ -227,28 +228,36 @@ class AdminNav extends Component {
 
                             { this.state.loading === "Users" &&
                                 <div className={"grid-container-col"}>
-                                    <div className={"dashboard-content"}>
-                                        <h5>Add User</h5> <br/>
-                                        <SignUp/>
-                                    </div>
-                                    <div className={"dashboard-content"}>
-                                        {/*Todo: Profile comes here*/}
+                                    { loggedAsAdmin &&
+                                        <div className={"dashboard-content"}>
+                                            <h5>Add User</h5> <br/>
+                                            <SignUp/>
+                                        </div>
+                                    }
+
+                                    <div className={"dashboard-content text-center"} style={{paddingLeft: '0', paddingRight: '0', paddingBottom: '0'}}>
                                         <h5>User Profile</h5> <br/>
-                                        <SignUp/>
+                                        <MyAccount />
                                     </div>
+
+                                    { loggedAsAdmin &&
                                     <div className={"dashboard-content grid-item1"}>
                                         <h5>List of Users</h5> <br/>
                                         <GettAllUsers/>
                                     </div>
+                                    }
                                 </div>
                             }
 
                             { this.state.loading === "Templates" &&
                                 <div className={"grid-container-row"}>
-                                    <div className={"dashboard-content"}>
-                                        <h5>Add Template</h5> <br/>
-                                        <AddTemplates/>
-                                    </div>
+                                    { loggedAsEditor &&
+                                    // Todo: add template from conference
+                                        <div className={"dashboard-content"}>
+                                            <h5>Add Template</h5> <br/>
+                                            <AddTemplates/>
+                                        </div>
+                                    }
                                     <div className={"dashboard-content"}>
                                         <h5>List of Template</h5> <br/>
                                         <TemplateList/>
@@ -260,10 +269,10 @@ class AdminNav extends Component {
                                 <div className={"grid-container-row"}>
 
                                     { loggedAsEditor &&
-                                    <div className={"dashboard-content"}>
-                                        <h5>Add Conference</h5> <br/>
-                                        <AddConferenceDetailsComponent/>
-                                    </div>
+                                        <div className={"dashboard-content"}>
+                                            <h5>Add Conference</h5> <br/>
+                                            <AddConferenceDetailsComponent/>
+                                        </div>
                                     }
 
                                     <div className={"dashboard-content"}>
