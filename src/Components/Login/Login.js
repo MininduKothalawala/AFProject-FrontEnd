@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
-import './Login.css'
-import AuthenticationService from '../Authentication/AuthenticationService';
-import AthenticationDataService from '../Authentication/AuthenticationDataService';
+import AuthenticationService from './AuthenticationService';
+import AthenticationDataService from './AuthenticationDataService';
 import {withRouter} from 'react-router-dom';
 
 class Login extends Component {

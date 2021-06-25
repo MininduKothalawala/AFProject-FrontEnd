@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Link} from "react-router-dom";
 import {Modal, Nav, Navbar} from "react-bootstrap";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
-import AuthenticationService from "../Authentication/AuthenticationService";
+import AuthenticationService from "../Login/AuthenticationService";
 import Login from "../Login/Login";
 
 class Header extends Component {
