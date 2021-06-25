@@ -44,10 +44,9 @@ class ConferencePage extends Component {
                                                 <Card.Header><b>{event.conferenceName}</b></Card.Header>
                                                 <Card.Body>
                                                     <Card.Text>
-                                                        Date: {event.date} <br/>
                                                         Venue: {event.venue} <br/>
-                                                        Starts At: {event.startingTime} <br/>
-                                                        End At: {event.endingTime}
+                                                        Start Date: {event.startingDate} <br/>
+                                                        End Date: {event.endingDate}
                                                     </Card.Text>
                                                 </Card.Body>
                                             </Card>

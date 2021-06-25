@@ -11,9 +11,9 @@ class ConferenceDetails extends Component {
         this.state = {
             cid: this.props.match.params.id,
             confName: '',
-            date: '',
-            startTime: '',
-            endTime: '',
+            description:'',
+            startingDate: '',
+            endingDate: '',
             venue: ''
         }
     }
@@ -30,9 +30,9 @@ class ConferenceDetails extends Component {
                 console.log(response.data)
                 this.setState({
                     confName: response.data.conferenceName,
-                    date: response.data.date,
-                    startTime: response.data.startingTime,
-                    endTime: response.data.endingTime,
+                    description: response.data.description,
+                    startingDate: response.data.startingDate,
+                    endingDate: response.data.endingDate,
                     venue: response.data.venue
                 })
 
@@ -47,14 +47,14 @@ class ConferenceDetails extends Component {
     }
 
     render() {
-        const {confName, date, startTime, endTime, venue} = this.state
+        const {confName, description, startingDate, endingDate, venue} = this.state
 
         return (
             <div className={"pb-5"}>
                 <Container fluid className={"p-0 mb-5 text-center"}>
                     <Container fluid className={"p-5 mb-5"} style={{backgroundColor: '#b8cccd', height: '500px'}}>
-                        <h1 className={"display-1"} style={{textAlign: 'center'}}>{confName}</h1>
-                        <h6 className={"text-muted"} style={{textAlign: 'center'}}>descriptiondescriptiondescriptiondescriptiondescriptiondescription</h6>
+                        <h1 className={"display-3"} style={{textAlign: 'center'}}>{confName}</h1>
+                        <h6 className={"text-muted"} style={{textAlign: 'center'}}>{description}</h6>
                         <div className={"my-5"}>
                             <Button variant={"danger"} type={"submit"} className={"p-3"}
                             onClick={() => this.enroll(this.state.cid)}>ENROL NOW</Button>
@@ -97,11 +97,10 @@ class ConferenceDetails extends Component {
                     <CardDeck>
                         <Card className={"mb-4 description"}>
                             <Card.Body>
-                                <Card.Title style={{textAlign: 'center', marginTop: '30px'}}>Date and Time</Card.Title>
+                                <Card.Title style={{textAlign: 'center', marginTop: '30px'}}>Dates</Card.Title>
                                 <Card.Text className="mt-4 lead" style={{textAlign: 'center', marginTop: '30px'}}>
-                                    {date}<br/>
-                                    {startTime}<br/>
-                                    {endTime}
+                                    Start Date: {startingDate}<br/>
+                                    End Date: {endingDate}
                                 </Card.Text>
                             </Card.Body>
                         </Card>

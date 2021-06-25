@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Accordion, Button, Card, Container, Form} from "react-bootstrap";
+import {Accordion, Button, Card, Form} from "react-bootstrap";
 import * as Swal from "sweetalert2";
 import TemplatesDataService from "./TemplatesDataService";
 import './Templates.css';
@@ -21,7 +21,7 @@ class AddTemplates extends Component {
     }
 
     componentDidMount() {
-        const loggedUser = AuthenticationService.loggedUserName();
+        const loggedUser = AuthenticationService.loggedUserId();
         this.setState({
             username: loggedUser
         });
@@ -126,14 +126,13 @@ class AddTemplates extends Component {
         const {tempDesc, tempType} = this.state;
 
         return (
-            <Container>
-                <Card>
-                    <Card.Title>Add Template</Card.Title>
-                    <Card.Body>
+            <div>
+                <Card style={{border: 'none'}}>
+                    <Card.Body className={"p-0"}>
                         <Form onSubmit={this.handleSubmit}>
                             <Form.Group controlId={"templateDesc"}>
                                 <Form.Label>Description</Form.Label>
-                                <Form.Control as={"textarea"} name={"tempDesc"} placeholder={"Enter desc"} required
+                                <Form.Control as={"textarea"} name={"tempDesc"} placeholder={"Enter description"} required
                                               value={tempDesc} onChange={this.handleChange}/>
                             </Form.Group>
 
@@ -214,7 +213,7 @@ class AddTemplates extends Component {
                 </Card>
                 {/*TODO: this button is for testing SweetAlert. DELETE Later!*/}
                 <Button variant="primary" type={"submit"} onClick={this.testButton}>SWAL</Button>
-            </Container>
+            </div>
         )
 
     }

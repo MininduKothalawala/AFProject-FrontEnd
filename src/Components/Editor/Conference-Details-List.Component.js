@@ -7,9 +7,8 @@ const Conference = props => (
     <tr>
         <td>{props.conference.id}</td>
         <td>{props.conference.conferenceName}</td>
-        <td>{props.conference.date}</td>
-        <td>{props.conference.startingTime}</td>
-        <td>{props.conference.endingTime}</td>
+        <td>{props.conference.startingDate}</td>
+        <td>{props.conference.endingDate}</td>
         <td>{props.conference.venue}</td>
         <td>
             { props.conference.status === "Approved" ?
@@ -78,22 +77,6 @@ class ConferenceDetailsListComponent extends Component{
         })
     }
 
-    // componentDidMount(){
-    //     axios.get("http://localhost:8080/conferenceList/")
-    //         .then((res)=>{
-    //             this.setState({
-    //                 conference:res.data,
-    //                 id:0,
-    //                 conferenceName:'',
-    //                 date:'',
-    //                 startingTime:'',
-    //                 endingTime:'',
-    //                 venue:'',
-    //                 status:''
-    //             })
-    //         })
-    // }
-
     render() {
         return(
             <Container>
@@ -103,9 +86,8 @@ class ConferenceDetailsListComponent extends Component{
                     <tr>
                         <th>ID</th>
                         <th>Conference Name</th>
-                        <th>Date</th>
-                        <th>Starting Time</th>
-                        <th>Ending Time</th>
+                        <th>Starting Date</th>
+                        <th>Ending Date</th>
                         <th>Venue</th>
                         <th>Status</th>
                         <th>Action</th>

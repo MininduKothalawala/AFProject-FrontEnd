@@ -9,8 +9,7 @@ class UpdateConferenceDetailsComponent extends Component{
         this.onChangeID = this.onChangeID.bind(this);
         this.onChangeConferenceName = this.onChangeConferenceName.bind(this);
         this.onChangeConferenceDate = this.onChangeConferenceDate.bind(this);
-        this.onChangeStartingTime = this.onChangeStartingTime.bind(this);
-        this.onChangeEndingTime = this.onChangeEndingTime.bind(this);
+        this.onChangeEndingDate = this.onChangeEndingDate.bind(this);
         this.onChangeVenue = this.onChangeVenue.bind(this);
         this.onChangeStatus = this.onChangeStatus.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -18,9 +17,8 @@ class UpdateConferenceDetailsComponent extends Component{
         this.state = {
             id : this.props.match.params.id,
             conferenceName : '',
-            date : '',
-            startingTime : '',
-            endingTime: '',
+            startingDate : '',
+            endingDate: '',
             venue : '',
             status :''
 
@@ -45,14 +43,14 @@ class UpdateConferenceDetailsComponent extends Component{
         });
     }
 
-    onChangeStartingTime(e){
+    onChangeStartingDate(e){
         this.setState({
-            startingTime : e.target.value
+            startingDate : e.target.value
         });
     }
-    onChangeEndingTime(e){
+    onChangeEndingDate(e){
         this.setState({
-            endingTime : e.target.value
+            endingDate : e.target.value
         });
     }
     onChangeVenue(e){
@@ -75,9 +73,8 @@ class UpdateConferenceDetailsComponent extends Component{
         const conferences = {
             id: this.state.id,
             conferenceName: this.state.conferenceName,
-            date: this.state.date,
-            startingTime: this.state.startingTime,
-            endingTime: this.state.endingTime,
+            startingDate: this.state.startingDate,
+            endingDate: this.state.endingDate,
             venue: this.state.venue,
             status: this.state.status,
         }
@@ -114,21 +111,12 @@ class UpdateConferenceDetailsComponent extends Component{
                     </div>
 
                     <div className = "form-group">
-                        <label>Date : </label>
-                        <input type = "text"
-                               required
-                               className = "form-control"
-                               value = {this.state.date}
-                               onChange = {this.onChangeConferenceDate}
-                        />
-                    </div>
-                    <div className = "form-group">
                         <label>Starting Time : </label>
                         <input type = "text"
                                required
                                className = "form-control"
-                               value = {this.state.startingTime}
-                               onChange = {this.onChangeStartingTime}
+                               value = {this.state.startingDate}
+                               onChange = {this.onChangeStartingDate}
                         />
                     </div>
 
@@ -137,8 +125,8 @@ class UpdateConferenceDetailsComponent extends Component{
                         <input type = "text"
                                required
                                className = "form-control"
-                               value = {this.state.endingTime}
-                               onChange = {this.onChangeEndingTime}
+                               value = {this.state.endingDate}
+                               onChange = {this.onChangeEndingDate}
                         />
                     </div>
 
