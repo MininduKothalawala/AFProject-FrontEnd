@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router";
-import {Card, Container, Table} from "react-bootstrap";
+import {Table} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
@@ -16,7 +16,7 @@ class gettAllUsers extends Component {
         super(props);
 
         this.state = {
-            User:[],
+            User: [],
             username: '',
             name: '',
             password: '',
@@ -32,7 +32,7 @@ class gettAllUsers extends Component {
     }
 
 
-     getAllUsers = () => {
+    getAllUsers = () => {
         axios.get('http://localhost:8080/api/adminuser/alladmin').then(response => {
             // console.log(response.data)
             this.setState({
@@ -46,102 +46,85 @@ class gettAllUsers extends Component {
     }
 
     deleteItem(id) {
-        swal( {
+        swal({
             title: "Are you sure?",
             text: "Once deleted, you will not be able to recover this record!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
-        } )
-            .then( (willDelete) => {
+        })
+            .then((willDelete) => {
                 if (willDelete) {
-                    axios.delete( 'http://localhost:8080/api/adminuser/deleteuser/' + id ).then( response => {
-                        console.log(response.data)
+                    axios.delete('http://localhost:8080/api/adminuser/deleteuser/' + id).then(response => {
+                        // console.log(response.data)
                         this.getAllUsers();
-                    } )
-                    swal( "Record has been deleted!", {
+                    })
+                    swal("Record has been deleted!", {
                         icon: "success",
 
 
-                    } );
+                    });
                 }
-            } );
+            });
 
 
     }
 
 
-
     render() {
-
         const {User} = this.state;
-        // console.log(User)
+
         return (
             <div>
-                <Container className={"my-5 py-4"} style={{width: '60rem'}}>
-                    <Card className={"adminCard"}>
-                        <div className={"text-center adminCardTitle"}>User List</div>
-                        <Card.Body className={"m-3"}>
+                <Table bordered hover striped variant={"dark"}>
+                    <thead>
+                    <tr className={"tableHeaders"}>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Email Address</th>
+                        <th>Mobile Number</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-                            <div className={"mb-5 table-responsive tableFixHead"}>
+                    {
+                        User.length === 0 ?
+                            <tr align="center">
+                                <td colSpan="6"><h6 className={"mt-3"}>No records at the moment</h6>
+                                </td>
+                            </tr>
 
-                                <Table borderless hover>
-                                    <thead>
-                                    <tr className={"tableHeaders"}>
-                                        <th>Username</th>
-                                        <th>Name</th>
-                                        <th>Email Address</th>
-                                        <th>Mobile Number</th>
-                                        <th>Role</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                            : [
+                                User.map(user => {
+                                    // console.log(user)
+                                    return (
+                                        <tr key={user.username}>
+                                            <td style={{verticalAlign: 'middle'}}>{user.username}</td>
+                                            <td style={{verticalAlign: 'middle'}}>{user.name}</td>
+                                            <td style={{verticalAlign: 'middle'}}>{user.email}</td>
+                                            <td style={{verticalAlign: 'middle'}}>{user.mobileNo}</td>
+                                            <td style={{verticalAlign: 'middle'}}>{user.role}</td>
+                                            <td style={{verticalAlign: 'middle'}}>
+                                                <Button variant={"danger"} type={"submit"}
+                                                        onClick={this.deleteItem.bind(this, user.username)}>
+                                                    <FontAwesomeIcon icon={faTrashAlt}/>
+                                                </Button>
 
-                                    {
-                                        User.length === 0 ?
-                                            <tr align="center">
-                                                <td colSpan="10"><h6 className={"mt-3"}>No records at the moment</h6>
-                                                </td>
-                                            </tr>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
 
-                                            : [
-                                                User.map(user => {
-                                                    console.log(user)
-                                                    return (
-                                                        <tr className={"tableRow"} key={user.username}>
-                                                            <td style={{verticalAlign: 'middle'}}>{user.username}</td>
-                                                            <td style={{verticalAlign: 'middle'}}>{user.name}</td>
-                                                            <td style={{verticalAlign: 'middle'}}>{user.email}</td>
-                                                            <td style={{verticalAlign: 'middle'}}>{user.mobileNo}</td>
-                                                            <td style={{verticalAlign: 'middle'}}>{user.role}</td>
-                                                            <td style={{
-                                                                verticalAlign: 'middle',
-                                                                textAlign: 'center',
-                                                                width: '50px'
-                                                            }}>
-                                                                <Button variant={"danger"} type={"submit"}
-                                                                        onClick={this.deleteItem.bind(this, user.username)}>
-                                                                    <FontAwesomeIcon icon={faTrashAlt}/>
-                                                                </Button>
-
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
-
-                                            ]
-                                    }
+                            ]
+                    }
 
 
-                                    </tbody>
-                                </Table>
-                            </div>
-
-                        </Card.Body>
-                    </Card>
-                </Container>
+                    </tbody>
+                </Table>
             </div>
+
         )
 
 
