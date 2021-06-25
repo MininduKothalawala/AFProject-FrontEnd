@@ -14,13 +14,13 @@ import ListAllConferenceDetailsComponent from "./Admin/List-AllConferenceDetails
 import ListPendingConferenceDetails from "./Admin/List-PendingConferenceDetails.Component";
 import ListApprovedConferenceDetailsComponent from "./Admin/List-ApprovedConferenceDetails.Component";
 import TemplateList from "./AdminDashboard/Templates/TemplateList";
-import GettAllUsers from "./AdminDashboard/GettAllUsers";
+import GettAllUsers from "./AdminDashboard/User/GettAllUsers";
 import SignUp from "./Login/Signup";
 import ConferenceRegistration from "./MainUIs/Conference/ConferenceRegistration";
 import EditTemplate from "./AdminDashboard/Templates/EditTemplates";
 import ConferenceDetails from "./MainUIs/Conference/ConferenceDetails";
 import Templates from "./MainUIs/Templates";
-import AdminProfile from "./Login/AdminProfile";
+import AdminProfile from "./AdminDashboard/User/AdminProfile";
 
 
 class Frontend extends Component {

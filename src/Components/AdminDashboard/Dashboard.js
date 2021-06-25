@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router";
 import './AdminNav.css';
-import AuthenticationService from "../Authentication/AuthenticationService";
+import AuthenticationService from "../Login/AuthenticationService";
 
 class Dashboard extends Component {
     constructor(props) {

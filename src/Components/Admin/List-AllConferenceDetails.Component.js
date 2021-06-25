@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import {Badge, Button, ButtonGroup, Table} from "react-bootstrap";
-import AuthenticationService from "../Authentication/AuthenticationService";
+import AuthenticationService from "../Login/AuthenticationService";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
 

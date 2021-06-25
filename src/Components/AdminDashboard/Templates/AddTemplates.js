@@ -3,7 +3,7 @@ import {Accordion, Button, Card, Form} from "react-bootstrap";
 import * as Swal from "sweetalert2";
 import TemplatesDataService from "./TemplatesDataService";
 import './Templates.css';
-import AuthenticationService from "../../Authentication/AuthenticationService";
+import AuthenticationService from "../../Login/AuthenticationService";
 
 
 class AddTemplates extends Component {
