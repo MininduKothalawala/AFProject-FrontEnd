@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Container} from "react-bootstrap";
+import Header from "../Header-Footer/Header";
 
 class Templates extends Component {
     constructor(props) {
@@ -11,9 +12,13 @@ class Templates extends Component {
 
     render() {
         return(
-            <Container>
-                <h3 className={"text-center"}>No Templates Available</h3>
-            </Container>
+            <div>
+                <Header/>
+
+                <Container>
+                    <h3 className={"text-center"}>No Templates Available</h3>
+                </Container>
+            </div>
         )
     }
 

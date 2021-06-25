@@ -2,11 +2,9 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import Home from './MainUIs/Home/Home';
-import Header from "./Header-Footer/Header";
 import Login from "./Login/Login";
-import AdminNav from "./Header-Footer/AdminNav";
+import AdminNav from "./AdminDashboard/AdminNav";
 import AddTemplates from "./AdminDashboard/Templates/AddTemplates";
-// import Footer from "./Header-Footer/Footer";
 
 import ConferenceDetailsListComponent from './Editor/Conference-Details-List.Component';
 import UpdateConferenceDetailsComponent from "./Editor/Update-ConferenceDetails.Component";
@@ -22,43 +20,48 @@ import ConferenceRegistration from "./MainUIs/Conference/ConferenceRegistration"
 import EditTemplate from "./AdminDashboard/Templates/EditTemplates";
 import ConferenceDetails from "./MainUIs/Conference/ConferenceDetails";
 import Templates from "./MainUIs/Templates";
+import AdminProfile from "./Login/AdminProfile";
 
 
 class Frontend extends Component {
 
     render() {
         return(
-            <div className="Frontend">
+            <div>
                 <Router>
 
-                    <Header/>
+                    {/*<Header/>*/}
 
                     <Switch>
                         <Route path="/" exact component={Home}/>
                         <Route path="/signup" exact component={SignUp}/>
+                        <Route path="/login" exact component={Login}/>
+                        <Route path="/profile" exact component={AdminProfile}/>
+                        <Route path="/user/list" exact component={GettAllUsers}/>
+                        <Route path="/admin" exact component={AdminNav}/>
 
                         <Route path="/conferenceList"   component={ConferenceDetailsListComponent}/>
                         <Route path="/updateConference/:id"   component={UpdateConferenceDetailsComponent}/>
                         <Route path="/addConference" component={AddConferenceDetailsComponent}/>
-                        <Route path = "/listAllConference" component = {ListAllConferenceDetailsComponent} />
-                        <Route path = "/listPendingConference" component = {ListPendingConferenceDetails} />
-                        <Route path = "/listApprovedConference" component = {ListApprovedConferenceDetailsComponent} />
-                        <Route path = "/conference/reg/:id" component = {ConferenceRegistration} />
-                        <Route path = "/conference/:id" exact component = {ConferenceDetails} />
+                        <Route path= "/listAllConference" component = {ListAllConferenceDetailsComponent} />
+                        <Route path= "/listPendingConference" component = {ListPendingConferenceDetails} />
+                        <Route path= "/listApprovedConference" component = {ListApprovedConferenceDetailsComponent} />
 
-                        <Route path="/Login" exact component={Login}/>
+                        <Route path= "/conference/reg/:id" component = {ConferenceRegistration} />
+                        <Route path= "/conference/:id" exact component = {ConferenceDetails} />
+
                         <Route path="/templates" exact component={Templates}/>
-                        <Route path="/Admindashboard" exact component={AdminNav}/>
                         <Route path="/admin-template/add/" exact component={AddTemplates}/>
                         <Route path="/admin-template/edit/:id" exact component={EditTemplate}/>
                         <Route path="/admin-template/list" exact component={TemplateList}/>
-                        <Route path="/user/getallusers" exact component={GettAllUsers}/>
-
 
                     </Switch>
 
                     {/*<Footer/>*/}
                 </Router>
+
+
+
             </div>
         )
     }

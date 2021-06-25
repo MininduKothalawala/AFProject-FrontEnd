@@ -139,8 +139,8 @@ export default class TemplateList extends Component {
         const {template, search, type} = this.state;
 
         return (
-            <div className={"m-3"}>
-                <Card>
+            <div>
+                <Card style={{border: 'none'}}>
                     <Form inline style={{float:'right'}} >
                         <Form.Group controlId={"templateType"} className={"mr-5"}>
                             <Form.Control as={"select"} name={"type"}
