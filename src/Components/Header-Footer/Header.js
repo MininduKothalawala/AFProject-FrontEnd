@@ -1,65 +1,74 @@
 import React, {Component} from "react";
-import {Nav, Navbar} from "react-bootstrap";
-import { withRouter } from "react-router";
-import AuthenticationService from "../Authentication/AuthenticationService";
-import {Link} from "react-router-dom";
+import {withRouter} from "react-router";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faSignOutAlt, faUser} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
+import {Modal, Nav, Navbar} from "react-bootstrap";
+import {faUser} from "@fortawesome/free-solid-svg-icons";
+import AuthenticationService from "../Authentication/AuthenticationService";
+import Login from "../Login/Login";
 
 class Header extends Component {
-    state={}
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            show: false
+        }
+    }
+
+    //Modal box
+    handleShow = () => {
+        this.setState({show: true})
+    }
+    //Modal box
+    handleClose = () => {
+        this.setState({show: false})
+    }
 
     render() {
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
-        const loggedUserRole = AuthenticationService.loggedUserRole();
-        const loggedUser = AuthenticationService.loggedUserName();
-        let loggedAsAdmin = false;
-        let loggedAsReviever = false;
-        let loggedAsEditor = false;
 
-        if (loggedUserRole != null && loggedUserRole === 'admin') {
-            loggedAsAdmin = true;
-        }
-        if (loggedUserRole != null && loggedUserRole === 'reviever') {
-            loggedAsReviever = true;
-        }
-        if (loggedUserRole != null && loggedUserRole === 'editor') {
-            loggedAsEditor = true;
-        }
+        return (
+            <div>
+                <div className={"mb-5"}>
 
-        return(
-            <div className={"mb-5"}>
+                    <Navbar bg="light" expand="lg">
+                        <Navbar.Brand href="/">SLIIT</Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                        <Navbar.Collapse id="basic-navbar-nav">
+                            <Nav className="mr-auto">
+                                <Nav.Link href="/">Home</Nav.Link>
+                                <Nav.Link href="/templates">Templates</Nav.Link>
+                                <Nav.Link href="#">About us</Nav.Link>
+                            </Nav>
 
-                <Navbar bg="light" expand="lg">
-                    <Navbar.Brand href="/">ICAF</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
-                            <Nav.Link href="/">Home</Nav.Link>
-                            <Nav.Link href="/templates">Templates</Nav.Link>
-                            <Nav.Link href="/Admindashboard">DASHBOARD</Nav.Link>
-                            {/*<Nav.Link href="/listPendingConference">Pending Conferences</Nav.Link>*/}
-                            {/*<Nav.Link href="/listApprovedConference">Approved Conferences</Nav.Link>*/}
-                        </Nav>
+                            {
+                                !isUserLoggedIn &&
+                                <button style={{backgroundColor: 'transparent', border: 'none'}}
+                                    onClick={this.handleShow}><FontAwesomeIcon icon={faUser}/>&nbsp; Login</button>
+                            }
+                            {
+                                isUserLoggedIn &&
+                                <Link to="/admin" style={{textDecoration: 'none'}}>
+                                Dashboard</Link>
+                            }
 
-                        {!loggedUser &&
-                            <Link to="/Login" onClick={AuthenticationService.logout} style={{textDecoration:'none'}}>
-                                <FontAwesomeIcon icon={faUser}/>Login</Link>
-                        }
+                        </Navbar.Collapse>
+                    </Navbar>
+                </div>
 
-                        {loggedUser &&
-                            <>
-                                <div className={"mr-3"}><FontAwesomeIcon icon={faUser} className={"mr-2"}/>Hi, {loggedUser}</div>
-                                <Link to="/Login" onClick={AuthenticationService.logout} style={{textDecoration:'none'}}>
-                                    <FontAwesomeIcon icon={faSignOutAlt}/> Logout</Link>
-                            </>
-                        }
-                    </Navbar.Collapse>
-                </Navbar>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Login</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body> <Login/> </Modal.Body>
+                </Modal>
 
             </div>
+
         )
     }
 
 }
+
 export default withRouter(Header);
