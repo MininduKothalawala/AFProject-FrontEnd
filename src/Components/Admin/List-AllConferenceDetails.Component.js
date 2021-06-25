@@ -12,9 +12,8 @@ const Conference = props => (
 
         <td>{props.conference.id}</td>
         <td>{props.conference.conferenceName}</td>
-        <td>{props.conference.date}</td>
-        <td>{props.conference.startingTime}</td>
-        <td>{props.conference.endingTime}</td>
+        <td>{props.conference.startingDate}</td>
+        <td>{props.conference.endingDate}</td>
         <td>{props.conference.venue}</td>
         <td>
             {
@@ -110,15 +109,14 @@ class ListAllConferenceDetailsComponent extends Component{
         const {loggedAsAdmin, loggedAsEditor} = this.state;
 
         return(
-            <div>
+            <div style={{height: '400px'}}>
                 <Table striped responsive hover bordered>
                     <thead>
                     <tr>
                         <th className={"text-center"}>ID</th>
                         <th className={"text-center"}>Conference Name</th>
-                        <th className={"text-center"}>Date</th>
-                        <th className={"text-center"}>Starting Time</th>
-                        <th className={"text-center"}>Ending Time</th>
+                        <th className={"text-center"}>Starting Date</th>
+                        <th className={"text-center"}>Ending Date</th>
                         <th className={"text-center"}>Venue</th>
                         <th className={"text-center"}>Status</th>
                         { loggedAsEditor &&

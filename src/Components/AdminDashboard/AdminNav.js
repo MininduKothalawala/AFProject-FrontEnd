@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import AuthenticationService from "../Login/AuthenticationService";
 import {
     faBars, faBell,
-    faChalkboardTeacher, faDollarSign, faFileAlt, faFileContract, faFileSignature,
+    faChalkboardTeacher, faDollarSign, faFileAlt, faFileContract, faFileSignature, faHome,
     faSignOutAlt,
     faThLarge,
     faTimes,
@@ -110,6 +110,10 @@ class AdminNav extends Component {
         this.props.history.push("/login")
     }
 
+    mainUi = () => {
+        this.props.history.push("/")
+    }
+
     render() {
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         const loggedUserRole = AuthenticationService.loggedUserRole();
@@ -158,7 +162,7 @@ class AdminNav extends Component {
                                         Templates
                                     </ListGroup.Item>
                                     <ListGroup.Item eventKey="conference"
-                                                    onClick={() => this.loadContent("conference")}>
+                                                    onClick={() => this.loadContent("Conference")}>
                                         <FontAwesomeIcon className={"mr-2"} icon={faChalkboardTeacher}/>
                                         Conference
                                     </ListGroup.Item>
@@ -204,8 +208,8 @@ class AdminNav extends Component {
                                 <Navbar.Toggle/>
                                 <Navbar.Collapse className="justify-content-end">
                                     <Navbar.Text>
-                                        <button className={"menu-icon"}>
-                                            <h6><FontAwesomeIcon icon={faBell}/></h6>
+                                        <button className={"menu-icon"} onClick={this.mainUi}>
+                                            <h6><FontAwesomeIcon icon={faHome}/></h6>
                                         </button>
                                     </Navbar.Text>
                                     <Navbar.Text>
