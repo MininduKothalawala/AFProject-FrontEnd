@@ -1,0 +1,9 @@
+/********* overriding swal2 *********/
+
+.swal2-title {
+    color: #fff !important;
+}
+.swal2-html-container {
+    color: #cbcbcb !important;
+}
+/************************************/
