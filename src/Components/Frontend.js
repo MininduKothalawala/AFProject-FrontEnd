@@ -10,9 +10,9 @@ import ConferenceDetailsListComponent from './Editor/Conference-Details-List.Com
 import UpdateConferenceDetailsComponent from "./Editor/Update-ConferenceDetails.Component";
 import AddConferenceDetailsComponent from "./Editor/Add-ConferenceDetails.Component";
 
-import ListAllConferenceDetailsComponent from "./Admin/List-AllConferenceDetails.Component";
-import ListPendingConferenceDetails from "./Admin/List-PendingConferenceDetails.Component";
-import ListApprovedConferenceDetailsComponent from "./Admin/List-ApprovedConferenceDetails.Component";
+import ListAllConferenceDetailsComponent from "./AdminDashboard/Conference/List-AllConferenceDetails.Component";
+import ListPendingConferenceDetails from "./AdminDashboard/Conference/List-PendingConferenceDetails.Component";
+import ListApprovedConferenceDetailsComponent from "./AdminDashboard/Conference/List-ApprovedConferenceDetails.Component";
 import TemplateList from "./AdminDashboard/Templates/TemplateList";
 import GettAllUsers from "./AdminDashboard/User/GettAllUsers";
 import SignUp from "./Login/Signup";
@@ -21,6 +21,7 @@ import EditTemplate from "./AdminDashboard/Templates/EditTemplates";
 import ConferenceDetails from "./MainUIs/Conference/ConferenceDetails";
 import Templates from "./MainUIs/Templates";
 import AdminProfile from "./AdminDashboard/User/AdminProfile";
+import ViewConference from "./AdminDashboard/Conference/ViewConference";
 
 
 class Frontend extends Component {

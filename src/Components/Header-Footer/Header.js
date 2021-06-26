@@ -30,7 +30,7 @@ class Header extends Component {
 
         return (
             <div>
-                <div className={"mb-5"}>
+                <div>
 
                     <Navbar bg="light" expand="lg">
                         <Navbar.Brand href="/">SLIIT</Navbar.Brand>
