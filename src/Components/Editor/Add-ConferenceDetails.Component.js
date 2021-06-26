@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import moment from 'moment';
+import Swal from "sweetalert2";
 
 class AddConferenceDetailsComponent extends Component{
 
@@ -25,7 +26,7 @@ class AddConferenceDetailsComponent extends Component{
             endingDate: '',
             venue : '',
             status :'Pending',  //initial state is 'pending'
-            today: moment(new Date()).format('YYYY-MM-DD')
+            daylimit: moment().add(10, "days").format('YYYY-MM-DD')
         }
     }
 
@@ -85,11 +86,21 @@ class AddConferenceDetailsComponent extends Component{
         console.log(conferences);
 
         axios.post('http://localhost:8080/api/conference/addConference', conferences)
-            .then(res => console.log(res.data));
-        alert("Form is submitted successfully")
+            .then(res => {
+                console.log(res.data)
 
-        window.location = '/conferenceList';
+                // if (res.status === 200) {
 
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successful',
+                        html: '<p>Your file has been uploaded!!</p>',
+                        background: '#041c3d',
+                        confirmButtonColor: '#3aa2e7',
+                        iconColor: '#60e004'
+                    })
+                // }
+            });
     }
 
     render(){
@@ -141,7 +152,7 @@ class AddConferenceDetailsComponent extends Component{
                                         <input type = "date"
                                                required
                                                className = "form-control"
-                                               min={this.state.today}
+                                               min={this.state.daylimit}
                                                value = {this.state.startingDate}
                                                onChange = {this.onChangeStartingDate}
                                         />
@@ -151,22 +162,23 @@ class AddConferenceDetailsComponent extends Component{
                                         <input type = "date"
                                                required
                                                className = "form-control"
-                                               min={this.state.today}
+                                               min={moment(this.state.startingDate).format('YYYY-MM-DD')}
                                                value = {this.state.endingDate}
                                                onChange = {this.onChangeEndingDate}
                                         />
                                     </Col>
-                                    <Col>
-                                        <label>Venue : </label>
-                                        <input type = "text"
-                                               required
-                                               className = "form-control"
-                                               value = {this.state.venue}
-                                               onChange = {this.onChangeVenue}
-                                               placeholder={"Enter venue"}
-                                        />
-                                    </Col>
                                 </Row>
+                            </div>
+
+                            <div className = "form-group">
+                                <label>Venue : </label>
+                                <input type = "text"
+                                       required
+                                       className = "form-control"
+                                       value = {this.state.venue}
+                                       onChange = {this.onChangeVenue}
+                                       placeholder={"Enter venue"}
+                                />
                             </div>
 
                             <div className={"my-4"}>
