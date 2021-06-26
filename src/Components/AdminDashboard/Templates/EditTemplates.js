@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Accordion, Button, Card, Container, Form} from "react-bootstrap";
+import {Accordion, Button, Card, Form} from "react-bootstrap";
 import * as Swal from "sweetalert2";
 import TemplatesDataService from "./TemplatesDataService";
 import './Templates.css';
@@ -11,7 +11,7 @@ class EditTemplates extends Component {
         super(props);
 
         this.state = {
-            id: this.props.match.params.id,
+            id: props.tempId,
             tempDesc: '',
             tempType: 'choose',
             tempFile: undefined,
@@ -97,13 +97,14 @@ class EditTemplates extends Component {
 
                         Swal.fire({
                             icon: 'success',
-                            title: 'SUCCESS',
-                            text: 'Your file has been updated!',
-                            timer: 1500
+                            title: 'Successful',
+                            html: '<p>Your file has been uploaded!!</p>',
+                            background: '#041c3d',
+                            confirmButtonColor: '#3aa2e7',
+                            iconColor: '#60e004'
                         })
 
                         this.clearData();
-                        this.props.history.push('/admin-template/list')
                     }
                 })
 
@@ -125,65 +126,53 @@ class EditTemplates extends Component {
 
                 TemplatesDataService.editTemplate(formData, config)
                     .then(res => {
-                        console.log(formData);
                         console.log(res);
 
                         if (res.status === 200) {
-                            console.log("UPDATED ALL");
 
                             Swal.fire({
                                 icon: 'success',
-                                title: 'SUCCESS',
-                                text: 'Your file has been updated!',
-                                timer: 1500
+                                title: 'Successful',
+                                html: '<p>Your file has been uploaded!!</p>',
+                                background: '#041c3d',
+                                confirmButtonColor: '#3aa2e7',
+                                iconColor: '#60e004'
                             })
 
                             this.clearData();
-                            this.props.history.push('/admin-template/list')
                         }
                     })
 
 
             } else {
                 Swal.fire({
-                    icon: 'error',
-                    title: 'ERROR',
-                    text: 'Please choose a template type'
+                    icon: 'warning',
+                    title: 'No Template Type',
+                    html: '<p>Please choose a template type!</p>',
+                    background: '#041c3d',
+                    confirmButtonColor: '#3aa2e7',
+                    iconColor: '#e0b004'
                 })
             }
 
         }
 
-
     }
 
     clearData = () => {
         this.setState({
-            id: -1,
+            id: '',
             tempDesc: '',
             tempType: 'choose',
             tempFile: undefined,
         })
     }
 
-    testButton = () => {
-        Swal.fire({
-            icon: 'success',
-            title: 'Successful',
-            html: '<p>Your file has been uploaded!</p>',
-            background: '#041c3d',
-            confirmButtonColor: '#3aa2e7',
-            iconColor: '#58b7ff'
-        })
-    }
-
     render() {
-        const {tempDesc, tempType, id, isChecked} = this.state;
+        const {tempDesc, tempType, isChecked} = this.state;
 
             return (
-                <Container>
-                    <Card>
-                        <Card.Title>Edit Template</Card.Title>
+                    <Card style={{border:'none'}}>
                         <Card.Body>
                             <Form onSubmit={this.handleUpdate}>
                                 <Form.Group controlId={"templateDesc"}>
@@ -261,7 +250,6 @@ class EditTemplates extends Component {
                                                                         </Accordion.Collapse>
                                                                         : ''
                                                                 ]
-
                                                         ]
                                                 }
                                             </Card>
@@ -276,10 +264,6 @@ class EditTemplates extends Component {
                             </Form>
                         </Card.Body>
                     </Card>
-
-                    {/*TODO: this button is for testing SweetAlert. DELETE Later!*/}
-                    <Button variant="primary" type={"submit"} onClick={this.testButton}>SWAL</Button>
-                </Container>
             )
 
 

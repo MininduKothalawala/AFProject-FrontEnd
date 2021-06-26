@@ -81,24 +81,27 @@ class AddTemplates extends Component {
 
                             Swal.fire({
                                 icon: 'success',
-                                title: 'SUCCESS',
-                                text: 'Your file has been uploaded!',
-                                timer: 1500
+                                title: 'Successful',
+                                html: '<p>Your file has been uploaded!!</p>',
+                                background: '#041c3d',
+                                confirmButtonColor: '#3aa2e7',
+                                iconColor: '#60e004'
                             })
                             this.clearData();
-                            this.props.history.push('/admin-template/list')
                         }
                     })
 
 
         } else {
             Swal.fire({
-                icon: 'error',
-                title: 'ERROR',
-                text: 'Please choose a template type'
+                icon: 'warning',
+                title: 'No Template Type',
+                html: '<p>Please choose a template type!</p>',
+                background: '#041c3d',
+                confirmButtonColor: '#3aa2e7',
+                iconColor: '#e0b004'
             })
         }
-
 
     }
 
@@ -108,17 +111,6 @@ class AddTemplates extends Component {
             tempDesc: '',
             tempType: 'choose',
             tempFile: undefined,
-        })
-    }
-
-    testButton = () => {
-        Swal.fire({
-            icon: 'success',
-            title: 'Successful',
-            html: '<p>Your file has been uploaded!</p>',
-            background: '#041c3d',
-            confirmButtonColor: '#3aa2e7',
-            iconColor: '#58b7ff'
         })
     }
 
@@ -211,8 +203,6 @@ class AddTemplates extends Component {
                         </Form>
                     </Card.Body>
                 </Card>
-                {/*TODO: this button is for testing SweetAlert. DELETE Later!*/}
-                <Button variant="primary" type={"submit"} onClick={this.testButton}>SWAL</Button>
             </div>
         )
 
