@@ -5,15 +5,15 @@ import {Link} from "react-router-dom";
 
 const Conference = props => (
     <tr>
-        <td>{props.conference.id}</td>
-        <td>{props.conference.conferenceName}</td>
-        <td>{props.conference.date}</td>
-        <td>{props.conference.startingTime}</td>
-        <td>{props.conference.endingTime}</td>
-        <td>{props.conference.venue}</td>
-        <td>{props.conference.status}</td>
+        <td>{props.conferences.id}</td>
+        <td>{props.conferences.conferenceName}</td>
+        <td>{props.conferences.date}</td>
+        <td>{props.conferences.startingTime}</td>
+        <td>{props.conferences.endingTime}</td>
+        <td>{props.conferences.venue}</td>
+        <td>{props.conferences.status}</td>
         <td>
-            <button ><Link to = {"/updateConference/" +props.conference._id } >Edit</Link></button> <button  onClick ={() => {props.deleteConference(props.conference.id)}}>Delete</button>
+            <button ><Link to = {"/updateConference/" +props.conferences.id } >Edit</Link></button> <button  onClick ={() => {props.deleteConference(props.conferences.id)}}>Delete</button>
         </td>
     </tr>
 )
@@ -51,7 +51,7 @@ class ConferenceDetailsListComponent extends Component{
 
     conferenceList(){
         return this.state.conferences.map(currentconference => {
-            return <Conference conference = {currentconference} deleteConference = {this.deleteConference} key = {currentconference.id}/>
+            return <Conference conferences = {currentconference} deleteConference = {this.deleteConference} key = {currentconference.id}/>
         })
     }
 
