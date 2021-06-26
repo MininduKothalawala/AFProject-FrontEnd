@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from './Home/Home';
 import Header from "./Header-Footer/Header";
 import Login from "./Login/Login";
-import AdminDashBoard from "./AdminDashboard/AdminDashBoard";
+import AdminDashBoard from "./AdminDashboard/AdminDashBoard"
 // import Footer from "./Header-Footer/Footer";
 
 import ConferenceDetailsListComponent from './Editor/Conference-Details-List.Component';
@@ -12,7 +12,7 @@ import UpdateConferenceDetailsComponent from "./Editor/Update-ConferenceDetails.
 import AddConferenceDetailsComponent from "./Editor/Add-ConferenceDetails.Component";
 
 import ListAllConferenceDetailsComponent from "./Admin/List-AllConferenceDetails.Component";
-import ListPendingConferenceDetails from "./Admin/List-PendingConferenceDetails";
+import ListPendingConferenceDetails from "./Admin/List-PendingConferenceDetails.Component"
 import ListApprovedConferenceDetailsComponent from "./Admin/List-ApprovedConferenceDetails.Component";
 
 class Frontend extends Component {
@@ -36,7 +36,7 @@ class Frontend extends Component {
                         <Route path = "/listApprovedConference" component = {ListApprovedConferenceDetailsComponent} />
 
                         <Route path="/Login" exact component={Login}/>
-                        <Route path="/Admindashboard" exact component={AdminDashBoard}/>
+
 
                     </Switch>
 

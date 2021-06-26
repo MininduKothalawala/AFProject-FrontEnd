@@ -8,6 +8,7 @@ class AddConferenceDetailsComponent extends Component{
 
         this.onChangeID = this.onChangeID.bind(this);
         this.onChangeConferenceName = this.onChangeConferenceName.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeConferenceDate = this.onChangeConferenceDate.bind(this);
         this.onChangeStartingTime = this.onChangeStartingTime.bind(this);
         this.onChangeEndingTime = this.onChangeEndingTime.bind(this);
@@ -18,6 +19,7 @@ class AddConferenceDetailsComponent extends Component{
         this.state = {
             id : '',
             conferenceName : '',
+            description:'',
             date : '',
             startingTime : '',
             endingTime: '',
@@ -37,6 +39,11 @@ class AddConferenceDetailsComponent extends Component{
     onChangeConferenceName(e){
         this.setState({
             conferenceName : e.target.value
+        });
+    }
+    onChangeDescription(e){
+        this.setState({
+            description : e.target.value
         });
     }
 
@@ -74,6 +81,7 @@ class AddConferenceDetailsComponent extends Component{
         const conferences = {
             id: this.state.id,
             conferenceName: this.state.conferenceName,
+            description: this.state.description,
             date: this.state.date,
             startingTime: this.state.startingTime,
             endingTime: this.state.endingTime,
@@ -112,6 +120,16 @@ class AddConferenceDetailsComponent extends Component{
                                className = "form-control"
                                value = {this.state.conferenceName}
                                onChange = {this.onChangeConferenceName}
+                        />
+                    </div>
+
+                    <div className = "form-group">
+                        <label>Description : </label>
+                        <input type = "text"
+                               required
+                               className = "form-control"
+                               value = {this.state.description}
+                               onChange = {this.onChangeDescription}
                         />
                     </div>
 

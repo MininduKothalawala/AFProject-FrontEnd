@@ -36,6 +36,8 @@ class ListPendingConferenceDetails extends Component{
 
     }
 
+
+
     // approveConference(id){
     //     axios.put('http://localhost:8080/api/conference/approveConference/' +this.props.match.params.id)
     //         .then(res => console.log(res.data));
@@ -64,16 +66,17 @@ class ListPendingConferenceDetails extends Component{
         const conferences = {
             id : this.state.id,
             conferenceName : this.state.conferenceName,
+            description: this.state.description,
             date : this.state.date,
             startingTime : this.state.startingTime,
             endingTime : this.state.endingTime,
             venue : this.state.venue,
-            status : "Approved",
+            status : this.setState({status : 'Approved'})
         }
 
         console.log(conferences);
 
-        axios.put('http://localhost:8080/api/conference/updateConference' +this.props.match.params.id, conferences)
+        axios.put('http://localhost:8080/api/conference/approveConference' +id, conferences)
             .then(res => console.log(res.data));
 
     }
@@ -91,6 +94,7 @@ class ListPendingConferenceDetails extends Component{
                     <tr>
                         <th>ID</th>
                         <th>Conference Name</th>
+                        <th>Description</th>
                         <th>Date</th>
                         <th>Starting Time</th>
                         <th>Ending Time</th>
@@ -98,23 +102,25 @@ class ListPendingConferenceDetails extends Component{
                         <th>Status</th>
                     </tr>
                     </thead>
-                    {conferences.map(conferences => <tbody>
-                    <tr>
-                        <td>{conferences.id}</td>
-                        <td>{conferences.conferenceName}</td>
-                        <td>{conferences.date}</td>
-                        <td>{conferences.startingTime}</td>
-                        <td>{conferences.endingTime}</td>
-                        <td>{conferences.venue}</td>
-                        <td>{conferences.status}</td>
-                        <td><button onClick ={() => {this.approveConference(conferences.id)}}>Approve</button></td>
-                    </tr>
-                    </tbody>)}
+                    <tbody>
+                    {conferences.map(conferences =>
+                        <tr>
+                            <td>{conferences.id}</td>
+                            <td>{conferences.conferenceName}</td>
+                            <td>{conferences.description}</td>
+                            <td>{conferences.date}</td>
+                            <td>{conferences.startingTime}</td>
+                            <td>{conferences.endingTime}</td>
+                            <td>{conferences.venue}</td>
+                            <td>{conferences.status}</td>
+                            <td><button onClick ={() => {this.approveConference(conferences.id)}}>Approve</button></td>
+                        </tr>
+                    )}
+                    </tbody>
 
                 </table>
             </div>
         )
     }
-
 }
 export default ListPendingConferenceDetails;

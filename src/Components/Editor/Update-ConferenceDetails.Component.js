@@ -8,6 +8,7 @@ class UpdateConferenceDetailsComponent extends Component{
 
         this.onChangeID = this.onChangeID.bind(this);
         this.onChangeConferenceName = this.onChangeConferenceName.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeConferenceDate = this.onChangeConferenceDate.bind(this);
         this.onChangeStartingTime = this.onChangeStartingTime.bind(this);
         this.onChangeEndingTime = this.onChangeEndingTime.bind(this);
@@ -18,6 +19,7 @@ class UpdateConferenceDetailsComponent extends Component{
         this.state = {
             id : '',
             conferenceName : '',
+            description:'',
             date : '',
             startingTime : '',
             endingTime: '',
@@ -25,6 +27,26 @@ class UpdateConferenceDetailsComponent extends Component{
             status :''
 
         }
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:8080/api/conference/conferencebyid/'+this.props.match.params.id)
+            .then(response => {
+                this.setState({
+                    id : response.data.id,
+                    conferenceName : response.data.conferenceName,
+                    description : response.data.description,
+                    date:response.data.date,
+                    startingTime:response.data.startingTime,
+                    endingTime:response.data.endingTime,
+                    venue:response.data.venue,
+                    status : response.data.status
+                })
+            })
+            .catch(function(error) {
+                console.log(error);
+            })
+
     }
 
     onChangeID(e){
@@ -36,6 +58,12 @@ class UpdateConferenceDetailsComponent extends Component{
     onChangeConferenceName(e){
         this.setState({
             conferenceName : e.target.value
+        });
+    }
+
+    onChangeDescription(e){
+        this.setState({
+            description : e.target.value
         });
     }
 
@@ -75,6 +103,7 @@ class UpdateConferenceDetailsComponent extends Component{
         const conferences = {
             id: this.state.id,
             conferenceName: this.state.conferenceName,
+            description: this.state.description,
             date: this.state.date,
             startingTime: this.state.startingTime,
             endingTime: this.state.endingTime,
@@ -86,7 +115,7 @@ class UpdateConferenceDetailsComponent extends Component{
 
         axios.put('http://localhost:8080/api/conference/updateConference',conferences)
             .then(res => console.log(res.data));
-
+        window.location = '/conferenceList'
 
     }
     render() {
@@ -110,6 +139,16 @@ class UpdateConferenceDetailsComponent extends Component{
                                className = "form-control"
                                value = {this.state.conferenceName}
                                onChange = {this.onChangeConferenceName}
+                        />
+                    </div>
+
+                    <div className = "form-group">
+                        <label>Description : </label>
+                        <input type = "text"
+                               required
+                               className = "form-control"
+                               value = {this.state.description}
+                               onChange = {this.onChangeDescription}
                         />
                     </div>
 
