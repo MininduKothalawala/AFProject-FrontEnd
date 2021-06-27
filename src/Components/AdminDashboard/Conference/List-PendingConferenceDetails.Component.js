@@ -51,10 +51,6 @@ class ListPendingConferenceDetails extends Component{
 
         console.log(conferences);
 
-        // TODO:following method failed
-        // axios.put(`http://localhost:8080/api/conference/approveConference/${id}`, conferences)
-        //     .then(res => console.log(res.data));
-
         axios.put(`http://localhost:8080/api/conference/updateStatus/${id}/Approved`)
             .then( res => {
                 console.log(res.data)
