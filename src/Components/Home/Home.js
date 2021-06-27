@@ -11,6 +11,7 @@ class Home extends Component {
 
     handleSubmit = () => {
         console.log("button clicked")
+        this.props.history.push("/UserRegistration")
     }
 
     render() {
