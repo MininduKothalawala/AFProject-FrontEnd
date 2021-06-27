@@ -21,8 +21,6 @@ import EditTemplate from "./AdminDashboard/Templates/EditTemplates";
 import ConferenceDetails from "./MainUIs/Conference/ConferenceDetails";
 import Templates from "./MainUIs/Templates";
 import AdminProfile from "./AdminDashboard/User/AdminProfile";
-import ViewConference from "./AdminDashboard/Conference/ViewConference";
-
 
 class Frontend extends Component {
 

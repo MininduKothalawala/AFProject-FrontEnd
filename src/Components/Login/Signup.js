@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button, Card, Col, Row} from "react-bootstrap";
-import swal from "sweetalert";
 import UserService from "../../API/UserService";
 import * as Swal from "sweetalert2";
 import {withRouter} from "react-router";
@@ -52,24 +51,27 @@ class SignUp extends Component {
                     console.log(res.data)
 
                     Swal.fire({
-                        position: 'top-center',
                         icon: 'success',
-                        title: 'User Added!',
-                        showConfirmButton: false,
-                        timer: 1000
-                    }).then(() => {
-                        this.props.history.push('/Admindashboard');
+                        title: 'Successful',
+                        html: '<p>User has been added!</p>',
+                        background: '#041c3d',
+                        confirmButtonColor: '#3aa2e7',
+                        iconColor: '#60e004'
                     })
+
                 })
                 .catch(err => {
                     console.log(err.data)
                 })
 
         } else {
-            swal({
-                title: "Please select a Role!",
-                icon: "warning",
-                buttons: "Ok"
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning',
+                html: '<p>Please select a Role!</p>',
+                background: '#041c3d',
+                confirmButtonColor: '#3aa2e7',
+                iconColor: '#e0b004'
             })
         }
 
