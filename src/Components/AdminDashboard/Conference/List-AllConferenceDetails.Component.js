@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
-import {Badge, Button, Table} from "react-bootstrap";
+import {Badge, Button, Modal, Table} from "react-bootstrap";
 import AuthenticationService from "../../Login/AuthenticationService";
+import UpdateConferenceDetailsComponent from "../../Editor/Update-ConferenceDetails.Component";
 
 const Conference = props => (
 
@@ -14,23 +15,31 @@ const Conference = props => (
         <td>{props.conference.endingDate}</td>
         <td>{props.conference.venue}</td>
         <td className={"text-center"} style={{verticalAlign: 'middle'}}>
-            {
-                props.conference.status === 'Approved' ?
-                    <Badge variant="success" className={"px-3 py-2"} key={"0"}>APPROVED</Badge>
-                    : [
-                        props.conference.status === 'Pending' ?
-                            <Badge variant="warning" className={"px-3 py-2"} key={"0"}>PENDING</Badge>
-                            : [
-                                props.conference.status === 'Rejected' ?
-                                    <Badge variant="danger" className={"px-3 py-2"} key={"0"}>REJECTED</Badge> : ''
-                            ]
-                    ]
+            { props.conference.status === 'Approved' &&
+                <Badge variant="success" className={"px-3 py-2"} key={"0"}>APPROVED</Badge>
+            }
+            { props.conference.status === 'Pending' &&
+                <Badge variant="warning" className={"px-3 py-2"} key={"0"}>PENDING</Badge>
+            }
+            { props.conference.status === 'Rejected' &&
+                <Badge variant="danger" className={"px-3 py-2"} key={"0"}>REJECTED</Badge>
+            }
+            { props.conference.status === 'Updated' &&
+                <Badge variant="primary" className={"px-3 py-2"} key={"0"}>UPDATED</Badge>
+            }
+            { props.conference.status === 'Expired' &&
+                <Badge variant="info" className={"px-3 py-2"} key={"0"}>EXPIRED</Badge>
+            }
+            { props.conference.status === 'Canceled' &&
+                <Badge variant="secondary" className={"px-3 py-2"} key={"0"}>CANCELED</Badge>
             }
         </td>
         { props.loggedAsEditor &&
             <td className={"text-center"} style={{verticalAlign: 'middle'}}>
                 { props.conference.status !== 'Rejected' &&
-                <Button variant={"dark"} type={"submit"}>Edit</Button>
+                    <Button variant={"warning"} type={"submit"}><Link to = {"/updateConference/" +props.conference.id } >Edit</Link></Button>
+                    // <Button variant={"dark"} type={"submit"} onClick={() => this.editConference(props.conference.id)}>Edit</Button>
+                    // Todo: cannot access edit method here
                 }
             </td>
         }
@@ -44,8 +53,9 @@ class ListAllConferenceDetailsComponent extends Component{
 
         this.state = {
             conferences : [],
+            conferenceId:'',
             loggedAsEditor: false,
-            loggedAsAdmin: false
+            show: false
         }
     }
 
@@ -67,20 +77,12 @@ class ListAllConferenceDetailsComponent extends Component{
     loggedUser() {
         let loggedUserRole = AuthenticationService.loggedUserRole();
 
-        if (loggedUserRole != null && loggedUserRole === 'admin') {
-            this.setState({
-                loggedAsAdmin: true,
-                loggedAsEditor: false
-            })
-        }
-        else if (loggedUserRole != null && loggedUserRole === 'editor') {
+        if (loggedUserRole != null && loggedUserRole === 'editor') {
             this.setState({
                 loggedAsEditor: true,
-                loggedAsAdmin: false,
             })
         }
     }
-
 
     conferenceList(){
         return this.state.conferences.map(currentconference => {
@@ -88,12 +90,23 @@ class ListAllConferenceDetailsComponent extends Component{
         })
     }
 
+    handleShow = () => {
+        this.setState({show: true})
+    }
 
+    handleClose = () => {
+        this.setState({show: false})
+    }
+
+    editConference = (id) => {
+        this.setState({conferenceId: id})
+        this.handleShow();
+    }
 
     render() {
 
         return(
-            <div style={{height: '400px'}}>
+            <div>
                 <Table striped responsive hover bordered>
                     <thead>
                     <tr>
@@ -113,6 +126,19 @@ class ListAllConferenceDetailsComponent extends Component{
                         {this.conferenceList()}
                     </tbody>
                 </Table>
+
+
+                {/*--------------------------Model Box to Edit Conference--------------------------*/}
+
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Update</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body> <UpdateConferenceDetailsComponent conferenceId={this.state.conferenceId} /> </Modal.Body>
+                </Modal>
+
+                {/*--------------------------------------------------------------------------------*/}
+
             </div>
         )
     }
