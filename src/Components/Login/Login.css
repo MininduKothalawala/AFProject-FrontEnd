@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100;300;400;500;600;700&display=swap');
+
+.form {
+    /* position: fixed; */
+    left: 30%;
+    right: 30%;
+    top: 24%;
+    bottom: 30%;
+}
+
+.form Form {
+    display: grid;
+}
+
+.form Label {
+    color: black;
+    font-weight: 600;
+}
+
+.accountCard {
+    border: none;
+    border-radius: 0;
+    margin-bottom: 50px;
+    box-shadow: 1px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.accountCardTitle {
+    margin-bottom: 10px;
+    padding: 0 15px;
+    border: none;
+}
+
+.btnAccount {
+    font-family: 'Lexend', sans-serif;
+    font-weight: 500;
+    font-size: 1.7em;
+    color: #6c6c6c;
+    background-color: #d0d0d0;
+    padding: 20px 10px;
+}
+
+.btnAccount:hover {
+    background-color: #d0d0d0;
+    color: #000000;
+}
+
