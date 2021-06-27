@@ -15,7 +15,6 @@ class AddConferenceDetailsComponent extends Component{
         this.onChangeStartingDate = this.onChangeStartingDate.bind(this);
         this.onChangeEndingDate = this.onChangeEndingDate.bind(this);
         this.onChangeVenue = this.onChangeVenue.bind(this);
-        this.onChangeStatus = this.onChangeStatus.bind(this);
         this.onSubmit2 = this.onSubmit2.bind(this);
 
         this.state = {
@@ -64,12 +63,6 @@ class AddConferenceDetailsComponent extends Component{
         });
     }
 
-    onChangeStatus(e){
-        this.setState({
-            status : e.target.value
-        });
-    }
-
     onSubmit2(e){
         e.preventDefault();
 
@@ -77,8 +70,8 @@ class AddConferenceDetailsComponent extends Component{
             id: this.state.id,
             conferenceName: this.state.conferenceName,
             description: this.state.description,
-            startingDate: this.state.startingDate,
-            endingDate: this.state.endingDate,
+            startingDate: moment(this.state.startingDate).format('YYYY-MM-DD'),
+            endingDate: moment(this.state.endingDate).format('YYYY-MM-DD'),
             venue: this.state.venue,
             status: this.state.status,
         }
@@ -88,8 +81,7 @@ class AddConferenceDetailsComponent extends Component{
         axios.post('http://localhost:8080/api/conference/addConference', conferences)
             .then(res => {
                 console.log(res.data)
-
-                // if (res.status === 200) {
+                if (res.status === 200) {
 
                     Swal.fire({
                         icon: 'success',
@@ -99,7 +91,17 @@ class AddConferenceDetailsComponent extends Component{
                         confirmButtonColor: '#3aa2e7',
                         iconColor: '#60e004'
                     })
-                // }
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        html: '<p>There was an error uploading!</p>',
+                        background: '#041c3d',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        iconColor: '#e00404'
+                    })
+                }
             });
     }
 
@@ -140,7 +142,7 @@ class AddConferenceDetailsComponent extends Component{
                                     required
                                     className = "form-control"
                                     value = {this.state.description}
-                                    onChange = {this.onChangeConferenceDesc}
+                                    onChange = {this.onChangeDescription}
                                     placeholder={"Enter description"}
                                 />
                             </div>

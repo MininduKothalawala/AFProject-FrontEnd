@@ -5,11 +5,12 @@ import Swal from "sweetalert2";
 import {
     faArrowAltCircleDown,
     faEdit,
-    faFilter, faSearch, faTimes,
+    faSearch,
     faTrashAlt
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import EditTemplates from "./EditTemplates";
+import "./Templates.css"
 
 export default class TemplateList extends Component {
     constructor(props) {
@@ -18,7 +19,6 @@ export default class TemplateList extends Component {
         this.state = {
             template: [],
             search: '',
-            type: '',
             tempId: '',
             show: false,
         }
@@ -150,16 +150,8 @@ export default class TemplateList extends Component {
     }
 
     //filter by type
-    handleFilter = (e) => {
-        e.preventDefault();
+    handleFilter = (type) => {
 
-        const type = this.state.type;
-
-        console.log(type)
-
-        if (type === 'choose') {
-            this.refreshList();
-        } else {
             TemplatesDataService.filterByType(type)
                 .then(res => {
                     if (res.status === 200) {
@@ -167,7 +159,7 @@ export default class TemplateList extends Component {
                         this.setState({template: res.data})
                     }
                 })
-        }
+
     }
 
     clearData = () => {
@@ -179,16 +171,17 @@ export default class TemplateList extends Component {
     }
 
     render() {
-        const {template, search, type} = this.state;
+        const {template, search} = this.state;
 
         return (
-            <div>
+            <div className={"outer-group"}>
                 <Card style={{border: 'none'}}>
 
                     {/*-------------------------------------------Search and Filter-------------------------------------------*/}
-                    <Card className={"mb-5"}>
-                        <Card.Body>
-                            <Form inline className={"outer-group"}>
+
+                    <div>
+                        <ButtonGroup className={"temp-btn-grp"}>
+                            <Form className={"mr-5"}>
                                 <div>
                                     <InputGroup>
                                         <Form.Control type={"text"} name={"search"} placeholder={"Search by username"}
@@ -202,33 +195,20 @@ export default class TemplateList extends Component {
                                         </InputGroup.Append>
                                     </InputGroup>
                                 </div>
-
-                                <div>
-                                    <InputGroup>
-                                        <Form.Control as={"select"} name={"type"}
-                                                      value={type} onChange={this.handleChange}>
-                                            <option value={"choose"}>Filter by Type</option>
-                                            <option value={"research"}>Research Paper Template</option>
-                                            <option value={"powerpoint"}>Powerpoint Template</option>
-                                            <option value={"workshop"}>Workshop Proposal Template</option>
-                                        </Form.Control>
-                                        <InputGroup.Append>
-                                            <ButtonGroup>
-                                                <Button variant="info" style={{width: '40px'}}
-                                                        onClick={this.handleFilter}>
-                                                    <FontAwesomeIcon icon={faFilter}/>
-                                                </Button>
-                                                <Button variant="danger" style={{width: '40px'}}
-                                                        onClick={this.clearData}>
-                                                    <FontAwesomeIcon icon={faTimes}/>
-                                                </Button>
-                                            </ButtonGroup>
-                                        </InputGroup.Append>
-                                    </InputGroup>
-                                </div>
                             </Form>
-                        </Card.Body>
-                    </Card>
+                            <Button variant={"outline-info"} type={"submit"} className={"temp-btn-status"}
+                                    onClick={this.refreshList}>ALL TEMPLATES</Button>
+                            <Button variant={"outline-success"} type={"submit"} className={"temp-btn-status"}
+                                    onClick={() => this.handleFilter("research")}>RESEARCH PAPERS</Button>
+                            <Button variant={"outline-primary"} type={"submit"} className={"temp-btn-status"}
+                                    onClick={() => this.handleFilter("workshop")}>PROPOSALS</Button>
+                            <Button variant={"outline-warning"} type={"submit"} className={"temp-btn-status"}
+                                    onClick={() => this.handleFilter("powerpoint")}>PRESENTATIONS</Button>
+                        </ButtonGroup>
+                    </div>
+
+
+
 
                     {/*-------------------------------------------Templates Table-------------------------------------------*/}
 

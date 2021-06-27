@@ -5,33 +5,28 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faExternalLinkAlt, faTimes} from "@fortawesome/free-solid-svg-icons";
 import ViewConference from "./ViewConference";
 
-// const Conference = props => (
-//     <tr>
-//         <td>{props.conference.id}</td>
-//         <td>{props.conference.conferenceName}</td>
-//         <td>{props.conference.date}</td>
-//         <td>{props.conference.startingTime}</td>
-//         <td>{props.conference.endingTime}</td>
-//         <td>{props.conference.venue}</td>
-//         <td>{props.conference.status}</td>
-//
-//     </tr>
-// )
-
 class ListPendingConferenceDetails extends Component{
 
     constructor(props) {
         super(props);
-        this.approveConference = this.approveConference.bind(this);
-        this.viewConference = this.viewConference.bind(this);
+
         this.state = {
             conferences : [],
             show: false,
             confID: ''
         }
+
+        this.approveConference = this.approveConference.bind(this);
+        this.viewConference = this.viewConference.bind(this);
+        this.refreshList = this.refreshList.bind(this);
+        this.rejectConference = this.rejectConference.bind(this);
     }
 
     componentDidMount() {
+        this.refreshList();
+    }
+
+    refreshList() {
         axios.get('http://localhost:8080/api/conference/pendingConference/Pending')
             .then(response => {
                 this.setState({conferences: response.data})
@@ -40,29 +35,6 @@ class ListPendingConferenceDetails extends Component{
                 console.log(error);
             })
     }
-
-    // approveConference(id){
-    //     axios.put('http://localhost:8080/api/conference/approveConference/' +this.props.match.params.id)
-    //         .then(res => console.log(res.data));
-    //
-    // }
-
-    // approveConference(id){
-
-
-    //     axios.put('http://localhost:8080/api/conference/approveConference/' +id)
-    //         .then(res => console.log(res.data));
-    //     this.setState({
-    //         conference : this.state.conferences.filter(el => el.id !== id)
-    //     })
-    // }
-
-    // conferenceList(){
-    //     return this.state.conferences.map(currentconference => {
-    //         return <Conference conference = {currentconference} />
-    //     })
-    // }
-
 
     approveConference(id){
 
@@ -74,21 +46,31 @@ class ListPendingConferenceDetails extends Component{
             startingTime : this.state.startingTime,
             endingTime : this.state.endingTime,
             venue : this.state.venue,
-            status : this.setState({status : 'Approved'})
+            status : 'Approved'
         }
 
         console.log(conferences);
 
-        axios.put('http://localhost:8080/api/conference/approveConference' +id, conferences)
-            .then(res => console.log(res.data));
+        axios.put(`http://localhost:8080/api/conference/updateStatus/${id}/Approved`)
+            .then( res => {
+                console.log(res.data)
+                this.refreshList()
+            })
 
+    }
+
+    rejectConference(id){
+        axios.put(`http://localhost:8080/api/conference/updateStatus/${id}/Rejected`)
+            .then( res => {
+                console.log(res.data)
+                this.refreshList()
+            })
     }
 
     viewConference(id) {
         //to pass the id to another component
         this.setState({confID: id})
 
-        // console.log(this.state.confID)
         this.handleShow()
     }
 
@@ -111,10 +93,6 @@ class ListPendingConferenceDetails extends Component{
                         <tr>
                             <th className={"text-center"}>ID</th>
                             <th className={"text-center"}>Conference Name</th>
-                            {/*<th className={"text-center"}>Description</th>*/}
-                            {/*<th className={"text-center"}>Starting Date</th>*/}
-                            {/*<th className={"text-center"}>Ending Date</th>*/}
-                            {/*<th className={"text-center"}>Venue</th>*/}
                             <th className={"text-center"}>View</th>
                             <th className={"text-center"}>Status</th>
                             <th className={"text-center"}>Action</th>
@@ -125,10 +103,6 @@ class ListPendingConferenceDetails extends Component{
                             <tr key={conferences.id}>
                                 <td>{conferences.id}</td>
                                 <td>{conferences.conferenceName}</td>
-                                {/*<td>{conferences.description}</td>*/}
-                                {/*<td>{conferences.startingDate}</td>*/}
-                                {/*<td>{conferences.endingDate}</td>*/}
-                                {/*<td>{conferences.venue}</td>*/}
                                 <td className={"text-center"} style={{verticalAlign: 'middle'}}>
                                     <Button variant={"info"} type={"submit"} onClick={() => this.viewConference(conferences.id)}>
                                         <FontAwesomeIcon icon={faExternalLinkAlt}/>
@@ -155,7 +129,7 @@ class ListPendingConferenceDetails extends Component{
                                             <FontAwesomeIcon icon={faCheck} onClick ={() => {this.approveConference(conferences.id)}} />
                                         </Button>
                                         <Button variant={"danger"} type={"submit"}>
-                                            <FontAwesomeIcon icon={faTimes}/>
+                                            <FontAwesomeIcon icon={faTimes} onClick ={() => {this.rejectConference(conferences.id)}} />
                                         </Button>
                                     </ButtonGroup>
                                 </td>

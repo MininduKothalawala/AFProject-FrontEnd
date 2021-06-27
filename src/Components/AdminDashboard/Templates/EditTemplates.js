@@ -140,6 +140,16 @@ class EditTemplates extends Component {
                             })
 
                             this.clearData();
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                html: '<p>There was an error updating!</p>',
+                                background: '#041c3d',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                iconColor: '#e00404'
+                            })
                         }
                     })
 

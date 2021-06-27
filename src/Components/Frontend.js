@@ -6,7 +6,6 @@ import Login from "./Login/Login";
 import AdminNav from "./AdminDashboard/AdminNav";
 import AddTemplates from "./AdminDashboard/Templates/AddTemplates";
 
-import ConferenceDetailsListComponent from './Editor/Conference-Details-List.Component';
 import UpdateConferenceDetailsComponent from "./Editor/Update-ConferenceDetails.Component";
 import AddConferenceDetailsComponent from "./Editor/Add-ConferenceDetails.Component";
 
@@ -21,8 +20,6 @@ import EditTemplate from "./AdminDashboard/Templates/EditTemplates";
 import ConferenceDetails from "./MainUIs/Conference/ConferenceDetails";
 import Templates from "./MainUIs/Templates";
 import AdminProfile from "./AdminDashboard/User/AdminProfile";
-import ViewConference from "./AdminDashboard/Conference/ViewConference";
-
 
 class Frontend extends Component {
 
@@ -41,7 +38,6 @@ class Frontend extends Component {
                         <Route path="/user/list" exact component={GettAllUsers}/>
                         <Route path="/admin" exact component={AdminNav}/>
 
-                        <Route path="/conferenceList"   component={ConferenceDetailsListComponent}/>
                         <Route path="/updateConference/:id"   component={UpdateConferenceDetailsComponent}/>
                         <Route path="/addConference" component={AddConferenceDetailsComponent}/>
                         <Route path= "/listAllConference" component = {ListAllConferenceDetailsComponent} />

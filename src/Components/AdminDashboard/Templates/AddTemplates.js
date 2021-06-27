@@ -88,6 +88,16 @@ class AddTemplates extends Component {
                                 iconColor: '#60e004'
                             })
                             this.clearData();
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                html: '<p>There was an error uploading!</p>',
+                                background: '#041c3d',
+                                showConfirmButton: false,
+                                timer: 1500,
+                                iconColor: '#e00404'
+                            })
                         }
                     })
 

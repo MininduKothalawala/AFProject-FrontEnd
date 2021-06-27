@@ -15,7 +15,6 @@ class Home extends Component {
         return(
             <div>
                 <Header/>
-
                 <Container>
                     <ConferencePage/>
                 </Container>
