@@ -29,7 +29,7 @@ const Conference = props => (
                     <Link to = {`/updateConference/` +props.conference.id }>Edit</Link>
                 </Button>
                 {/*<Button onClick ={() => {props.editConference(props.conference.id)}}>Edit</Button>*/}
-                <Button variant={"outline-danger"} onClick ={() => {props.deleteConference(props.conference.id)}}>Delete</Button>
+                <Button variant={"outline-danger"} onClick ={() => {props.deleteConference(props.conferences.id)}}>Delete</Button>
             </ButtonGroup>
         </td>
     </tr>

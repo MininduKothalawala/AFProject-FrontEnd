@@ -8,7 +8,8 @@ class UpdateConferenceDetailsComponent extends Component{
 
         this.onChangeID = this.onChangeID.bind(this);
         this.onChangeConferenceName = this.onChangeConferenceName.bind(this);
-        this.onChangeConferenceDate = this.onChangeConferenceDate.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeStartingDate = this.onChangeStartingDate.bind(this);
         this.onChangeEndingDate = this.onChangeEndingDate.bind(this);
         this.onChangeVenue = this.onChangeVenue.bind(this);
         this.onChangeStatus = this.onChangeStatus.bind(this);
@@ -17,6 +18,7 @@ class UpdateConferenceDetailsComponent extends Component{
         this.state = {
             id : this.props.match.params.id,
             conferenceName : '',
+            description:'',
             startingDate : '',
             endingDate: '',
             venue : '',
@@ -37,9 +39,9 @@ class UpdateConferenceDetailsComponent extends Component{
         });
     }
 
-    onChangeConferenceDate(e){
+    onChangeDescription(e){
         this.setState({
-            date : e.target.value
+            description : e.target.value
         });
     }
 
@@ -65,14 +67,13 @@ class UpdateConferenceDetailsComponent extends Component{
         });
     }
 
-
-
     onSubmit(e) {
         e.preventDefault();
 
         const conferences = {
             id: this.state.id,
             conferenceName: this.state.conferenceName,
+            description: this.state.description,
             startingDate: this.state.startingDate,
             endingDate: this.state.endingDate,
             venue: this.state.venue,
@@ -107,6 +108,16 @@ class UpdateConferenceDetailsComponent extends Component{
                                className = "form-control"
                                value = {this.state.conferenceName}
                                onChange = {this.onChangeConferenceName}
+                        />
+                    </div>
+
+                    <div className = "form-group">
+                        <label>Description : </label>
+                        <input type = "text"
+                               required
+                               className = "form-control"
+                               value = {this.state.description}
+                               onChange = {this.onChangeDescription}
                         />
                     </div>
 

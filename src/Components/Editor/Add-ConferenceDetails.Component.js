@@ -11,7 +11,7 @@ class AddConferenceDetailsComponent extends Component{
 
         this.onChangeID = this.onChangeID.bind(this);
         this.onChangeConferenceName = this.onChangeConferenceName.bind(this);
-        this.onChangeConferenceDesc = this.onChangeConferenceDesc.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeStartingDate = this.onChangeStartingDate.bind(this);
         this.onChangeEndingDate = this.onChangeEndingDate.bind(this);
         this.onChangeVenue = this.onChangeVenue.bind(this);
@@ -42,7 +42,7 @@ class AddConferenceDetailsComponent extends Component{
         });
     }
 
-    onChangeConferenceDesc(e){
+    onChangeDescription(e){
         this.setState({
             description : e.target.value
         });

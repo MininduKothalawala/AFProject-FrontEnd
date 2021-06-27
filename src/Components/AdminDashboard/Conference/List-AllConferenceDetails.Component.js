@@ -1,21 +1,19 @@
 import React, {Component} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
-import {Badge, Button, ButtonGroup, Table} from "react-bootstrap";
-import AuthenticationService from "../Login/AuthenticationService";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {Badge, Button, Table} from "react-bootstrap";
+import AuthenticationService from "../../Login/AuthenticationService";
 
 const Conference = props => (
 
-    <tr key={props.conference.id}>
+    <tr>
 
         <td>{props.conference.id}</td>
         <td>{props.conference.conferenceName}</td>
         <td>{props.conference.startingDate}</td>
         <td>{props.conference.endingDate}</td>
         <td>{props.conference.venue}</td>
-        <td>
+        <td className={"text-center"} style={{verticalAlign: 'middle'}}>
             {
                 props.conference.status === 'Approved' ?
                     <Badge variant="success" className={"px-3 py-2"} key={"0"}>APPROVED</Badge>
@@ -30,23 +28,10 @@ const Conference = props => (
             }
         </td>
         { props.loggedAsEditor &&
-            <td>
+            <td className={"text-center"} style={{verticalAlign: 'middle'}}>
+                { props.conference.status !== 'Rejected' &&
                 <Button variant={"dark"} type={"submit"}>Edit</Button>
-            </td>
-        }
-        { props.loggedAsAdmin &&
-            <td>
-                <ButtonGroup>
-                    <Button variant={"warning"} type={"submit"}
-                    >
-                        <FontAwesomeIcon icon={faCheck}/>
-                    </Button>
-                    <Button variant={"danger"} type={"submit"}
-                    >
-                        <FontAwesomeIcon icon={faTimes}/>
-                    </Button>
-
-                </ButtonGroup>
+                }
             </td>
         }
 
@@ -59,8 +44,8 @@ class ListAllConferenceDetailsComponent extends Component{
 
         this.state = {
             conferences : [],
-            loggedAsAdmin: false,
-            loggedAsEditor: false
+            loggedAsEditor: false,
+            loggedAsAdmin: false
         }
     }
 
@@ -90,8 +75,8 @@ class ListAllConferenceDetailsComponent extends Component{
         }
         else if (loggedUserRole != null && loggedUserRole === 'editor') {
             this.setState({
+                loggedAsEditor: true,
                 loggedAsAdmin: false,
-                loggedAsEditor: true
             })
         }
     }
@@ -99,14 +84,13 @@ class ListAllConferenceDetailsComponent extends Component{
 
     conferenceList(){
         return this.state.conferences.map(currentconference => {
-            return <Conference conference = {currentconference} />
+            return <Conference conference = {currentconference}  loggedAsEditor={this.state.loggedAsEditor} key={currentconference.id}/>
         })
     }
 
 
 
     render() {
-        const {loggedAsAdmin, loggedAsEditor} = this.state;
 
         return(
             <div style={{height: '400px'}}>
@@ -119,11 +103,8 @@ class ListAllConferenceDetailsComponent extends Component{
                         <th className={"text-center"}>Ending Date</th>
                         <th className={"text-center"}>Venue</th>
                         <th className={"text-center"}>Status</th>
-                        { loggedAsEditor &&
+                        { this.state.loggedAsEditor &&
                             <th className={"text-center"}>Edit</th>
-                        }
-                        { loggedAsAdmin &&
-                            <th className={"text-center"}>Update Status</th>
                         }
                     </tr>
                     </thead>
