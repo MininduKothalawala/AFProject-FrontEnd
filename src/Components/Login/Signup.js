@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Card, Col, Container, Row} from "react-bootstrap";
+import {Button, Card, Col, Row} from "react-bootstrap";
 import swal from "sweetalert";
 import UserService from "../../API/UserService";
 import * as Swal from "sweetalert2";
@@ -54,7 +54,7 @@ class SignUp extends Component {
                     Swal.fire({
                         position: 'top-center',
                         icon: 'success',
-                        title: 'User Adede!',
+                        title: 'User Added!',
                         showConfirmButton: false,
                         timer: 1000
                     }).then(() => {
@@ -77,9 +77,9 @@ class SignUp extends Component {
     }
     render() {
         return (
-            <Container>
+            <div>
                 <Card style={{border: 'none'}}>
-                    <Card.Body>
+                    <Card.Body className={"p-0"}>
                         <form onSubmit={this.handleSubmit}>
                             <div className={"mb-3"}>
                                 <label htmlFor="name" className="grey-text">
@@ -102,10 +102,10 @@ class SignUp extends Component {
                             </div>
 
                             <div className={"mb-3"}>
-                                <label htmlFor="userid" className="grey-text">
+                                <label htmlFor="username" className="grey-text">
                                     Username
                                 </label>
-                                <input type="text" id="userid" name="userid" className="form-control"
+                                <input type="text" id="username" name="username" className="form-control"
                                        placeholder={"ex: JohnMayer27"}
                                        required={true} onChange={this.handleChange}
                                 />
@@ -138,9 +138,9 @@ class SignUp extends Component {
                                     <select className="form-control" id="role" name={"role"} value={this.state.role}
                                             required={true} onChange={this.handleChange}>
                                         <option value={"role"}>Select role</option>
-                                        <option value={"reviever"}>Reviever</option>
                                         <option value={"admin"}>Admin</option>
                                         <option value={"editor"}>Editor</option>
+                                        <option value={"reviewer"}>Reviewer</option>
                                     </select>
                                 </Col>
                             </Row>
@@ -155,7 +155,7 @@ class SignUp extends Component {
                     </Card.Body>
                 </Card>
 
-            </Container>
+            </div>
 
         );
     }

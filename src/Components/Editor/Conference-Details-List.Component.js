@@ -5,15 +5,32 @@ import {Link} from "react-router-dom";
 
 const Conference = props => (
     <tr>
-        <td>{props.conferences.id}</td>
-        <td>{props.conferences.conferenceName}</td>
-        <td>{props.conferences.date}</td>
-        <td>{props.conferences.startingTime}</td>
-        <td>{props.conferences.endingTime}</td>
-        <td>{props.conferences.venue}</td>
-        <td>{props.conferences.status}</td>
+        <td>{props.conference.id}</td>
+        <td>{props.conference.conferenceName}</td>
+        <td>{props.conference.startingDate}</td>
+        <td>{props.conference.endingDate}</td>
+        <td>{props.conference.venue}</td>
         <td>
-            <button ><Link to = {"/updateConference/" +props.conferences.id } >Edit</Link></button> <button  onClick ={() => {props.deleteConference(props.conferences.id)}}>Delete</button>
+            { props.conference.status === "Approved" ?
+                <Badge variant="success" className={"px-3 py-2"} key={"0"}>APPROVED</Badge>
+                : [ props.conference.status === "Rejected" ?
+                    <Badge variant="danger" className={"px-3 py-2"} key={"0"}>REJECTED</Badge>
+                    : [ props.conference.status === "Pending" ?
+                        <Badge variant="warning" className={"px-3 py-2"} key={"0"}>PENDING</Badge> : ''
+                    ]
+                ]
+
+            }
+
+        </td>
+        <td>
+            <ButtonGroup>
+                <Button variant={"outline-warning"}>
+                    <Link to = {`/updateConference/` +props.conference.id }>Edit</Link>
+                </Button>
+                {/*<Button onClick ={() => {props.editConference(props.conference.id)}}>Edit</Button>*/}
+                <Button variant={"outline-danger"} onClick ={() => {props.deleteConference(props.conferences.id)}}>Delete</Button>
+            </ButtonGroup>
         </td>
     </tr>
 )
@@ -49,50 +66,34 @@ class ConferenceDetailsListComponent extends Component{
 
     }
 
-    conferenceList(){
+    conferenceList() {
         return this.state.conferences.map(currentconference => {
-            return <Conference conferences = {currentconference} deleteConference = {this.deleteConference} key = {currentconference.id}/>
+            return <Conference conference = {currentconference} deleteConference = {this.deleteConference} key = {currentconference.id}/>
         })
     }
 
-    // componentDidMount(){
-    //     axios.get("http://localhost:8080/conferenceList/")
-    //         .then((res)=>{
-    //             this.setState({
-    //                 conference:res.data,
-    //                 id:0,
-    //                 conferenceName:'',
-    //                 date:'',
-    //                 startingTime:'',
-    //                 endingTime:'',
-    //                 venue:'',
-    //                 status:''
-    //             })
-    //         })
-    // }
-
     render() {
         return(
-            <div>
+            <Container>
 
-                <table>
+                <Table bordered responsive hover striped>
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Conference Name</th>
-                        <th>Date</th>
-                        <th>Starting Time</th>
-                        <th>Ending Time</th>
+                        <th>Starting Date</th>
+                        <th>Ending Date</th>
                         <th>Venue</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
 
                     <tbody>
                     {this.conferenceList()}
                     </tbody>
-                </table>
-            </div>
+                </Table>
+            </Container>
         )
     }
 }
