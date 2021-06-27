@@ -4,12 +4,11 @@ import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import moment from "moment";
 import Swal from "sweetalert2";
 
-class UpdateConferenceDetailsComponent extends Component{
+class UpdateConferenceDetailsComponent extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
-        this.onChangeID = this.onChangeID.bind(this);
         this.onChangeConferenceName = this.onChangeConferenceName.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeConferenceDate = this.onChangeConferenceDate.bind(this);
@@ -19,79 +18,85 @@ class UpdateConferenceDetailsComponent extends Component{
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            id : props.conferenceId,
-            conferenceName : '',
-            description:'',
-            startingDate : '',
+            id: props.conferenceId,
+            conferenceName: '',
+            description: '',
+            startingDate: '',
             endingDate: '',
-            venue : '',
-            status :'Updated',  //state after updating is 'updated'
+            venue: '',
+            status: '',
             daylimit: moment().add(10, "days").format('YYYY-MM-DD')
         }
     }
 
     componentDidMount() {
-        console.log(this.props.match.params.id)
-        axios.get('http://localhost:8080/api/conference/conferencebyid/'+this.props.match.params.id)
+        axios.get('http://localhost:8080/api/conference/conferencebyid/' + this.state.id)
             .then(response => {
                 this.setState({
-                    id : response.data.id,
-                    conferenceName : response.data.conferenceName,
-                    description : response.data.description,
+                    id: response.data.id,
+                    conferenceName: response.data.conferenceName,
+                    description: response.data.description,
                     startingDate: moment(response.data.startingDate).format('YYYY-MM-DD'),
                     endingDate: moment(response.data.endingDate).format('YYYY-MM-DD'),
-                    venue:response.data.venue,
-                    status : response.data.status
+                    venue: response.data.venue,
+                    status: response.data.status
                 })
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error);
             })
 
     }
 
-    onChangeID(e){
+    onChangeConferenceName(e) {
         this.setState({
-            id : e.target.value
+            conferenceName: e.target.value
         });
     }
 
-    onChangeConferenceName(e){
+    onChangeDescription(e) {
         this.setState({
-            conferenceName : e.target.value
+            description: e.target.value
         });
     }
 
-    onChangeDescription(e){
+    onChangeConferenceDate(e) {
         this.setState({
-            description : e.target.value
+            date: e.target.value
         });
     }
 
-    onChangeConferenceDate(e){
+    onChangeStartingDate(e) {
         this.setState({
-            date : e.target.value
+            startingDate: e.target.value
         });
     }
 
-    onChangeStartingDate(e){
+    onChangeEndingDate(e) {
         this.setState({
-            startingDate : e.target.value
+            endingDate: e.target.value
         });
     }
-    onChangeEndingDate(e){
+
+    onChangeVenue(e) {
         this.setState({
-            endingDate : e.target.value
-        });
-    }
-    onChangeVenue(e){
-        this.setState({
-            venue : e.target.value
+            venue: e.target.value
         });
     }
 
     onSubmit(e) {
         e.preventDefault();
+
+        let newStatus;
+
+        //check for status
+        if (this.state.status === 'Approved') {
+            newStatus = 'Updated'
+        } else if (this.state.status === 'Pending') {
+            newStatus = 'Pending'
+        } else if (this.state.status === 'Updated') {
+            newStatus = 'Updated'
+        }
 
         const conferences = {
             id: this.state.id,
@@ -100,12 +105,23 @@ class UpdateConferenceDetailsComponent extends Component{
             startingDate: moment(this.state.startingDate).format('YYYY-MM-DD'),
             endingDate: moment(this.state.endingDate).format('YYYY-MM-DD'),
             venue: this.state.venue,
-            status: this.state.status,
+            status: newStatus,
         }
+
+        //for the email
+        const id = this.state.id;
+        const mailSubject = "Conference Update Notification" ;
+        const mailBody = "Dear Participant,\n\n" +
+            "This is to inform you that there has been a change in details of the following conference" +
+            "\"" + this.state.conferenceName + "\"" + ".\n\n" +
+            "Click the link below to see the update.\n" +
+            "http://localhost:3000\n\n" +
+            "Regards,\n" +
+            "ICAF Support Team";
 
         console.log(conferences);
 
-        axios.put('http://localhost:8080/api/conference/updateConference',conferences)
+        axios.put('http://localhost:8080/api/conference/updateConference', conferences)
             .then(res => {
                 console.log(res)
                 if (res.status === 200) {
@@ -118,6 +134,13 @@ class UpdateConferenceDetailsComponent extends Component{
                         confirmButtonColor: '#3aa2e7',
                         iconColor: '#60e004'
                     })
+
+                    //send email
+                    // if (newStatus === 'Updated') {
+                    //     axios.post(`http://localhost:8080/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
+                    //         .then(res => (console.log(res)))
+                    // }
+
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -133,79 +156,74 @@ class UpdateConferenceDetailsComponent extends Component{
 
 
     }
-    render() {
-        return(
-            <Card>
-                <Card.Body>
-                    <Form onSubmit = {this.onSubmit}>
-                        <div className = "form-group">
-                            <Row>
-                                <Col md={4}>
-                                    <label>Conference ID : </label>
-                                    <input type = "text"
-                                           required
-                                           className = "form-control"
-                                           value = {this.state.id}
-                                           onChange = {this.onChangeID}
-                                    />
-                                </Col>
-                                <Col>
-                                    <div className = "form-group">
-                                        <label>Name : </label>
-                                        <input type = "text"
-                                               required
-                                               className = "form-control"
-                                               value = {this.state.conferenceName}
-                                               onChange = {this.onChangeConferenceName}
-                                        />
-                                    </div>
-                                </Col>
-                            </Row>
-                        </div>
 
-                        <div className = "form-group">
-                            <label>Description : </label>
-                            <textarea
-                                   rows={4}
-                                   required
-                                   className = "form-control"
-                                   value = {this.state.description}
-                                   onChange = {this.onChangeDescription}
+    render() {
+        return (
+            <Card style={{border: 'none'}}>
+                <Card.Body>
+                    <Form onSubmit={this.onSubmit}>
+                        <div className="form-group">
+                            <label>Conference ID : </label>
+                            <input type="text"
+                                   disabled
+                                   className="form-control"
+                                   value={this.state.id}
                             />
                         </div>
 
-                        <div className = "form-group">
+                        <div className="form-group">
+                            <label>Name : </label>
+                            <input type="text"
+                                   required
+                                   className="form-control"
+                                   value={this.state.conferenceName}
+                                   onChange={this.onChangeConferenceName}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Description : </label>
+                            <textarea
+                                rows={4}
+                                required
+                                className="form-control"
+                                value={this.state.description}
+                                onChange={this.onChangeDescription}
+                            />
+                        </div>
+
+                        <div className="form-group">
                             <Row>
                                 <Col>
                                     <label>Starting Date : </label>
-                                    <input type = "date"
+                                    <input type="date"
                                            required
-                                           className = "form-control"
+                                           className="form-control"
                                            min={this.state.daylimit}
-                                           value = {this.state.startingDate}
-                                           onChange = {this.onChangeStartingDate}
+                                           value={this.state.startingDate}
+                                           onChange={this.onChangeStartingDate}
                                     />
                                 </Col>
                                 <Col>
                                     <label>Ending Date : </label>
-                                    <input type = "date"
+                                    <input type="date"
                                            required
-                                           className = "form-control"
+                                           className="form-control"
                                            min={moment(this.state.startingDate).format('YYYY-MM-DD')}
-                                           value = {this.state.endingDate}
-                                           onChange = {this.onChangeEndingDate}
+                                           value={this.state.endingDate}
+                                           onChange={this.onChangeEndingDate}
                                     />
                                 </Col>
                             </Row>
                         </div>
 
-                        <div className = "form-group">
+                        <div className="form-group">
                             <label>Venue : </label>
-                            <input type = "text"
+                            <input type="text"
                                    required
-                                   className = "form-control"
-                                   value = {this.state.venue}
-                                   onChange = {this.onChangeVenue}
+                                   className="form-control"
+                                   value={this.state.venue}
+                                   onChange={this.onChangeVenue}
                             />
                         </div>
 
@@ -218,4 +236,5 @@ class UpdateConferenceDetailsComponent extends Component{
         )
     }
 }
+
 export default UpdateConferenceDetailsComponent;

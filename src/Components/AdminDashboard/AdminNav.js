@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import {withRouter} from "react-router";
 import './AdminNav.css';
 import {Container, ListGroup, Modal, Navbar, NavDropdown, Tab} from "react-bootstrap";
-import {Link} from "react-router-dom";
 import AuthenticationService from "../Login/AuthenticationService";
 import {
     faBars,
@@ -33,7 +32,7 @@ class AdminNav extends Component {
             index: 0,
             classes: '',
             show: true,
-            loading: "Templates",
+            loading: "Conference",
             windowWidth: window.innerWidth, //window size
             width: "0",
             mleft: "0",
@@ -70,9 +69,7 @@ class AdminNav extends Component {
         }
     }
 
-    openSideNav = (e) => {
-        // e.preventDefault();
-
+    openSideNav = () => {
         let size = this.state.windowWidth;
         let width = this.state.width;
 
@@ -320,7 +317,7 @@ class AdminNav extends Component {
                                     </div>
                                 }
 
-                                { loggedAsReviewer &&
+                                { (loggedAsReviewer || loggedAsAdmin) &&
 
                                     <div className={"dashboard-content"}>
                                         <h5>List of Approved Conference</h5> <br/>

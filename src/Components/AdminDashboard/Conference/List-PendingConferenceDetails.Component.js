@@ -5,19 +5,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faExternalLinkAlt, faTimes} from "@fortawesome/free-solid-svg-icons";
 import ViewConference from "./ViewConference";
 
-// const Conference = props => (
-//     <tr>
-//         <td>{props.conference.id}</td>
-//         <td>{props.conference.conferenceName}</td>
-//         <td>{props.conference.date}</td>
-//         <td>{props.conference.startingTime}</td>
-//         <td>{props.conference.endingTime}</td>
-//         <td>{props.conference.venue}</td>
-//         <td>{props.conference.status}</td>
-//
-//     </tr>
-// )
-
 class ListPendingConferenceDetails extends Component{
 
     constructor(props) {
@@ -41,29 +28,6 @@ class ListPendingConferenceDetails extends Component{
             })
     }
 
-    // approveConference(id){
-    //     axios.put('http://localhost:8080/api/conference/approveConference/' +this.props.match.params.id)
-    //         .then(res => console.log(res.data));
-    //
-    // }
-
-    // approveConference(id){
-
-
-    //     axios.put('http://localhost:8080/api/conference/approveConference/' +id)
-    //         .then(res => console.log(res.data));
-    //     this.setState({
-    //         conference : this.state.conferences.filter(el => el.id !== id)
-    //     })
-    // }
-
-    // conferenceList(){
-    //     return this.state.conferences.map(currentconference => {
-    //         return <Conference conference = {currentconference} />
-    //     })
-    // }
-
-
     approveConference(id){
 
         const conferences = {
@@ -74,7 +38,7 @@ class ListPendingConferenceDetails extends Component{
             startingTime : this.state.startingTime,
             endingTime : this.state.endingTime,
             venue : this.state.venue,
-            status : this.setState({status : 'Approved'})
+            status : 'Approved'
         }
 
         console.log(conferences);
