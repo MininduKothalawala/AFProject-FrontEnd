@@ -20,9 +20,6 @@ import AddConferenceDetailsComponent from "../Editor/Add-ConferenceDetails.Compo
 import ListAllConferenceDetailsComponent from "./Conference/List-AllConferenceDetails.Component";
 import TemplateList from "./Templates/TemplateList";
 import Dashboard from "./Dashboard";
-import ProposalReview from "./Review/ProposalReview";
-import ResearchPaperReview from "./Review/ResearchPaperReview";
-import Payment from "./Payment/Payment";
 import AdminProfile from "./User/AdminProfile";
 import ListApprovedConferenceDetailsComponent from "./Conference/List-ApprovedConferenceDetails.Component";
 import ListPendingConferenceDetails from "./Conference/List-PendingConferenceDetails.Component";
@@ -367,9 +364,9 @@ class AdminNav extends Component {
                                 </Container>
                             }
 
-                            {this.state.loading === "Research Paper Review" && <ResearchPaperReview/>}
-                            {this.state.loading === "Workshop Proposal Review" && <ProposalReview/>}
-                            {this.state.loading === "Payment" && <Payment/>}
+                            {/*{this.state.loading === "Research Paper Review" && <ResearchPaperReview/>}*/}
+                            {/*{this.state.loading === "Workshop Proposal Review" && <ProposalReview/>}*/}
+                            {/*{this.state.loading === "Payment" && <Payment/>}*/}
 
                         </div>
                     </div>
