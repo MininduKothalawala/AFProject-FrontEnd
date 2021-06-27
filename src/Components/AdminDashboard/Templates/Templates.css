@@ -18,7 +18,7 @@
 
 .temp-btn-grp {
     display: grid;
-    grid-template-columns: auto auto auto auto auto !important;
+    grid-template-columns: auto auto auto auto auto;
     margin-bottom: 40px;
 }
 
@@ -28,7 +28,7 @@
 @media only screen and (max-width: 600px) {
     .temp-btn-grp {
         display: grid;
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto;
         margin-bottom: 40px;
     }
 
@@ -41,7 +41,7 @@
 @media only screen and (min-width: 600px) {
     .temp-btn-grp {
         display: grid;
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto;
         margin-bottom: 40px;
     }
 
@@ -54,7 +54,7 @@
 @media only screen and (min-width: 768px) {
     .temp-btn-grp {
         display: grid;
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto;
         margin-bottom: 40px;
     }
     .outer-group {
@@ -66,7 +66,7 @@
 @media only screen and (min-width: 992px) {
     .temp-btn-grp {
         display: grid;
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto;
         margin-bottom: 40px;
     }
     .outer-group {
@@ -79,7 +79,7 @@
 @media only screen and (min-width: 1200px) {
     .temp-btn-grp {
         display: grid;
-        grid-template-columns: auto auto auto auto;
+        grid-template-columns: auto auto auto auto auto;
         margin-bottom: 40px;
     }
     .outer-group {

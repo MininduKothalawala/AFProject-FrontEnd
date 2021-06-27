@@ -6,7 +6,7 @@
     font-weight: 500;
 }
 
-.btn-group {
+.conference-btn-group {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto;
     margin-bottom: 40px;
@@ -18,7 +18,7 @@
         height: 800px;
     }
 
-    .btn-group {
+    .conference-btn-group {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto;
     }
@@ -26,7 +26,11 @@
 
 /*600px and up*/
 @media only screen and (min-width: 600px) {
-    .btn-group {
+    .main-div {
+        height: 800px;
+    }
+
+    .conference-btn-group {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto;
     }
@@ -38,7 +42,7 @@
         height: 700px;
     }
 
-    .btn-group {
+    .conference-btn-group {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto;
     }
@@ -50,7 +54,7 @@
         height: 800px;
     }
 
-    .btn-group {
+    .conference-btn-group {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto;
     }
@@ -62,7 +66,7 @@
         height: 500px;
     }
 
-    .btn-group {
+    .conference-btn-group {
         display: grid;
         grid-template-columns: auto auto auto auto auto auto auto;
     }

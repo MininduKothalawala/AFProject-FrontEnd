@@ -32,7 +32,7 @@ class AdminNav extends Component {
             index: 0,
             classes: '',
             show: true,
-            loading: "Conference",
+            loading: "Pending Conferences",
             windowWidth: window.innerWidth, //window size
             width: "0",
             mleft: "0",
@@ -160,31 +160,59 @@ class AdminNav extends Component {
                                     </ListGroup.Item>
 
                                     <div>
-                                        <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin:0}}/>
+                                        <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin: 0}}/>
                                     </div>
 
                                     {/*-------------------------------Users-------------------------------*/}
                                     {loggedAsAdmin &&
-                                        <>
-                                            <ListGroup.Item eventKey="user" onClick={() => this.loadContent("Users")}>
-                                                <FontAwesomeIcon className={"mr-3"} icon={faUser}/>
-                                                User
-                                            </ListGroup.Item>
-                                            <div>
-                                                <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin:0}}/>
-                                            </div>
-                                        </>
+                                    <>
+                                        <ListGroup.Item eventKey="user" onClick={() => this.loadContent("Users")}>
+                                            <FontAwesomeIcon className={"mr-3"} icon={faUser}/>
+                                            User
+                                        </ListGroup.Item>
+                                        <div>
+                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin: 0}}/>
+                                        </div>
+                                    </>
                                     }
 
                                     {/*-------------------------------Conference-------------------------------*/}
                                     <>
-                                        <ListGroup.Item eventKey="conference"
-                                                        onClick={() => this.loadContent("Conference")}>
-                                            <FontAwesomeIcon className={"mr-3"} icon={faChalkboardTeacher}/>
-                                            Conference
-                                        </ListGroup.Item>
+                                        {(loggedAsAdmin || loggedAsEditor) &&
+                                        <>
+                                            <ListGroup.Item eventKey="conference"
+                                                            onClick={() => this.loadContent("Conference")}>
+                                                <FontAwesomeIcon className={"mr-3"} icon={faChalkboardTeacher}/>
+                                                Conference List
+                                            </ListGroup.Item>
+                                            <div>
+                                                <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin: 0}}/>
+                                            </div>
+                                        </>
+                                        }
 
-                                        { loggedAsEditor &&
+                                        {loggedAsAdmin &&
+                                        <>
+                                            <ListGroup.Item eventKey="pending-conference"
+                                                            onClick={() => this.loadContent("Pending Conferences")}>
+                                                <FontAwesomeIcon className={"mr-3"} icon={faChalkboardTeacher}/>
+                                                Pending Conferences
+                                            </ListGroup.Item>
+                                            <div>
+                                                <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin: 0}}/>
+                                            </div>
+                                        </>
+                                        }
+
+                                        {(loggedAsReviewer || loggedAsAdmin) &&
+                                        <ListGroup.Item eventKey="approved-conference"
+                                                        onClick={() => this.loadContent("Approved Conferences")}>
+                                            <FontAwesomeIcon className={"mr-3"} icon={faChalkboardTeacher}/>
+                                            Approved Conferences
+                                        </ListGroup.Item>
+                                        }
+
+                                        {loggedAsEditor &&
                                         <ListGroup.Item eventKey="add-conference"
                                                         onClick={() => this.loadContent("Add Conference")}>
                                             <FontAwesomeIcon className={"mr-3"} icon={faPlusSquare}/>
@@ -193,31 +221,39 @@ class AdminNav extends Component {
                                         }
 
                                         <div>
-                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin:0}}/>
+                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin: 0}}/>
                                         </div>
                                     </>
 
                                     {/*-------------------------------Templates-------------------------------*/}
-                                    { loggedAsEditor &&
+                                    {(loggedAsAdmin || loggedAsEditor) &&
                                     <>
-                                        { (loggedAsEditor || loggedAsAdmin) &&
-                                            <ListGroup.Item eventKey="template" onClick={() => this.loadContent("Templates")}>
-                                                <FontAwesomeIcon className={"mr-3"} icon={faFileContract}/>
-                                                Templates
-                                            </ListGroup.Item>
-                                        }
-                                        <ListGroup.Item eventKey="addtemplate" onClick={() => this.loadContent("Add Templates")}>
+                                        <ListGroup.Item eventKey="template"
+                                                        onClick={() => this.loadContent("Templates")}>
+                                            <FontAwesomeIcon className={"mr-3"} icon={faFileContract}/>
+                                            Template List
+                                        </ListGroup.Item>
+                                        <div>
+                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin: 0}}/>
+                                        </div>
+                                    </>
+                                    }
+
+                                    {loggedAsEditor &&
+                                    <>
+                                        <ListGroup.Item eventKey="addtemplate"
+                                                        onClick={() => this.loadContent("Add Templates")}>
                                             <FontAwesomeIcon className={"mr-3"} icon={faPlusSquare}/>
                                             Add Templates
                                         </ListGroup.Item>
                                         <div>
-                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin:0}}/>
+                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin: 0}}/>
                                         </div>
                                     </>
                                     }
 
                                     {/*-------------------------------Review-------------------------------*/}
-                                    { loggedAsReviewer &&
+                                    {loggedAsReviewer &&
                                     <>
                                         <ListGroup.Item eventKey="papers"
                                                         onClick={() => this.loadContent("Research Paper Review")}>
@@ -230,16 +266,16 @@ class AdminNav extends Component {
                                             Review Workshop Proposals
                                         </ListGroup.Item>
                                         <div>
-                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin:0}}/>
+                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin: 0}}/>
                                         </div>
                                     </>
                                     }
 
-                                    { loggedAsAdmin &&
-                                        <ListGroup.Item eventKey="proposals" onClick={() => this.loadContent("Payment")}>
-                                            <FontAwesomeIcon className={"mr-3"} icon={faDollarSign}/>
-                                            Payments
-                                        </ListGroup.Item>
+                                    {loggedAsAdmin &&
+                                    <ListGroup.Item eventKey="proposals" onClick={() => this.loadContent("Payment")}>
+                                        <FontAwesomeIcon className={"mr-3"} icon={faDollarSign}/>
+                                        Payments
+                                    </ListGroup.Item>
                                     }
                                 </ListGroup>
                             </Tab.Container>
@@ -307,58 +343,49 @@ class AdminNav extends Component {
                             </div>
                             }
 
-                            { this.state.loading === "Conference" &&
-                            <div className={"grid-container-row"}>
+                            {this.state.loading === "Conference" &&
+                            <div className={"dashboard-content"}>
+                                <h5>List of All Conference</h5> <br/>
+                                <ListAllConferenceDetailsComponent/>
+                            </div>
 
-                                { loggedAsAdmin &&
-                                    <div className={"dashboard-content"}>
-                                        <h5>List of Pending Conference</h5> <br/>
-                                        <ListPendingConferenceDetails/>
-                                    </div>
-                                }
+                            }
 
-                                { (loggedAsReviewer || loggedAsAdmin) &&
-
-                                    <div className={"dashboard-content"}>
-                                        <h5>List of Approved Conference</h5> <br/>
-                                        <ListApprovedConferenceDetailsComponent/>
-                                    </div>
-                                }
-
-                                { (loggedAsAdmin || loggedAsEditor) &&
-                                    <div className={"dashboard-content"}>
-                                        <h5>List of All Conference</h5> <br/>
-                                        <ListAllConferenceDetailsComponent/>
-                                    </div>
-                                }
+                            {this.state.loading === "Pending Conferences" &&
+                            <div className={"dashboard-content"}>
+                                <h5>List of Pending Conference</h5> <br/>
+                                <ListPendingConferenceDetails/>
                             </div>
                             }
 
-                            { this.state.loading === "Add Conference" &&
-                                <Container>
-                                    <div className={"dashboard-content"}>
-                                        <h5>Add Conference</h5> <br/>
-                                        <AddConferenceDetailsComponent/>
-                                    </div>
-                                </Container>
+                            {this.state.loading === "Approved Conferences" &&
+                            <div className={"dashboard-content"}>
+                                <h5>List of Approved Conference</h5> <br/>
+                                <ListApprovedConferenceDetailsComponent/>
+                            </div>
                             }
 
-                            { this.state.loading === "Templates" &&
-                                <>
-                                    { (loggedAsEditor || loggedAsAdmin) &&
-                                        <div className={"dashboard-content"}>
-                                            <h5>List of Template</h5> <br/>
-                                            <TemplateList/>
-                                        </div>
-                                    }
-                                </>
+                            {this.state.loading === "Add Conference" &&
+                            <Container>
+                                <div className={"dashboard-content"}>
+                                    <h5>Add Conference</h5> <br/>
+                                    <AddConferenceDetailsComponent/>
+                                </div>
+                            </Container>
                             }
 
-                            { this.state.loading === "Add Templates" &&
-                                <Container className={"dashboard-content"}>
-                                    <h5>Add Template</h5> <br/>
-                                    <AddTemplates/>
-                                </Container>
+                            {this.state.loading === "Templates" &&
+                                <div className={"dashboard-content"}>
+                                    <h5>List of Template</h5> <br/>
+                                    <TemplateList/>
+                                </div>
+                            }
+
+                            {this.state.loading === "Add Templates" &&
+                            <Container className={"dashboard-content"}>
+                                <h5>Add Template</h5> <br/>
+                                <AddTemplates/>
+                            </Container>
                             }
 
                             {/*{this.state.loading === "Research Paper Review" && <ResearchPaperReview/>}*/}

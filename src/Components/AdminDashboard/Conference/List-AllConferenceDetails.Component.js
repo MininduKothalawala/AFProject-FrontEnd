@@ -232,7 +232,7 @@ class ListAllConferenceDetailsComponent extends Component {
         return (
             <div className={"main-div"}>
                 <div>
-                    <ButtonGroup className={"btn-grp"}>
+                    <ButtonGroup className={"conference-btn-group"}>
                         <Button variant={"outline-info"} type={"submit"} className={"btn-status"}
                                 onClick={this.refreshTable}>ALL CONFERENCES</Button>
                         <Button variant={"outline-success"} type={"submit"} className={"btn-status"}
