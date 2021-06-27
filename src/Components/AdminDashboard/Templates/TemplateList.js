@@ -1,7 +1,15 @@
 import React, {Component} from "react";
-import {Badge, Button, ButtonGroup, Card, Form, Table} from "react-bootstrap";
+import {Badge, Button, ButtonGroup, Card, Form, InputGroup, Modal, Table} from "react-bootstrap";
 import TemplatesDataService from "./TemplatesDataService";
 import Swal from "sweetalert2";
+import {
+    faArrowAltCircleDown,
+    faEdit,
+    faFilter, faSearch, faTimes,
+    faTrashAlt
+} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import EditTemplates from "./EditTemplates";
 
 export default class TemplateList extends Component {
     constructor(props) {
@@ -9,8 +17,10 @@ export default class TemplateList extends Component {
 
         this.state = {
             template: [],
-            search:'',
-            type:''
+            search: '',
+            type: '',
+            tempId: '',
+            show: false,
         }
     }
 
@@ -20,7 +30,7 @@ export default class TemplateList extends Component {
 
     refreshList = () => {
         TemplatesDataService.getAllTemplates()
-            .then( res => {
+            .then(res => {
                 console.log(res.data)
 
                 this.setState({
@@ -38,30 +48,55 @@ export default class TemplateList extends Component {
     }
 
     handleUpdate = (tempId) => {
-        this.props.history.push(`/admin-template/add/${tempId}`)
-        console.log("UPDATE")
+        this.setState({tempId: tempId})
+        this.handleShow()
+    }
+
+    handleShow = () => {
+        this.setState({show: true})
+    }
+
+    handleClose = () => {
+        this.setState({show: false})
     }
 
     handleDelete = (id, fileId) => {
-        TemplatesDataService.deleteTemplate(id, fileId)
-            .then( res => {
 
-                if (res.status === 200) {
-                    console.log("CREATED");
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            background: '#041c3d',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#e00404',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                TemplatesDataService.deleteTemplate(id, fileId)
+                    .then(res => {
 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Successful',
-                        html: '<p>Your file has been deleted!</p>',
-                        background: '#041c3d',
-                        confirmButtonColor: '#3aa2e7',
-                        iconColor: '#58b7ff'
+                        if (res.status === 200) {
+                            console.log("CREATED");
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Successful',
+                                html: '<p>Your file has been deleted!</p>',
+                                background: '#041c3d',
+                                confirmButtonColor: '#3aa2e7',
+                                iconColor: '#60e004'
+                            })
+
+                            this.refreshList();
+                        }
+                        console.log(res)
                     })
+            }
+        })
 
-                    this.refreshList();
-                }
-                console.log(res)
-            })
+
     }
 
     handleDownload = (e, filename, fid) => {
@@ -86,17 +121,29 @@ export default class TemplateList extends Component {
 
         if (username !== '') {
             TemplatesDataService.searchByAddedUser(username)
-                .then( res => {
-                    console.log(res.data)
+                .then(res => {
+                    if (res.data.length > 0) {
+                        this.setState({template: res.data})
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Not Found',
+                            html: '<p>Please enter a valid username!</p>',
+                            background: '#041c3d',
+                            confirmButtonColor: '#3aa2e7',
+                            iconColor: '#e00404'
+                        })
+                        this.clearData();
+                    }
                 })
         } else {
             Swal.fire({
-                icon: 'error',
-                title: 'error',
-                html: '<p>Your file has been uploaded!</p>',
-                background: '#363640',
-                confirmButtonColor: '#ff6969',
-                iconColor: '#e00404'
+                icon: 'warning',
+                title: 'Warning',
+                html: '<p>Search field cannot be empty!</p>',
+                background: '#041c3d',
+                confirmButtonColor: '#3aa2e7',
+                iconColor: '#e0b004'
             })
         }
 
@@ -106,7 +153,7 @@ export default class TemplateList extends Component {
     handleFilter = (e) => {
         e.preventDefault();
 
-        const type =this.state.type;
+        const type = this.state.type;
 
         console.log(type)
 
@@ -114,9 +161,9 @@ export default class TemplateList extends Component {
             this.refreshList();
         } else {
             TemplatesDataService.filterByType(type)
-                .then( res => {
+                .then(res => {
                     if (res.status === 200) {
-                        console.log(res);
+                        // console.log(res);
                         this.setState({template: res.data})
                     }
                 })
@@ -124,50 +171,66 @@ export default class TemplateList extends Component {
     }
 
     clearData = () => {
-        if (this.state.search !== '') {
-            this.setState({
-                search: '',
-                type: ''
-            })
-            this.refreshList();
-        }
-
-        console.log(this.state.id)
+        this.setState({
+            search: '',
+            type: ''
+        })
+        this.refreshList();
     }
 
     render() {
         const {template, search, type} = this.state;
 
         return (
-            <div className={"m-3"}>
-                <Card>
-                    <Form inline style={{float:'right'}} >
-                        <Form.Group controlId={"templateType"} className={"mr-5"}>
-                            <Form.Control as={"select"} name={"type"}
-                                          value={type} onChange={this.handleChange}>
-                                <option value={"choose"}>Filter by Type</option>
-                                <option value={"research"}>Research paper Template</option>
-                                <option value={"powerpoint"}>Powerpoint Template</option>
-                                <option value={"workshop"}>Workshop Proposal Template</option>
-                            </Form.Control>
-                            <ButtonGroup>
-                                <Button variant={"dark"} type={"submit"} className={"px-3"}
-                                        onClick={this.handleFilter}>@</Button>
-                                <Button variant={"secondary"} type={"submit"} className={"px-3"}
-                                        onClick={this.clearData}>X</Button>
-                            </ButtonGroup>
+            <div>
+                <Card style={{border: 'none'}}>
 
+                    {/*-------------------------------------------Search and Filter-------------------------------------------*/}
+                    <Card className={"mb-5"}>
+                        <Card.Body>
+                            <Form inline className={"outer-group"}>
+                                <div>
+                                    <InputGroup>
+                                        <Form.Control type={"text"} name={"search"} placeholder={"Search by username"}
+                                                      className={"form-control"} value={search}
+                                                      onChange={this.handleChange} onClick={this.clearData}/>
+                                        <InputGroup.Append>
+                                            <Button variant={"dark"} type={"submit"}
+                                                    onClick={(e) => this.handleSearch(e, search)}>
+                                                <FontAwesomeIcon icon={faSearch}/>
+                                            </Button>
+                                        </InputGroup.Append>
+                                    </InputGroup>
+                                </div>
 
-                        </Form.Group>
+                                <div>
+                                    <InputGroup>
+                                        <Form.Control as={"select"} name={"type"}
+                                                      value={type} onChange={this.handleChange}>
+                                            <option value={"choose"}>Filter by Type</option>
+                                            <option value={"research"}>Research Paper Template</option>
+                                            <option value={"powerpoint"}>Powerpoint Template</option>
+                                            <option value={"workshop"}>Workshop Proposal Template</option>
+                                        </Form.Control>
+                                        <InputGroup.Append>
+                                            <ButtonGroup>
+                                                <Button variant="info" style={{width: '40px'}}
+                                                        onClick={this.handleFilter}>
+                                                    <FontAwesomeIcon icon={faFilter}/>
+                                                </Button>
+                                                <Button variant="danger" style={{width: '40px'}}
+                                                        onClick={this.clearData}>
+                                                    <FontAwesomeIcon icon={faTimes}/>
+                                                </Button>
+                                            </ButtonGroup>
+                                        </InputGroup.Append>
+                                    </InputGroup>
+                                </div>
+                            </Form>
+                        </Card.Body>
+                    </Card>
 
-                        <Form.Group controlId={"templateSearch"} className={"ml-5"}>
-                            <input type={"text"} name="search" placeholder={"Search"} className={"form-control"} value={search}
-                                   onChange={this.handleChange} onClick={this.clearData}/>
-                            <Button variant={"dark"} type={"submit"}
-                                    onClick={(e) => this.handleSearch(e, search)}>OK</Button>
-                        </Form.Group>
-
-                    </Form>
+                    {/*-------------------------------------------Templates Table-------------------------------------------*/}
 
                     <Table striped responsive hover bordered>
                         <thead>
@@ -187,33 +250,43 @@ export default class TemplateList extends Component {
                                 </tr>
 
                                 : [
-                                    template.map (temp =>
+                                    template.map(temp =>
                                         <tr key={temp.id}>
-                                            <td className={"text-center"} style={{verticalAlign:'middle'}}>
+                                            <td className={"text-center"} style={{verticalAlign: 'middle'}}>
                                                 {
                                                     temp.tempType === 'powerpoint' ?
-                                                        <Badge variant="warning" className={"px-3 py-2"} key={"0"}>PRESENTATION</Badge>
+                                                        <Badge variant="warning" className={"px-3 py-2"}
+                                                               key={"0"}>PRESENTATION</Badge>
                                                         : [
                                                             temp.tempType === 'research' ?
-                                                                <Badge variant="success" className={"px-3 py-2"} key={"0"}>RESEARCH</Badge>
+                                                                <Badge variant="success" className={"px-3 py-2"}
+                                                                       key={"0"}>RESEARCH</Badge>
                                                                 : [
                                                                     temp.tempType === 'workshop' ?
-                                                                        <Badge variant="primary" className={"px-3 py-2"} key={"0"}>PROPOSOL</Badge> : ''
+                                                                        <Badge variant="primary" className={"px-3 py-2"}
+                                                                               key={"0"}>PROPOSOL</Badge> : ''
                                                                 ]
                                                         ]
                                                 }
                                             </td>
                                             <td>{temp.filename}</td>
                                             <td>{temp.tempDesc}</td>
-                                            <td className={"text-center"} style={{verticalAlign:'middle'}}><Badge variant="dark" className={"px-3 py-2"}>{temp.username}</Badge></td>
-                                            <td className={"text-center"} style={{verticalAlign:'middle'}}>
+                                            <td className={"text-center"} style={{verticalAlign: 'middle'}}><Badge
+                                                variant="dark" className={"px-3 py-2"}>{temp.username}</Badge></td>
+                                            <td className={"text-center"} style={{verticalAlign: 'middle'}}>
                                                 <ButtonGroup>
-                                                    <Button variant={"success"} className={"px-2"} type={"submit"}
-                                                            onClick={(e) => this.handleDownload(e, temp.filename, temp.tempFileId)}>Download</Button>
-                                                    <Button variant={"warning"} className={"px-4"} type={"submit"}
-                                                            onClick={() => this.handleUpdate(temp.id)}>Edit</Button>
+                                                    <Button variant={"success"} type={"submit"}
+                                                            onClick={(e) => this.handleDownload(e, temp.filename, temp.tempFileId)}>
+                                                        <FontAwesomeIcon icon={faArrowAltCircleDown}/>
+                                                    </Button>
+                                                    <Button variant={"warning"} type={"submit"}
+                                                            onClick={() => this.handleUpdate(temp.id)}>
+                                                        <FontAwesomeIcon icon={faEdit}/>
+                                                    </Button>
                                                     <Button variant={"danger"} type={"submit"}
-                                                            onClick={() => this.handleDelete(temp.id, temp.tempFileId)}>Delete</Button>
+                                                            onClick={() => this.handleDelete(temp.id, temp.tempFileId)}>
+                                                        <FontAwesomeIcon icon={faTrashAlt}/>
+                                                    </Button>
                                                 </ButtonGroup>
                                             </td>
                                         </tr>
@@ -223,6 +296,17 @@ export default class TemplateList extends Component {
                         </tbody>
                     </Table>
                 </Card>
+
+                {/*--------------------------Model Box to Edit Template--------------------------*/}
+
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Update</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body> <EditTemplates tempId={this.state.tempId} /> </Modal.Body>
+                </Modal>
+
+                {/*--------------------------------------------------------------------------------*/}
             </div>
         )
     }

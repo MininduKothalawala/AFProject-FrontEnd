@@ -1,5 +1,8 @@
-import {Component} from "react";
+import React, {Component} from "react";
 import axios from "axios";
+import {Button, Card, Col, Form, Row} from "react-bootstrap";
+import moment from 'moment';
+import Swal from "sweetalert2";
 
 class AddConferenceDetailsComponent extends Component{
 
@@ -9,9 +12,8 @@ class AddConferenceDetailsComponent extends Component{
         this.onChangeID = this.onChangeID.bind(this);
         this.onChangeConferenceName = this.onChangeConferenceName.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
-        this.onChangeConferenceDate = this.onChangeConferenceDate.bind(this);
-        this.onChangeStartingTime = this.onChangeStartingTime.bind(this);
-        this.onChangeEndingTime = this.onChangeEndingTime.bind(this);
+        this.onChangeStartingDate = this.onChangeStartingDate.bind(this);
+        this.onChangeEndingDate = this.onChangeEndingDate.bind(this);
         this.onChangeVenue = this.onChangeVenue.bind(this);
         this.onChangeStatus = this.onChangeStatus.bind(this);
         this.onSubmit2 = this.onSubmit2.bind(this);
@@ -20,13 +22,11 @@ class AddConferenceDetailsComponent extends Component{
             id : '',
             conferenceName : '',
             description:'',
-            date : '',
-            startingTime : '',
-            endingTime: '',
+            startingDate : '',
+            endingDate: '',
             venue : '',
-            status :''
-
-
+            status :'Pending',  //initial state is 'pending'
+            daylimit: moment().add(10, "days").format('YYYY-MM-DD')
         }
     }
 
@@ -41,26 +41,21 @@ class AddConferenceDetailsComponent extends Component{
             conferenceName : e.target.value
         });
     }
+
     onChangeDescription(e){
         this.setState({
             description : e.target.value
         });
     }
 
-    onChangeConferenceDate(e){
+    onChangeStartingDate(e){
         this.setState({
-            date : e.target.value
+            startingDate : e.target.value
         });
     }
-
-    onChangeStartingTime(e){
+    onChangeEndingDate(e){
         this.setState({
-            startingTime : e.target.value
-        });
-    }
-    onChangeEndingTime(e){
-        this.setState({
-            endingTime : e.target.value
+            endingDate : e.target.value
         });
     }
     onChangeVenue(e){
@@ -82,9 +77,8 @@ class AddConferenceDetailsComponent extends Component{
             id: this.state.id,
             conferenceName: this.state.conferenceName,
             description: this.state.description,
-            date: this.state.date,
-            startingTime: this.state.startingTime,
-            endingTime: this.state.endingTime,
+            startingDate: this.state.startingDate,
+            endingDate: this.state.endingDate,
             venue: this.state.venue,
             status: this.state.status,
         }
@@ -92,100 +86,107 @@ class AddConferenceDetailsComponent extends Component{
         console.log(conferences);
 
         axios.post('http://localhost:8080/api/conference/addConference', conferences)
-            .then(res => console.log(res.data));
-        alert("Form is submitted successfully")
+            .then(res => {
+                console.log(res.data)
 
-        window.location = '/conferenceList';
+                // if (res.status === 200) {
 
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Successful',
+                        html: '<p>Your file has been uploaded!!</p>',
+                        background: '#041c3d',
+                        confirmButtonColor: '#3aa2e7',
+                        iconColor: '#60e004'
+                    })
+                // }
+            });
     }
 
     render(){
         return(
             <div>
-                <form onSubmit = {this.onSubmit2}>
-                    <div className = "form-group">
-                        <label>ID : </label>
-                        <input type = "text"
-                               required
-                               className = "form-control"
-                               value = {this.state.id}
-                               onChange = {this.onChangeID}
-                        />
-                    </div>
+                <Card style={{border: 'none'}}>
+                    <Card.Body className={"p-0"}>
+                        <Form onSubmit={this.onSubmit2}>
+                            <div className = "form-group">
+                                <Row>
+                                    <Col md={4}>
+                                            <label>Conference ID : </label>
+                                            <input type = "text"
+                                                   required
+                                                   className = "form-control"
+                                                   value = {this.state.id}
+                                                   onChange = {this.onChangeID}
+                                                   placeholder={"Enter conference ID"}
+                                            />
+                                    </Col>
+                                    <Col>
+                                        <label>Conference Name : </label>
+                                        <input type = "text"
+                                               required
+                                               className = "form-control"
+                                               value = {this.state.conferenceName}
+                                               onChange = {this.onChangeConferenceName}
+                                               placeholder={"Enter conference name"}
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
 
-                    <div className = "form-group">
-                        <label>Name : </label>
-                        <input type = "text"
-                               required
-                               className = "form-control"
-                               value = {this.state.conferenceName}
-                               onChange = {this.onChangeConferenceName}
-                        />
-                    </div>
+                            <div className = "form-group">
+                                <label>Conference Description : </label>
+                                <textarea
+                                    required
+                                    className = "form-control"
+                                    value = {this.state.description}
+                                    onChange = {this.onChangeConferenceDesc}
+                                    placeholder={"Enter description"}
+                                />
+                            </div>
 
-                    <div className = "form-group">
-                        <label>Description : </label>
-                        <input type = "text"
-                               required
-                               className = "form-control"
-                               value = {this.state.description}
-                               onChange = {this.onChangeDescription}
-                        />
-                    </div>
+                            <div className = "form-group">
+                                <Row>
+                                    <Col>
+                                        <label>Starting Date : </label>
+                                        <input type = "date"
+                                               required
+                                               className = "form-control"
+                                               min={this.state.daylimit}
+                                               value = {this.state.startingDate}
+                                               onChange = {this.onChangeStartingDate}
+                                        />
+                                    </Col>
+                                    <Col>
+                                        <label>Ending Date : </label>
+                                        <input type = "date"
+                                               required
+                                               className = "form-control"
+                                               min={moment(this.state.startingDate).format('YYYY-MM-DD')}
+                                               value = {this.state.endingDate}
+                                               onChange = {this.onChangeEndingDate}
+                                        />
+                                    </Col>
+                                </Row>
+                            </div>
 
-                    <div className = "form-group">
-                        <label>Date : </label>
-                        <input type = "text"
-                               required
-                               className = "form-control"
-                               value = {this.state.date}
-                               onChange = {this.onChangeConferenceDate}
-                        />
-                    </div>
-                    <div className = "form-group">
-                        <label>Starting Time : </label>
-                        <input type = "text"
-                               required
-                               className = "form-control"
-                               value = {this.state.startingTime}
-                               onChange = {this.onChangeStartingTime}
-                        />
-                    </div>
+                            <div className = "form-group">
+                                <label>Venue : </label>
+                                <input type = "text"
+                                       required
+                                       className = "form-control"
+                                       value = {this.state.venue}
+                                       onChange = {this.onChangeVenue}
+                                       placeholder={"Enter venue"}
+                                />
+                            </div>
 
-                    <div className = "form-group">
-                        <label>Ending Time : </label>
-                        <input type = "text"
-                               required
-                               className = "form-control"
-                               value = {this.state.endingTime}
-                               onChange = {this.onChangeEndingTime}
-                        />
-                    </div>
-
-                    <div className = "form-group">
-                        <label>Venue : </label>
-                        <input type = "text"
-                               required
-                               className = "form-control"
-                               value = {this.state.venue}
-                               onChange = {this.onChangeVenue}
-                        />
-                    </div>
-
-                    <div className = "form-group">
-                        <label>Status : </label>
-                        <input type = "text"
-                               required
-                               className = "form-control"
-                               value = {this.state.status}
-                               onChange = {this.onChangeStatus}
-                        />
-                    </div>
-
-                    <div className = "form-group">
-                        <input type = "submit" value = "Add Conference" />
-                    </div>
-                </form>
+                            <div className={"my-4"}>
+                                <Button variant="primary" type={"submit"}>Submit</Button>
+                            </div>
+                        </Form>
+                    </Card.Body>
+                </Card>
             </div>
         )
     }

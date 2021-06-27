@@ -32,8 +32,12 @@ class TemplatesDataService {
         return axios.post(`${API_URL}/upload`, data)
     }
 
+    addResearchTemplate(data) {
+        return axios.post(`${API_URL}/upload/research`, data)
+    }
+
     editDescription(data) {
-        return axios.put(`${API_URL}/updateDesc/`, data)
+        return axios.put(`${API_URL}/updateDesc`, data)
     }
 
     editTemplate(data) {
@@ -44,8 +48,9 @@ class TemplatesDataService {
         return axios.delete(`${API_URL}/${id}/${fileId}`)
     }
 
-
-
+    validateConferenceId(id) {
+        return axios.get(`http://localhost:8080/api/conference/conferencebyid/${id}`);
+    }
 
 }
 

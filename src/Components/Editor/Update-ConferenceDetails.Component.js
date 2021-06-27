@@ -12,17 +12,23 @@ class UpdateConferenceDetailsComponent extends Component{
         this.onChangeConferenceDate = this.onChangeConferenceDate.bind(this);
         this.onChangeStartingTime = this.onChangeStartingTime.bind(this);
         this.onChangeEndingTime = this.onChangeEndingTime.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeStartingDate = this.onChangeStartingDate.bind(this);
+        this.onChangeEndingDate = this.onChangeEndingDate.bind(this);
         this.onChangeVenue = this.onChangeVenue.bind(this);
         this.onChangeStatus = this.onChangeStatus.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            id : '',
+            id : this.props.match.params.id,
             conferenceName : '',
             description:'',
             date : '',
             startingTime : '',
             endingTime: '',
+            description:'',
+            startingDate : '',
+            endingDate: '',
             venue : '',
             status :''
 
@@ -73,14 +79,14 @@ class UpdateConferenceDetailsComponent extends Component{
         });
     }
 
-    onChangeStartingTime(e){
+    onChangeStartingDate(e){
         this.setState({
-            startingTime : e.target.value
+            startingDate : e.target.value
         });
     }
-    onChangeEndingTime(e){
+    onChangeEndingDate(e){
         this.setState({
-            endingTime : e.target.value
+            endingDate : e.target.value
         });
     }
     onChangeVenue(e){
@@ -95,8 +101,6 @@ class UpdateConferenceDetailsComponent extends Component{
         });
     }
 
-
-
     onSubmit(e) {
         e.preventDefault();
 
@@ -104,9 +108,8 @@ class UpdateConferenceDetailsComponent extends Component{
             id: this.state.id,
             conferenceName: this.state.conferenceName,
             description: this.state.description,
-            date: this.state.date,
-            startingTime: this.state.startingTime,
-            endingTime: this.state.endingTime,
+            startingDate: this.state.startingDate,
+            endingDate: this.state.endingDate,
             venue: this.state.venue,
             status: this.state.status,
         }
@@ -115,7 +118,7 @@ class UpdateConferenceDetailsComponent extends Component{
 
         axios.put('http://localhost:8080/api/conference/updateConference',conferences)
             .then(res => console.log(res.data));
-        window.location = '/conferenceList'
+
 
     }
     render() {
@@ -153,31 +156,22 @@ class UpdateConferenceDetailsComponent extends Component{
                     </div>
 
                     <div className = "form-group">
-                        <label>Date : </label>
+                        <label>Starting Date : </label>
                         <input type = "text"
                                required
                                className = "form-control"
-                               value = {this.state.date}
-                               onChange = {this.onChangeConferenceDate}
-                        />
-                    </div>
-                    <div className = "form-group">
-                        <label>Starting Time : </label>
-                        <input type = "text"
-                               required
-                               className = "form-control"
-                               value = {this.state.startingTime}
-                               onChange = {this.onChangeStartingTime}
+                               value = {this.state.startingDate}
+                               onChange = {this.onChangeStartingDate}
                         />
                     </div>
 
                     <div className = "form-group">
-                        <label>Ending Time : </label>
+                        <label>Ending Date : </label>
                         <input type = "text"
                                required
                                className = "form-control"
-                               value = {this.state.endingTime}
-                               onChange = {this.onChangeEndingTime}
+                               value = {this.state.endingDate}
+                               onChange = {this.onChangeEndingDate}
                         />
                     </div>
 
