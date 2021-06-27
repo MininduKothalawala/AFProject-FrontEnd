@@ -6,6 +6,7 @@ import UpdateConferenceDetailsComponent from "../../Editor/Update-ConferenceDeta
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
+import moment from "moment";
 
 const Conference = props => (
 
@@ -17,41 +18,47 @@ const Conference = props => (
         <td>{props.conference.endingDate}</td>
         <td>{props.conference.venue}</td>
         <td className={"text-center"} style={{verticalAlign: 'middle'}}>
-            {props.conference.status === 'Approved' &&
-            <Badge variant="success" className={"px-3 py-2"} key={"0"}>APPROVED</Badge>
+            { props.conference.status === 'Approved' &&
+                <Badge variant="success" className={"px-3 py-2"} key={"0"}>APPROVED</Badge>
             }
-            {props.conference.status === 'Pending' &&
-            <Badge variant="warning" className={"px-3 py-2"} key={"0"}>PENDING</Badge>
+            { props.conference.status === 'Pending' &&
+                <Badge variant="warning" className={"px-3 py-2"} key={"0"}>PENDING</Badge>
             }
-            {props.conference.status === 'Rejected' &&
-            <Badge variant="danger" className={"px-3 py-2"} key={"0"}>REJECTED</Badge>
+            { props.conference.status === 'Rejected' &&
+                <Badge variant="danger" className={"px-3 py-2"} key={"0"}>REJECTED</Badge>
             }
-            {props.conference.status === 'Updated' &&
-            <Badge variant="primary" className={"px-3 py-2"} key={"0"}>UPDATED</Badge>
+            { props.conference.status === 'Updated' &&
+                <Badge variant="primary" className={"px-3 py-2"} key={"0"}>UPDATED</Badge>
             }
-            {props.conference.status === 'Expired' &&
-            <Badge variant="info" className={"px-3 py-2"} key={"0"}>EXPIRED</Badge>
+            { props.conference.status === 'Expired' &&
+                <Badge variant="secondary" className={"px-3 py-2"} key={"0"}>EXPIRED</Badge>
             }
-            {props.conference.status === 'Canceled' &&
-            <Badge variant="secondary" className={"px-3 py-2"} key={"0"}>CANCELED</Badge>
-            }
-        </td>
-        {props.loggedUser === 'editor' &&
-        <td className={"text-center"} style={{verticalAlign: 'middle'}}>
-            {(props.conference.status === 'Approved' || props.conference.status === 'Pending' || props.conference.status === 'Updated') &&
-            <ButtonGroup>
-                <Button variant={"warning"} type={"submit"}
-                        onClick={() => props.edit(props.conference.id)}>
-                    <FontAwesomeIcon icon={faEdit}/>
-                </Button>
-                <Button variant={"danger"} type={"submit"}
-                        onClick={() => props.delete(props.conference.id)}>
-                    <FontAwesomeIcon icon={faTrashAlt}/>
-                </Button>
-            </ButtonGroup>
+            { props.conference.status === 'Canceled' &&
+                <Badge variant="secondary" className={"px-3 py-2"} key={"0"}>CANCELED</Badge>
             }
         </td>
+        { props.loggedUser === 'editor' &&
+            <td className={"text-center"} style={{verticalAlign: 'middle'}}>
+                { (props.conference.status === 'Approved' || props.conference.status === 'Pending' || props.conference.status === 'Updated') &&
+                    <ButtonGroup>
+                        <Button variant={"warning"} type={"submit"}
+                                onClick={() => props.edit(props.conference.id)}>
+                            <FontAwesomeIcon icon={faEdit}/>
+                        </Button>
+                        <Button variant={"danger"} type={"submit"}
+                                onClick={() => props.delete(props.conference.id)}>
+                            <FontAwesomeIcon icon={faTrashAlt}/>
+                        </Button>
+                    </ButtonGroup>
+                }
+            </td>
         }
+
+        {/* ----------checking for past conference---------- */}
+        { props.conference.status !== 'Rejected' &&
+            props.expired(props.conference.id, props.conference.endingDate)
+        }
+
     </tr>
 )
 
@@ -85,8 +92,12 @@ class ListAllConferenceDetailsComponent extends Component {
 
     conferenceList() {
         return this.state.conferences.map(currentconference => {
-            return <Conference conference={currentconference} loggedUser={this.state.loggedUser}
-                               edit={this.editConference} delete={this.deleteConference} key={currentconference.id}/>
+            return <Conference conference={currentconference} key={currentconference.id}
+                               loggedUser={this.state.loggedUser}
+                               edit={this.editConference}
+                               delete={this.deleteConference}
+                               expired={this.checkExpiredConference}
+                    />
         })
     }
 
@@ -139,6 +150,16 @@ class ListAllConferenceDetailsComponent extends Component {
 
     }
 
+    checkExpiredConference = (id, endDate) => {
+        const today = moment(new Date(), 'YYYY-MM-DD')
+        const date = moment(endDate, 'YYYY-MM-DD')
+
+        if ( today.diff(date) > 0 ) {
+            axios.put(`http://localhost:8080/api/conference/updateStatus/${id}/Expired`)
+                .then( res => (console.log(res.data)))
+        }
+    }
+
     render() {
 
         return (
@@ -159,7 +180,7 @@ class ListAllConferenceDetailsComponent extends Component {
                     </thead>
 
                     <tbody>
-                    {this.conferenceList()}
+                        { this.conferenceList() }
                     </tbody>
                 </Table>
 

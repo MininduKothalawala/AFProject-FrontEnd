@@ -133,6 +133,10 @@ class UpdateConferenceDetailsComponent extends Component {
                         background: '#041c3d',
                         confirmButtonColor: '#3aa2e7',
                         iconColor: '#60e004'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location = '/admin'
+                        }
                     })
 
                     //send email
