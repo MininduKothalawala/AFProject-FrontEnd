@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router";
 import './AdminNav.css';
-import {ListGroup, Navbar, Tab} from "react-bootstrap";
+import {Container, ListGroup, Modal, Navbar, NavDropdown, Tab} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import AuthenticationService from "../Login/AuthenticationService";
 import {
-    faBars, faBell,
-    faChalkboardTeacher, faDollarSign, faFileAlt, faFileContract, faFileSignature, faHome,
+    faBars,
+    faChalkboardTeacher, faDollarSign, faFileAlt, faFileContract, faFileSignature, faHome, faPlusSquare,
     faSignOutAlt,
     faThLarge,
     faTimes,
@@ -17,13 +17,15 @@ import SignUp from "../Login/Signup";
 import GettAllUsers from "./User/GettAllUsers";
 import AddTemplates from "./Templates/AddTemplates";
 import AddConferenceDetailsComponent from "../Editor/Add-ConferenceDetails.Component";
-import ListAllConferenceDetailsComponent from "../Admin/List-AllConferenceDetails.Component";
+import ListAllConferenceDetailsComponent from "./Conference/List-AllConferenceDetails.Component";
 import TemplateList from "./Templates/TemplateList";
 import Dashboard from "./Dashboard";
 import ProposalReview from "./Review/ProposalReview";
 import ResearchPaperReview from "./Review/ResearchPaperReview";
 import Payment from "./Payment/Payment";
-import MyAccount from "./User/AdminProfile";
+import AdminProfile from "./User/AdminProfile";
+import ListApprovedConferenceDetailsComponent from "./Conference/List-ApprovedConferenceDetails.Component";
+import ListPendingConferenceDetails from "./Conference/List-PendingConferenceDetails.Component";
 
 class AdminNav extends Component {
     constructor(props) {
@@ -34,10 +36,11 @@ class AdminNav extends Component {
             index: 0,
             classes: '',
             show: true,
-            loading: "Dashboard",
+            loading: "Templates",
             windowWidth: window.innerWidth, //window size
             width: "0",
-            mleft: "0"
+            mleft: "0",
+            modalBox: false
         }
     }
 
@@ -54,10 +57,7 @@ class AdminNav extends Component {
     }
 
     windowResize = () => {
-        // window size for responsive design
         this.setState({windowWidth: window.innerWidth})
-        // console.log("r:" + this.state.windowWidth)
-        // console.log("w:" + this.state.width)
 
         // this.updateSize();
 
@@ -107,11 +107,21 @@ class AdminNav extends Component {
 
     logout = () => {
         AuthenticationService.logout();
-        this.props.history.push("/login")
+        this.props.history.push("/")
     }
 
+    //go to home
     mainUi = () => {
         this.props.history.push("/")
+    }
+
+    //Modal box
+    handleShow = () => {
+        this.setState({modalBox: true})
+    }
+    //Modal box
+    handleClose = () => {
+        this.setState({modalBox: false})
     }
 
     render() {
@@ -149,40 +159,91 @@ class AdminNav extends Component {
                         <div>
                             <Tab.Container id="list-group-tabs-example" defaultActiveKey="dashboard">
                                 <ListGroup>
+                                    {/*-------------------------------Dashboard-------------------------------*/}
                                     <ListGroup.Item eventKey="dashboard" onClick={() => this.loadContent("Dashboard")}>
-                                        <FontAwesomeIcon className={"mr-2"} icon={faThLarge}/>
+                                        <FontAwesomeIcon className={"mr-3"} icon={faThLarge}/>
                                         Dashboard
                                     </ListGroup.Item>
-                                    <ListGroup.Item eventKey="user" onClick={() => this.loadContent("Users")}>
-                                        <FontAwesomeIcon className={"mr-2"} icon={faUser}/>
-                                        User
-                                    </ListGroup.Item>
-                                    <ListGroup.Item eventKey="template" onClick={() => this.loadContent("Templates")}>
-                                        <FontAwesomeIcon className={"mr-2"} icon={faFileContract}/>
-                                        Templates
-                                    </ListGroup.Item>
-                                    <ListGroup.Item eventKey="conference"
-                                                    onClick={() => this.loadContent("Conference")}>
-                                        <FontAwesomeIcon className={"mr-2"} icon={faChalkboardTeacher}/>
-                                        Conference
-                                    </ListGroup.Item>
 
-                                    { loggedAsReviewer &&
+                                    <div>
+                                        <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin:0}}/>
+                                    </div>
+
+                                    {/*-------------------------------Users-------------------------------*/}
+                                    {loggedAsAdmin &&
                                         <>
-                                            <ListGroup.Item eventKey="papers" onClick={() => this.loadContent("Research Paper Review")}>
-                                                <FontAwesomeIcon className={"mr-2"} icon={faFileSignature}/>
-                                                Review Research Papers
+                                            <ListGroup.Item eventKey="user" onClick={() => this.loadContent("Users")}>
+                                                <FontAwesomeIcon className={"mr-3"} icon={faUser}/>
+                                                User
                                             </ListGroup.Item>
-                                            <ListGroup.Item eventKey="proposals" onClick={() => this.loadContent("Workshop Proposal Review")}>
-                                                <FontAwesomeIcon className={"mr-2"} icon={faFileAlt}/>
-                                                Review Workshop Proposals
-                                            </ListGroup.Item>
+                                            <div>
+                                                <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin:0}}/>
+                                            </div>
                                         </>
+                                    }
+
+                                    {/*-------------------------------Conference-------------------------------*/}
+                                    <>
+                                        <ListGroup.Item eventKey="conference"
+                                                        onClick={() => this.loadContent("Conference")}>
+                                            <FontAwesomeIcon className={"mr-3"} icon={faChalkboardTeacher}/>
+                                            Conference
+                                        </ListGroup.Item>
+
+                                        { loggedAsEditor &&
+                                        <ListGroup.Item eventKey="add-conference"
+                                                        onClick={() => this.loadContent("Add Conference")}>
+                                            <FontAwesomeIcon className={"mr-3"} icon={faPlusSquare}/>
+                                            Add Conference
+                                        </ListGroup.Item>
+                                        }
+
+                                        <div>
+                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin:0}}/>
+                                        </div>
+                                    </>
+
+                                    {/*-------------------------------Templates-------------------------------*/}
+                                    { loggedAsEditor &&
+                                    <>
+                                        { (loggedAsEditor || loggedAsAdmin) &&
+                                            <ListGroup.Item eventKey="template" onClick={() => this.loadContent("Templates")}>
+                                                <FontAwesomeIcon className={"mr-3"} icon={faFileContract}/>
+                                                Templates
+                                            </ListGroup.Item>
+                                        }
+                                        <ListGroup.Item eventKey="addtemplate" onClick={() => this.loadContent("Add Templates")}>
+                                            <FontAwesomeIcon className={"mr-3"} icon={faPlusSquare}/>
+                                            Add Templates
+                                        </ListGroup.Item>
+                                        <div>
+                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin:0}}/>
+                                        </div>
+                                    </>
+                                    }
+
+                                    {/*-------------------------------Review-------------------------------*/}
+                                    { loggedAsReviewer &&
+                                    <>
+                                        <ListGroup.Item eventKey="papers"
+                                                        onClick={() => this.loadContent("Research Paper Review")}>
+                                            <FontAwesomeIcon className={"mr-3"} icon={faFileSignature}/>
+                                            Review Research Papers
+                                        </ListGroup.Item>
+                                        <ListGroup.Item eventKey="proposals"
+                                                        onClick={() => this.loadContent("Workshop Proposal Review")}>
+                                            <FontAwesomeIcon className={"mr-3"} icon={faFileAlt}/>
+                                            Review Workshop Proposals
+                                        </ListGroup.Item>
+                                        <div>
+                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin:0}}/>
+                                        </div>
+                                    </>
                                     }
 
                                     { loggedAsAdmin &&
                                         <ListGroup.Item eventKey="proposals" onClick={() => this.loadContent("Payment")}>
-                                            <FontAwesomeIcon className={"mr-2"} icon={faDollarSign}/>
+                                            <FontAwesomeIcon className={"mr-3"} icon={faDollarSign}/>
                                             Payments
                                         </ListGroup.Item>
                                     }
@@ -212,9 +273,19 @@ class AdminNav extends Component {
                                             <h6><FontAwesomeIcon icon={faHome}/></h6>
                                         </button>
                                     </Navbar.Text>
-                                    <Navbar.Text>
-                                        <h6 className={"menu-icon"}><FontAwesomeIcon icon={faUser}/> &nbsp; Hi, {loggedUser}</h6>
-                                    </Navbar.Text>
+                                    <NavDropdown as={"h6"} title={`Hi, ${loggedUser}`} id="basic-nav-dropdown"
+                                                 className={"menu-icon"}>
+                                        <NavDropdown.Item as={"h6"} onClick={this.handleShow}>User
+                                            Profile</NavDropdown.Item>
+
+                                        {/*-------------------User Profile-------------------*/}
+                                        <Modal show={this.state.modalBox} onHide={this.handleClose}>
+                                            <Modal.Header closeButton>
+                                                <Modal.Title>User Profile</Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body> <AdminProfile/> </Modal.Body>
+                                        </Modal>
+                                    </NavDropdown>
                                     <Navbar.Text>
                                         <button className={"menu-icon"} onClick={this.logout}>
                                             <h6><FontAwesomeIcon icon={faSignOutAlt}/> Logout</h6>
@@ -227,77 +298,83 @@ class AdminNav extends Component {
                         {/*-------------------Dashboard Content-------------------*/}
                         <div className={"load-components"}>
 
-                            { this.state.loading === "Dashboard" && <Dashboard/> }
+                            {this.state.loading === "Dashboard" && <Dashboard/>}
 
-
-                            { this.state.loading === "Users" &&
-                                <div className={"grid-container-col"}>
-                                    { loggedAsAdmin &&
-                                        <div className={"dashboard-content"}>
-                                            <h5>Add User</h5> <br/>
-                                            <SignUp/>
-                                        </div>
-                                    }
-
-                                    <div className={"dashboard-content text-center"} style={{paddingLeft: '0', paddingRight: '0', paddingBottom: '0'}}>
-                                        <h5>User Profile</h5> <br/>
-                                        <MyAccount />
-                                    </div>
-
-                                    { loggedAsAdmin &&
-                                    <div className={"dashboard-content grid-item1"}>
-                                        <h5>List of Users</h5> <br/>
-                                        <GettAllUsers/>
-                                    </div>
-                                    }
+                            {this.state.loading === "Users" &&
+                            <div className={"grid-container-row"}>
+                                <div className={"dashboard-content"}>
+                                    <h5>Add User</h5> <br/>
+                                    <SignUp/>
                                 </div>
+                                <div className={"dashboard-content"}>
+                                    <h5>List of Users</h5> <br/>
+                                    <GettAllUsers/>
+                                </div>
+                            </div>
+                            }
+
+                            { this.state.loading === "Conference" &&
+                            <div className={"grid-container-row"}>
+
+                                { loggedAsAdmin &&
+                                    <div className={"dashboard-content"}>
+                                        <h5>List of Pending Conference</h5> <br/>
+                                        <ListPendingConferenceDetails/>
+                                    </div>
+                                }
+
+                                { loggedAsReviewer &&
+
+                                    <div className={"dashboard-content"}>
+                                        <h5>List of Approved Conference</h5> <br/>
+                                        <ListApprovedConferenceDetailsComponent/>
+                                    </div>
+                                }
+
+                                { (loggedAsAdmin || loggedAsEditor) &&
+                                    <div className={"dashboard-content"}>
+                                        <h5>List of All Conference</h5> <br/>
+                                        <ListAllConferenceDetailsComponent/>
+                                    </div>
+                                }
+                            </div>
+                            }
+
+                            { this.state.loading === "Add Conference" &&
+                                <Container>
+                                    <div className={"dashboard-content"}>
+                                        <h5>Add Conference</h5> <br/>
+                                        <AddConferenceDetailsComponent/>
+                                    </div>
+                                </Container>
                             }
 
                             { this.state.loading === "Templates" &&
-                                <div className={"grid-container-row"}>
-                                    { loggedAsEditor &&
-                                    // Todo: add template from conference
+                                <>
+                                    { (loggedAsEditor || loggedAsAdmin) &&
                                         <div className={"dashboard-content"}>
-                                            <h5>Add Template</h5> <br/>
-                                            <AddTemplates/>
+                                            <h5>List of Template</h5> <br/>
+                                            <TemplateList/>
                                         </div>
                                     }
-                                    <div className={"dashboard-content"}>
-                                        <h5>List of Template</h5> <br/>
-                                        <TemplateList/>
-                                    </div>
-                                </div>
+                                </>
                             }
 
-                            { this.state.loading === "conference" &&
-                                <div className={"grid-container-row"}>
-
-                                    { loggedAsEditor &&
-                                        <div className={"dashboard-content"}>
-                                            <h5>Add Conference</h5> <br/>
-                                            <AddConferenceDetailsComponent/>
-                                        </div>
-                                    }
-
-                                    <div className={"dashboard-content"}>
-                                        <h5>List of Conference</h5> <br/>
-                                        <ListAllConferenceDetailsComponent/>
-                                    </div>
-                                </div>
+                            { this.state.loading === "Add Templates" &&
+                                <Container className={"dashboard-content"}>
+                                    <h5>Add Template</h5> <br/>
+                                    <AddTemplates/>
+                                </Container>
                             }
 
-                            { this.state.loading === "Research Paper Review" && <ResearchPaperReview /> }
-                            { this.state.loading === "Workshop Proposal Review" && <ProposalReview /> }
-                            { this.state.loading === "Payment" && <Payment /> }
+                            {this.state.loading === "Research Paper Review" && <ResearchPaperReview/>}
+                            {this.state.loading === "Workshop Proposal Review" && <ProposalReview/>}
+                            {this.state.loading === "Payment" && <Payment/>}
 
                         </div>
                     </div>
-
-
                 </div>
                 }
-
-
             </div>
 
         )
