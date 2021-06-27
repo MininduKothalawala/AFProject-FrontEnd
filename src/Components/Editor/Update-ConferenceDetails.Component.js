@@ -9,6 +9,10 @@ class UpdateConferenceDetailsComponent extends Component{
         this.onChangeID = this.onChangeID.bind(this);
         this.onChangeConferenceName = this.onChangeConferenceName.bind(this);
         this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeConferenceDate = this.onChangeConferenceDate.bind(this);
+        this.onChangeStartingTime = this.onChangeStartingTime.bind(this);
+        this.onChangeEndingTime = this.onChangeEndingTime.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
         this.onChangeStartingDate = this.onChangeStartingDate.bind(this);
         this.onChangeEndingDate = this.onChangeEndingDate.bind(this);
         this.onChangeVenue = this.onChangeVenue.bind(this);
@@ -19,12 +23,36 @@ class UpdateConferenceDetailsComponent extends Component{
             id : this.props.match.params.id,
             conferenceName : '',
             description:'',
+            date : '',
+            startingTime : '',
+            endingTime: '',
+            description:'',
             startingDate : '',
             endingDate: '',
             venue : '',
             status :''
 
         }
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:8080/api/conference/conferencebyid/'+this.props.match.params.id)
+            .then(response => {
+                this.setState({
+                    id : response.data.id,
+                    conferenceName : response.data.conferenceName,
+                    description : response.data.description,
+                    date:response.data.date,
+                    startingTime:response.data.startingTime,
+                    endingTime:response.data.endingTime,
+                    venue:response.data.venue,
+                    status : response.data.status
+                })
+            })
+            .catch(function(error) {
+                console.log(error);
+            })
+
     }
 
     onChangeID(e){
@@ -42,6 +70,12 @@ class UpdateConferenceDetailsComponent extends Component{
     onChangeDescription(e){
         this.setState({
             description : e.target.value
+        });
+    }
+
+    onChangeConferenceDate(e){
+        this.setState({
+            date : e.target.value
         });
     }
 
@@ -122,7 +156,7 @@ class UpdateConferenceDetailsComponent extends Component{
                     </div>
 
                     <div className = "form-group">
-                        <label>Starting Time : </label>
+                        <label>Starting Date : </label>
                         <input type = "text"
                                required
                                className = "form-control"
@@ -132,7 +166,7 @@ class UpdateConferenceDetailsComponent extends Component{
                     </div>
 
                     <div className = "form-group">
-                        <label>Ending Time : </label>
+                        <label>Ending Date : </label>
                         <input type = "text"
                                required
                                className = "form-control"

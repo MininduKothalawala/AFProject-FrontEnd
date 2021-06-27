@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Badge, Button, ButtonGroup, Container, Table} from "react-bootstrap";
+import {Button, Card, Container} from "react-bootstrap";
 import axios from "axios";
 import {Link} from "react-router-dom";
 
@@ -40,7 +40,6 @@ class ConferenceDetailsListComponent extends Component{
     constructor(props) {
         super(props);
 
-        this.editConference = this.editConference.bind(this);
         this.deleteConference = this.deleteConference.bind(this);
 
         this.state = { conferences : []
@@ -58,11 +57,7 @@ class ConferenceDetailsListComponent extends Component{
 
     }
 
-    editConference(id) {
-        // this.props.history.push('/updateConference' + id);
-    }
-
-    deleteConference(id) {
+    deleteConference(id){
         axios.delete('http://localhost:8080/api/conference/deleteConference' +id)
             .then(res => console.log(res.data));
         this.setState({
