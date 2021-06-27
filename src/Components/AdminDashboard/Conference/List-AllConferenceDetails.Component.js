@@ -7,59 +7,60 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import moment from "moment";
+import "./Conference.css"
 
 const Conference = props => (
 
-    <tr>
+        <tr>
 
-        <td>{props.conference.id}</td>
-        <td>{props.conference.conferenceName}</td>
-        <td>{props.conference.startingDate}</td>
-        <td>{props.conference.endingDate}</td>
-        <td>{props.conference.venue}</td>
-        <td className={"text-center"} style={{verticalAlign: 'middle'}}>
-            { props.conference.status === 'Approved' &&
-                <Badge variant="success" className={"px-3 py-2"} key={"0"}>APPROVED</Badge>
-            }
-            { props.conference.status === 'Pending' &&
-                <Badge variant="warning" className={"px-3 py-2"} key={"0"}>PENDING</Badge>
-            }
-            { props.conference.status === 'Rejected' &&
-                <Badge variant="danger" className={"px-3 py-2"} key={"0"}>REJECTED</Badge>
-            }
-            { props.conference.status === 'Updated' &&
-                <Badge variant="primary" className={"px-3 py-2"} key={"0"}>UPDATED</Badge>
-            }
-            { props.conference.status === 'Expired' &&
-                <Badge variant="secondary" className={"px-3 py-2"} key={"0"}>EXPIRED</Badge>
-            }
-            { props.conference.status === 'Canceled' &&
-                <Badge variant="secondary" className={"px-3 py-2"} key={"0"}>CANCELED</Badge>
-            }
-        </td>
-        { props.loggedUser === 'editor' &&
+            <td>{props.conference.id}</td>
+            <td>{props.conference.conferenceName}</td>
+            <td>{props.conference.startingDate}</td>
+            <td>{props.conference.endingDate}</td>
+            <td>{props.conference.venue}</td>
             <td className={"text-center"} style={{verticalAlign: 'middle'}}>
-                { (props.conference.status === 'Approved' || props.conference.status === 'Pending' || props.conference.status === 'Updated') &&
-                    <ButtonGroup>
-                        <Button variant={"warning"} type={"submit"}
-                                onClick={() => props.edit(props.conference.id)}>
-                            <FontAwesomeIcon icon={faEdit}/>
-                        </Button>
-                        <Button variant={"danger"} type={"submit"}
-                                onClick={() => props.delete(props.conference.id)}>
-                            <FontAwesomeIcon icon={faTrashAlt}/>
-                        </Button>
-                    </ButtonGroup>
+                { props.conference.status === 'Approved' &&
+                <Badge variant="success" className={"px-3 py-2"}>APPROVED</Badge>
+                }
+                { props.conference.status === 'Pending' &&
+                <Badge variant="warning" className={"px-3 py-2"}>PENDING</Badge>
+                }
+                { props.conference.status === 'Rejected' &&
+                <Badge variant="danger" className={"px-3 py-2"}>REJECTED</Badge>
+                }
+                { props.conference.status === 'Updated' &&
+                <Badge variant="primary" className={"px-3 py-2"}>UPDATED</Badge>
+                }
+                { props.conference.status === 'Expired' &&
+                <Badge variant="secondary" className={"px-3 py-2"}>EXPIRED</Badge>
+                }
+                { props.conference.status === 'Canceled' &&
+                <Badge variant="secondary" className={"px-3 py-2"}>CANCELED</Badge>
                 }
             </td>
-        }
+            { props.loggedUser === 'editor' &&
+            <td className={"text-center"} style={{verticalAlign: 'middle'}}>
+                { (props.conference.status === 'Approved' || props.conference.status === 'Pending' || props.conference.status === 'Updated') &&
+                <ButtonGroup>
+                    <Button variant={"warning"} type={"submit"}
+                            onClick={() => props.edit(props.conference.id)}>
+                        <FontAwesomeIcon icon={faEdit}/>
+                    </Button>
+                    <Button variant={"danger"} type={"submit"}
+                            onClick={() => props.delete(props.conference.id)}>
+                        <FontAwesomeIcon icon={faTrashAlt}/>
+                    </Button>
+                </ButtonGroup>
+                }
+            </td>
+            }
 
-        {/* ----------checking for past conference---------- */}
-        { props.conference.status !== 'Rejected' &&
+            {/* ----------checking for past conference---------- */}
+            { props.conference.status !== 'Rejected' &&
             props.expired(props.conference.id, props.conference.endingDate)
-        }
+            }
 
-    </tr>
+        </tr>
 )
 
 class ListAllConferenceDetailsComponent extends Component {
@@ -160,10 +161,95 @@ class ListAllConferenceDetailsComponent extends Component {
         }
     }
 
+    filterApprovedConference = () => {
+        axios.get('http://localhost:8080/api/conference/approvedConference/Approved')
+            .then(response => {
+                this.setState({conferences: response.data})
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    filterRejectedConference = () => {
+        axios.get('http://localhost:8080/api/conference/rejectedConference/Rejected')
+            .then(response => {
+                this.setState({conferences: response.data})
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    filterPendingConference = () => {
+        axios.get('http://localhost:8080/api/conference/pendingConference/Pending')
+            .then(response => {
+                this.setState({conferences: response.data})
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    filterUpdatedConference = () => {
+        axios.get('http://localhost:8080/api/conference/editedConference/Updated')
+            .then(response => {
+                this.setState({conferences: response.data})
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    filterExpiredConference = () => {
+        axios.get('http://localhost:8080/api/conference/expiredConference/Expired')
+            .then(response => {
+                this.setState({conferences: response.data})
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    filterCanceledConference = () => {
+        axios.get('http://localhost:8080/api/conference/canceledConference/Canceled')
+            .then(response => {
+                this.setState({conferences: response.data})
+                console.log(response.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
     render() {
 
         return (
-            <div>
+            <div className={"main-div"}>
+                <div>
+                    <ButtonGroup className={"btn-grp"}>
+                        <Button variant={"outline-info"} type={"submit"} className={"btn-status"}
+                                onClick={this.refreshTable}>ALL CONFERENCES</Button>
+                        <Button variant={"outline-success"} type={"submit"} className={"btn-status"}
+                                onClick={this.filterApprovedConference}>APPROVED</Button>
+                        <Button variant={"outline-danger"} type={"submit"} className={"btn-status"}
+                                onClick={this.filterRejectedConference}>REJECTED</Button>
+                        <Button variant={"outline-warning"} type={"submit"} className={"btn-status"}
+                                onClick={this.filterPendingConference}>PENDING</Button>
+                        <Button variant={"outline-primary"} type={"submit"} className={"btn-status"}
+                                onClick={this.filterUpdatedConference}>UPDATED</Button>
+                        <Button variant={"outline-dark"} type={"submit"} className={"btn-status"}
+                                onClick={this.filterExpiredConference}>EXPIRED</Button>
+                        <Button variant={"outline-secondary"} type={"submit"} className={"btn-status"}
+                                onClick={this.filterCanceledConference}>CANCELED</Button>
+                    </ButtonGroup>
+                </div>
+
                 <Table striped responsive hover bordered>
                     <thead>
                     <tr>

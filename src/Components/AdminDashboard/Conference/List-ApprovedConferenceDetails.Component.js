@@ -18,7 +18,7 @@ const Conference = props => (
             { props.conference.status === 'Approved' &&
                 <>
                     { props.loggedUser === 'admin' &&
-                        <Button variant={"secondary"} type={"submit"}
+                        <Button variant={"secondary"} type={"submit"} style={{fontWeight: '400'}}
                             onClick={() => props.cancel(props.conference.id, props.conference.conferenceName)}>Cancel</Button>
                     }
                 </>
