@@ -105,7 +105,7 @@ class SignUp extends Component {
                                 <label htmlFor="userid" className="grey-text">
                                     Username
                                 </label>
-                                <input type="text" id="userid" name="userid" className="form-control"
+                                <input type="text" id="username" name="username" className="form-control"
                                        placeholder={"ex: JohnMayer27"}
                                        required={true} onChange={this.handleChange}
                                 />

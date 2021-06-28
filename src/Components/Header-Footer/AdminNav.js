@@ -30,7 +30,7 @@ class AdminNav extends Component {
                             <div>
                                 <div className={"dashboard-items"}>
                                     <div>
-                                        <Link to="#" className={"dashboard-links dashboard-single-links"}>Dashboard</Link>
+                                        <Link to="/adminsummary" className={"dashboard-links dashboard-single-links"}>Dashboard</Link>
                                     </div>
                                 </div>
                                 <Accordion>
@@ -40,7 +40,7 @@ class AdminNav extends Component {
                                     <Accordion.Collapse eventKey="0" className={"dashboard-collapse"}>
                                         <div>
                                             <Link to="/signup" className={"dashboard-links"}>Add User</Link>
-                                            <Link to="/user/etallusers" className={"dashboard-links"}>User List</Link>
+                                            <Link to="/user/getallusers" className={"dashboard-links"}>User List</Link>
                                         </div>
                                     </Accordion.Collapse>
                                 </Accordion>

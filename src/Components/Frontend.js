@@ -19,6 +19,7 @@ import ListPendingConferenceDetails from "./Admin/List-PendingConferenceDetails.
 import ListApprovedConferenceDetailsComponent from "./Admin/List-ApprovedConferenceDetails.Component";
 import GettAllUsers from "./AdminDashboard/GettAllUsers";
 import SignUp from "./Login/Signup";
+import ChartComponents from "./AdminDashboard/ChartComponents";
 
 
 
@@ -44,6 +45,7 @@ class Frontend extends Component {
 
                         <Route path="/Login" exact component={Login}/>
                         <Route path="/Admindashboard" exact component={AdminNav}/>
+                        <Route path="/adminsummary" exact component={ChartComponents}/>
                         <Route path="/user/getallusers" exact component={GettAllUsers}/>
                         <Route path="/admin-template/add" exact component={AddTemplates}/>
 
