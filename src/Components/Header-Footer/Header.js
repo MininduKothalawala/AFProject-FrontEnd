@@ -39,7 +39,6 @@ class Header extends Component {
                             <Nav className="mr-auto">
                                 <Nav.Link href="/">Home</Nav.Link>
                                 <Nav.Link href="/templates">Templates</Nav.Link>
-                                <Nav.Link href="#">About us</Nav.Link>
                             </Nav>
 
                             {
@@ -57,7 +56,7 @@ class Header extends Component {
                     </Navbar>
                 </div>
 
-                <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal show={this.state.show} onHide={this.handleClose} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Login</Modal.Title>
                     </Modal.Header>

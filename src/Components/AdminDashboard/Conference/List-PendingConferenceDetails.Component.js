@@ -110,7 +110,7 @@ class ListPendingConferenceDetails extends Component{
 
                                     {/*--------------------------Model Box to View Conference--------------------------*/}
 
-                                    <Modal show={this.state.show} onHide={this.handleClose}>
+                                    <Modal show={this.state.show} onHide={this.handleClose} centered>
                                         <Modal.Header closeButton>
                                             <Modal.Title>Conference Details</Modal.Title>
                                         </Modal.Header>

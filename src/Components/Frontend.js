@@ -18,8 +18,9 @@ import SignUp from "./Login/Signup";
 import ConferenceRegistration from "./MainUIs/Conference/ConferenceRegistration";
 import EditTemplate from "./AdminDashboard/Templates/EditTemplates";
 import ConferenceDetails from "./MainUIs/Conference/ConferenceDetails";
-import Templates from "./MainUIs/Templates";
+import Templates from "./MainUIs/Templates/Templates";
 import AdminProfile from "./AdminDashboard/User/AdminProfile";
+import Payment from "./MainUIs/Payments/Payment";
 
 class Frontend extends Component {
 
@@ -51,6 +52,8 @@ class Frontend extends Component {
                         <Route path="/admin-template/add/" exact component={AddTemplates}/>
                         <Route path="/admin-template/edit/:id" exact component={EditTemplate}/>
                         <Route path="/admin-template/list" exact component={TemplateList}/>
+
+                        <Route path="/payment/:id/:cid" exact component={Payment}/>
 
                     </Switch>
 
