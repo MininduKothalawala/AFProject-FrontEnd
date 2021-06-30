@@ -15,7 +15,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import SignUp from "../Login/Signup";
 import GettAllUsers from "./User/GettAllUsers";
 import AddTemplates from "./Templates/AddTemplates";
-import AddConferenceDetailsComponent from "../Editor/Add-ConferenceDetails.Component";
+import AddConferenceDetailsComponent from "./Conference/Add-ConferenceDetails.Component";
 import ListAllConferenceDetailsComponent from "./Conference/List-AllConferenceDetails.Component";
 import TemplateList from "./Templates/TemplateList";
 import Dashboard from "./Dashboard";

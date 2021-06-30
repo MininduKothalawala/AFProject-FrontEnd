@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import {Badge, Button, ButtonGroup, Modal, Table} from "react-bootstrap";
 import AuthenticationService from "../../Login/AuthenticationService";
-import UpdateConferenceDetailsComponent from "../../Editor/Update-ConferenceDetails.Component";
+import UpdateConferenceDetailsComponent from "./Update-ConferenceDetails.Component";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
