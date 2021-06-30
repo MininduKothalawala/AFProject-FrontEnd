@@ -67,8 +67,8 @@ class PendingPaperReviews extends Component {
                 this.refreshData();
 
                 //notify users
-                // ReviewDataService.approveNotification(mail, mailSubject, mailBody)
-                //     .then( res => console.log(res.data))
+                ReviewDataService.approveNotification(mail, mailSubject, mailBody)
+                    .then( res => console.log(res.data))
             })
     }
 

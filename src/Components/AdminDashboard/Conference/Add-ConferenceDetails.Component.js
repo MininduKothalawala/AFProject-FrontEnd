@@ -99,7 +99,7 @@ class AddConferenceDetailsComponent extends Component{
 
         console.log(conferences);
 
-        axios.post('http://localhost:8080/api/conference/addConference', conferences)
+        axios.post('https://icaf-backend.azurewebsites.net/api/conference/addConference', conferences)
             .then(res => {
                 console.log(res.data)
                 if (res.status === 201) {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const USER_API_BASE_URL = "http://localhost:8080/api/adminuser/addadminuser";
+const USER_API_BASE_URL = "https://icaf-backend.azurewebsites.net/api/adminuser/addadminuser";
 
 class UserService{
     getUsers(){

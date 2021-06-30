@@ -5,7 +5,7 @@ import {Container, ListGroup, Modal, Navbar, NavDropdown, Tab} from "react-boots
 import AuthenticationService from "../Login/AuthenticationService";
 import {
     faBars,
-    faChalkboardTeacher, faDollarSign, faFileContract, faFileSignature, faHome, faPlusSquare,
+    faChalkboardTeacher, faFileContract, faFileSignature, faHome, faPlusSquare,
     faSignOutAlt,
     faThLarge,
     faTimes,
@@ -292,20 +292,6 @@ class AdminNav extends Component {
                                     </>
                                     }
 
-
-                                    {/*-------------------------------AttendeePayment-------------------------------*/}
-                                    {loggedAsAdmin &&
-                                    <>
-                                        <ListGroup.Item eventKey="payment"
-                                                        onClick={() => this.loadContent("Payment")}>
-                                            <FontAwesomeIcon className={"mr-4"} icon={faDollarSign}/>
-                                            Payments
-                                        </ListGroup.Item>
-                                        <div>
-                                            <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin: 0}}/>
-                                        </div>
-                                    </>
-                                    }
                                 </ListGroup>
                             </Tab.Container>
                         </div>
@@ -446,14 +432,6 @@ class AdminNav extends Component {
                                 </div>
                             </div>
                             }
-
-                            {/*-------------------------------AttendeePayment-------------------------------*/}
-                            {/*{this.state.loading === "AttendeePayment" &&*/}
-                            {/*<div className={"dashboard-content"}>*/}
-                            {/*    <h5>List of Payments</h5> <br/>*/}
-                            {/*    <AttendeePayment/>*/}
-                            {/*</div>*/}
-                            {/*}*/}
 
                         </div>
                     </div>

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const R_REG = 'http://localhost:8080/api/researcher';
-const C_REG = 'http://localhost:8080/api/conductor';
-const A_REG = 'http://localhost:8080/api/attendee';
+const R_REG = 'https://icaf-backend.azurewebsites.net/api/researcher';
+const C_REG = 'https://icaf-backend.azurewebsites.net/api/conductor';
+const A_REG = 'https://icaf-backend.azurewebsites.net/api/attendee';
 
 class ConferenceRegDataService {
 

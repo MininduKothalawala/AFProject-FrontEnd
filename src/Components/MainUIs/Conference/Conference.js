@@ -18,7 +18,7 @@ class ConferencePage extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:8080/api/conference/approvedConference/Approved`)
+        axios.get(`https://icaf-backend.azurewebsites.net/api/conference/approvedConference/Approved`)
             .then(response => {
                 console.log(response.data)
                 this.setState({conferences: response.data})
@@ -31,6 +31,10 @@ class ConferencePage extends Component {
 
     enroll = (id) => {
         this.props.history.push(`/conference/reg/${id}`)
+    }
+
+    details = (id) => {
+        this.props.history.push(`/conference/${id}`)
     }
 
     render() {
@@ -64,7 +68,10 @@ class ConferencePage extends Component {
                                                             </div>
                                                     </div>
                                                     <div className={"p-3"}>
-                                                        <Button variant={"primary"} block className={"p-3"} onClick={() => this.enroll(event.id)}>ENROLL</Button>
+                                                        <Button variant={"primary"} block className={"p-3"} onClick={() => this.details(event.id)}>Submissions</Button>
+                                                    </div>
+                                                    <div className={"px-3 pb-3 pt-2"}>
+                                                        <Button variant={"danger"} block className={"p-3"} onClick={() => this.enroll(event.id)}>ENROLL</Button>
                                                     </div>
                                                 </div>
                                             </div>

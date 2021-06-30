@@ -263,12 +263,12 @@ export default class TemplateList extends Component {
                                                     <Tooltip id="tooltip-right" bsPrefix={"template-popover"}>
                                                         <div>
                                                             <Image height={"200px"} variant={"top"}
-                                                                   src={`http://localhost:8080/templates/download/${temp.imgFileId}`} />
+                                                                   src={`https://icaf-backend.azurewebsites.net/templates/download/${temp.imgFileId}`} />
                                                         </div>
                                                     </Tooltip>
                                                 }>
                                                     <Image variant={"top"} height={"50px"}
-                                                           src={`http://localhost:8080/templates/download/${temp.imgFileId}`} />
+                                                           src={`https://icaf-backend.azurewebsites.net/templates/download/${temp.imgFileId}`} />
                                                 </OverlayTrigger>
                                             </td>
                                             <td>{temp.tempFileName}</td>
