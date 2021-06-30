@@ -15,7 +15,7 @@ class ResearchTemplates extends Component {
     }
 
     componentDidMount() {
-        TemplatesDataService.getAllTemplates()
+        TemplatesDataService.filterByType("research")
             .then(res => {
                 console.log(res.data)
 
@@ -47,7 +47,10 @@ class ResearchTemplates extends Component {
             <div>
                 <Header/>
 
-                <Container>
+                <Container className={"my-5"}>
+
+                    <h3 className={"text-center my-5"}>Research Paper Templates</h3>
+
                     {
                         templates.length > 0 ?
                             [

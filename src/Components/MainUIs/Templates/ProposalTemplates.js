@@ -15,7 +15,7 @@ class ProposalTemplates extends Component {
     }
 
     componentDidMount() {
-        TemplatesDataService.getAllTemplates()
+        TemplatesDataService.filterByType("workshop")
             .then(res => {
                 console.log(res.data)
 
@@ -31,7 +31,10 @@ class ProposalTemplates extends Component {
             <div>
                 <Header/>
 
-                <Container>
+                <Container className={"my-5"}>
+
+                    <h3 className={"text-center my-5"}>Workshop Proposal Templates</h3>
+
                     {
                         templates.length > 0 ?
                             [

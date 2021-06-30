@@ -257,7 +257,7 @@ export default class TemplateList extends Component {
                                                            key={"0"}>PROPOSOL</Badge>
                                                 }
                                             </td>
-                                            <td>
+                                            <td className={"text-center"}>
                                                 <OverlayTrigger placement={"right"} defaultShow={false} delay={{ show: 10, hide: 10 }}
                                                                 overlay={
                                                     <Tooltip id="tooltip-right" bsPrefix={"template-popover"}>

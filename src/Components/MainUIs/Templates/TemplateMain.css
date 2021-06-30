@@ -12,12 +12,14 @@
     margin: 20px;
     color: #3c3c3c;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    transition: box-shadow .3s ease-in-out;
+    transition: box-shadow .2s ease-in-out;
+    border: 3px solid rgba(0, 0, 0, 0.1);
 }
 
 .template-card:hover {
     color: #000000;
     text-decoration: none;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    border: 3px solid #007bff;
     cursor: pointer;
 }

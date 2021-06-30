@@ -15,7 +15,7 @@ class PresentationTemplates extends Component {
     }
 
     componentDidMount() {
-        TemplatesDataService.getAllTemplates()
+        TemplatesDataService.filterByType("powerpoint")
             .then(res => {
                 console.log(res.data)
 
@@ -31,7 +31,10 @@ class PresentationTemplates extends Component {
             <div>
                 <Header/>
 
-                <Container>
+                <Container className={"my-5"}>
+
+                    <h3 className={"text-center my-5"}>Presentation Templates</h3>
+
                     {
                         templates.length > 0 ?
                             [
