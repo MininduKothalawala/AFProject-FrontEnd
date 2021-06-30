@@ -33,6 +33,10 @@ class ConferencePage extends Component {
         this.props.history.push(`/conference/reg/${id}`)
     }
 
+    details = (id) => {
+        this.props.history.push(`/conference/${id}`)
+    }
+
     render() {
         return (
             <div>
@@ -64,7 +68,10 @@ class ConferencePage extends Component {
                                                             </div>
                                                     </div>
                                                     <div className={"p-3"}>
-                                                        <Button variant={"primary"} block className={"p-3"} onClick={() => this.enroll(event.id)}>ENROLL</Button>
+                                                        <Button variant={"primary"} block className={"p-3"} onClick={() => this.details(event.id)}>Submissions</Button>
+                                                    </div>
+                                                    <div className={"px-3 pb-3 pt-2"}>
+                                                        <Button variant={"danger"} block className={"p-3"} onClick={() => this.enroll(event.id)}>ENROLL</Button>
                                                     </div>
                                                 </div>
                                             </div>
