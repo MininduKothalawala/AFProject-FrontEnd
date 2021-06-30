@@ -14,11 +14,11 @@ class ReviewDataService {
     }
 
     downloadPaper(id) {
-        return axios.get(`${R_URL}/download/${id}`, {responseType: 'blob'})
+        return axios.get(`https://icaf-backend.azurewebsites.net/templates/download/${id}`, {responseType: 'blob'})
     }
 
     downloadProposol(id) {
-        return axios.get(`${C_URL}/download/${id}`, {responseType: 'blob'})
+        return axios.get(`https://icaf-backend.azurewebsites.net/templates/download/${id}`, {responseType: 'blob'})
     }
 
     updatePaperSubmissionStatus(data) {
