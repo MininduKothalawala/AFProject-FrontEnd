@@ -3,6 +3,7 @@ import axios from "axios";
 import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import moment from "moment";
 import Swal from "sweetalert2";
+import AuthenticationService from "../../Login/AuthenticationService";
 
 class UpdateConferenceDetailsComponent extends Component {
 
@@ -19,17 +20,20 @@ class UpdateConferenceDetailsComponent extends Component {
 
         this.state = {
             id: props.conferenceId,
-            conferenceName: '',
-            description: '',
-            startingDate: '',
+            conferenceName : '',
+            description:'',
+            startingDate : '',
             endingDate: '',
-            venue: '',
-            status: '',
+            username:'',
+            venue : '',
+            payment: '',
+            status :'',
             daylimit: moment().add(10, "days").format('YYYY-MM-DD')
         }
     }
 
     componentDidMount() {
+        const loggedUser = AuthenticationService.loggedUserId();
         axios.get('http://localhost:8080/api/conference/conferencebyid/' + this.state.id)
             .then(response => {
                 this.setState({
@@ -38,7 +42,9 @@ class UpdateConferenceDetailsComponent extends Component {
                     description: response.data.description,
                     startingDate: moment(response.data.startingDate).format('YYYY-MM-DD'),
                     endingDate: moment(response.data.endingDate).format('YYYY-MM-DD'),
+                    username: loggedUser,
                     venue: response.data.venue,
+                    payment:response.data.payment,
                     status: response.data.status
                 })
             })
@@ -84,6 +90,12 @@ class UpdateConferenceDetailsComponent extends Component {
         });
     }
 
+    onChangePayment(e){
+        this.setState({
+            payment : e.target.value
+        });
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
@@ -104,7 +116,9 @@ class UpdateConferenceDetailsComponent extends Component {
             description: this.state.description,
             startingDate: moment(this.state.startingDate).format('YYYY-MM-DD'),
             endingDate: moment(this.state.endingDate).format('YYYY-MM-DD'),
+            addedBy:this.state.username,
             venue: this.state.venue,
+            payment:this.state.payment,
             status: newStatus,
         }
 
@@ -222,12 +236,31 @@ class UpdateConferenceDetailsComponent extends Component {
                         </div>
 
                         <div className="form-group">
+                            <label>Added By : </label>
+                            <input type="text"
+                                   required
+                                   className="form-control"
+                                   value={this.state.username}
+                            />
+                        </div>
+
+                        <div className="form-group">
                             <label>Venue : </label>
                             <input type="text"
                                    required
                                    className="form-control"
                                    value={this.state.venue}
                                    onChange={this.onChangeVenue}
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label>Payment : </label>
+                            <input type="text"
+                                   required
+                                   className="form-control"
+                                   value={this.state.payment}
+                                   onChange={this.onChangePayment}
                             />
                         </div>
 
