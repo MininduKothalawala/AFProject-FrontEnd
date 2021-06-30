@@ -3,7 +3,7 @@ import axios from "axios";
 import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import moment from 'moment';
 import Swal from "sweetalert2";
-import AuthenticationService from "../Login/AuthenticationService";
+import AuthenticationService from "../../Login/AuthenticationService";
 
 class AddConferenceDetailsComponent extends Component{
 
