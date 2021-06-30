@@ -2,11 +2,9 @@ import React, {Component} from "react";
 import {withRouter} from "react-router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import '../../AdminDashboard/AdminNav.css';
-import AuthenticationService from "../../Login/AuthenticationService";
 import {Badge, Button, ButtonGroup, Form, InputGroup, Table} from "react-bootstrap";
 import ReviewDataService from "./ReviewDataService";
 import {faSearch} from "@fortawesome/free-solid-svg-icons";
-import TemplatesDataService from "../Templates/TemplatesDataService";
 import Swal from "sweetalert2";
 import "./Review.css"
 

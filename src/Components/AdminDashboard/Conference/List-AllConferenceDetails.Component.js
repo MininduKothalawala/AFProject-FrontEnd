@@ -81,7 +81,7 @@ class ListAllConferenceDetailsComponent extends Component {
     }
 
     refreshTable = () => {
-        axios.get('http://localhost:8080/api/conference/getAll')
+        axios.get('https://icaf-backend.azurewebsites.net/api/conference/getAll')
             .then(response => {
                 this.setState({conferences: response.data})
                 console.log(response.data)
@@ -129,7 +129,7 @@ class ListAllConferenceDetailsComponent extends Component {
             cancelButtonText: 'No'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete('http://localhost:8080/api/conference/deleteConference/' + id)
+                axios.delete('https://icaf-backend.azurewebsites.net/api/conference/deleteConference/' + id)
                     .then(res => {
                         if (res.status === 204) {
 
@@ -156,13 +156,13 @@ class ListAllConferenceDetailsComponent extends Component {
         const date = moment(endDate, 'YYYY-MM-DD')
 
         if ( today.diff(date) > 0 ) {
-            axios.put(`http://localhost:8080/api/conference/updateStatus/${id}/Expired`)
+            axios.put(`https://icaf-backend.azurewebsites.net/api/conference/updateStatus/${id}/Expired`)
                 .then( res => (console.log(res.data)))
         }
     }
 
     filterApprovedConference = () => {
-        axios.get('http://localhost:8080/api/conference/approvedConference/Approved')
+        axios.get('https://icaf-backend.azurewebsites.net/api/conference/approvedConference/Approved')
             .then(response => {
                 this.setState({conferences: response.data})
                 console.log(response.data)
@@ -173,7 +173,7 @@ class ListAllConferenceDetailsComponent extends Component {
     }
 
     filterRejectedConference = () => {
-        axios.get('http://localhost:8080/api/conference/rejectedConference/Rejected')
+        axios.get('https://icaf-backend.azurewebsites.net/api/conference/rejectedConference/Rejected')
             .then(response => {
                 this.setState({conferences: response.data})
                 console.log(response.data)
@@ -184,7 +184,7 @@ class ListAllConferenceDetailsComponent extends Component {
     }
 
     filterPendingConference = () => {
-        axios.get('http://localhost:8080/api/conference/pendingConference/Pending')
+        axios.get('https://icaf-backend.azurewebsites.net/api/conference/pendingConference/Pending')
             .then(response => {
                 this.setState({conferences: response.data})
                 console.log(response.data)
@@ -195,7 +195,7 @@ class ListAllConferenceDetailsComponent extends Component {
     }
 
     filterUpdatedConference = () => {
-        axios.get('http://localhost:8080/api/conference/editedConference/Updated')
+        axios.get('https://icaf-backend.azurewebsites.net/api/conference/editedConference/Updated')
             .then(response => {
                 this.setState({conferences: response.data})
                 console.log(response.data)
@@ -206,7 +206,7 @@ class ListAllConferenceDetailsComponent extends Component {
     }
 
     filterExpiredConference = () => {
-        axios.get('http://localhost:8080/api/conference/expiredConference/Expired')
+        axios.get('https://icaf-backend.azurewebsites.net/api/conference/expiredConference/Expired')
             .then(response => {
                 this.setState({conferences: response.data})
                 console.log(response.data)
@@ -217,7 +217,7 @@ class ListAllConferenceDetailsComponent extends Component {
     }
 
     filterCanceledConference = () => {
-        axios.get('http://localhost:8080/api/conference/canceledConference/Canceled')
+        axios.get('https://icaf-backend.azurewebsites.net/api/conference/canceledConference/Canceled')
             .then(response => {
                 this.setState({conferences: response.data})
                 console.log(response.data)

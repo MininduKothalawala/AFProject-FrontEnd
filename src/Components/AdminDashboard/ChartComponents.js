@@ -91,7 +91,7 @@
 //     }
 //
 //     getResearcherCount = () => {
-//         axios.get('http://localhost:8080/api/researcher/getResearcherCount').then(response => {
+//         axios.get('https://icaf-backend.azurewebsites.net/api/researcher/getResearcherCount').then(response => {
 //             console.log(response.data)
 //             this.setState({
 //                 data: response.data

@@ -3,7 +3,6 @@ import "./ConferenceMain.css"
 import Header from "../../Header-Footer/Header";
 import PaperSubmissionList from "./PaperSubmissionList";
 import ProposalSubmissionList from "./ProposalSubmissionList";
-import axios from "axios";
 
 class ConferenceSubmissions extends Component {
     constructor(props) {
@@ -18,28 +17,6 @@ class ConferenceSubmissions extends Component {
 
     componentDidMount() {
         console.log(this.state.conferenceID)
-        // this.loadResearchPapers();
-        this.loadWorkshopProposals();
-    }
-
-    // loadResearchPapers = () => {
-    //     axios.get('http://localhost:8080/api/researcher/search/conference/'+this.state.conferenceID)
-    //         .then( res => {
-    //             console.log(res.data)
-    //             this.setState({
-    //                 papers: res.data
-    //             })
-    //         })
-    // }
-
-    loadWorkshopProposals = () => {
-        axios.get('http://localhost:8080/api/conductor/search/conference/'+this.state.conferenceID)
-            .then( res => {
-                console.log(res.data)
-                this.setState({
-                    proposals: res.data
-                })
-            })
     }
 
     render() {

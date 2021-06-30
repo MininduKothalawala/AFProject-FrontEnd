@@ -42,7 +42,7 @@ class ListApprovedConferenceDetailsComponent extends Component {
     }
 
     refreshApprovedList = () => {
-        axios.get('http://localhost:8080/api/conference/approvedConference/Approved')
+        axios.get('https://icaf-backend.azurewebsites.net/api/conference/approvedConference/Approved')
             .then(response => {
                 this.setState({conferences: response.data})
             })
@@ -82,7 +82,7 @@ class ListApprovedConferenceDetailsComponent extends Component {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                axios.put(`http://localhost:8080/api/conference/updateStatus/${id}/Canceled`)
+                axios.put(`https://icaf-backend.azurewebsites.net/api/conference/updateStatus/${id}/Canceled`)
                     .then(res => {
                         console.log(res)
                         if (res.status === 200) {
@@ -98,7 +98,7 @@ class ListApprovedConferenceDetailsComponent extends Component {
                             this.refreshApprovedList();
 
                             // send email
-                            axios.post(`http://localhost:8080/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
+                            axios.post(`https://icaf-backend.azurewebsites.net/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
                                     .then(res => (console.log(res)))
 
 

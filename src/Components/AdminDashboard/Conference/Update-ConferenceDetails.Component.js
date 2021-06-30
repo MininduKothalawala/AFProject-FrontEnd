@@ -30,7 +30,7 @@ class UpdateConferenceDetailsComponent extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8080/api/conference/conferencebyid/' + this.state.id)
+        axios.get('https://icaf-backend.azurewebsites.net/api/conference/conferencebyid/' + this.state.id)
             .then(response => {
                 this.setState({
                     id: response.data.id,
@@ -121,7 +121,7 @@ class UpdateConferenceDetailsComponent extends Component {
 
         console.log(conferences);
 
-        axios.put('http://localhost:8080/api/conference/updateConference', conferences)
+        axios.put('https://icaf-backend.azurewebsites.net/api/conference/updateConference', conferences)
             .then(res => {
                 console.log(res)
                 if (res.status === 200) {
@@ -136,10 +136,10 @@ class UpdateConferenceDetailsComponent extends Component {
                     }).then((result) => {
                         if (result.isConfirmed) {
                             //send email
-                            // if (newStatus === 'Updated') {
-                            //     axios.post(`http://localhost:8080/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
-                            //         .then(res => (console.log(res)))
-                            // }
+                            if (newStatus === 'Updated') {
+                                axios.post(`https://icaf-backend.azurewebsites.net/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
+                                    .then(res => (console.log(res)))
+                            }
 
                             window.location.reload();
                         }
