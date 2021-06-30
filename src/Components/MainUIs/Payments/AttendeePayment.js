@@ -76,11 +76,11 @@ class AttendeePayment extends Component {
                     console.log(res)
 
                     this.setState({
-                        cardPin: res.data.pinNo,
+                        cardPin: res.data.cvv,
                         cardBalance: res.data.amount
                     })
 
-                    if (this.state.cardPin === cvc) {
+                    if (this.state.cardPin === res.data.cvv) {
                         //check expiration
                         if (eMonth >= "01" && eMonth <= "12") {
                             if (eMonth >= this.state.month && eYear >= this.state.year) {

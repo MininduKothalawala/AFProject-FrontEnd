@@ -16,6 +16,7 @@ class AddConferenceDetailsComponent extends Component{
         this.onChangeStartingDate = this.onChangeStartingDate.bind(this);
         this.onChangeEndingDate = this.onChangeEndingDate.bind(this);
         this.onChangeVenue = this.onChangeVenue.bind(this);
+        this.onChangePayment = this.onChangePayment.bind(this);
         this.onSubmit2 = this.onSubmit2.bind(this);
 
         this.state = {
@@ -101,7 +102,7 @@ class AddConferenceDetailsComponent extends Component{
         axios.post('https://icaf-backend.azurewebsites.net/api/conference/addConference', conferences)
             .then(res => {
                 console.log(res.data)
-                if (res.status === 200) {
+                if (res.status === 201) {
 
                     Swal.fire({
                         icon: 'success',
@@ -115,7 +116,7 @@ class AddConferenceDetailsComponent extends Component{
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        html: '<p>There was an error uploading!</p>',
+                        html: '<p>There was an error uploading!!</p>',
                         background: '#041c3d',
                         showConfirmButton: false,
                         timer: 1500,
