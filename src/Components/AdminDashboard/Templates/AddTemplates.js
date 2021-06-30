@@ -26,7 +26,7 @@ class AddTemplates extends Component {
         this.setState({
             username: loggedUser
         });
-            }
+    }
 
     handleChange = (event) => {
         event.preventDefault();

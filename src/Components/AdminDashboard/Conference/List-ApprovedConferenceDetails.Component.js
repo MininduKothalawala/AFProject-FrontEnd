@@ -97,9 +97,9 @@ class ListApprovedConferenceDetailsComponent extends Component {
                             })
                             this.refreshApprovedList();
 
-                            //send email
-                            // axios.post(`http://localhost:8080/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
-                            //         .then(res => (console.log(res)))
+                            // send email
+                            axios.post(`http://localhost:8080/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
+                                    .then(res => (console.log(res)))
 
 
                         } else {

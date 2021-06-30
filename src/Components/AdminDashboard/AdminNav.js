@@ -22,7 +22,7 @@ import Dashboard from "./Dashboard";
 import AdminProfile from "./User/AdminProfile";
 import ListApprovedConferenceDetailsComponent from "./Conference/List-ApprovedConferenceDetails.Component";
 import ListPendingConferenceDetails from "./Conference/List-PendingConferenceDetails.Component";
-// import Payment from "./Payment/PaymentTable";
+// import AttendeePayment from "./AttendeePayment/PaymentTable";
 import AllResearchPapers from "./Review/AllResearchPapers";
 import AllWorkshopProposals from "./Review/AllWorkshopProposals";
 import PendingProposalReviews from "./Review/PendingProposalReviews";
@@ -293,7 +293,7 @@ class AdminNav extends Component {
                                     }
 
 
-                                    {/*-------------------------------Payment-------------------------------*/}
+                                    {/*-------------------------------AttendeePayment-------------------------------*/}
                                     {loggedAsAdmin &&
                                     <>
                                         <ListGroup.Item eventKey="payment"
@@ -447,11 +447,11 @@ class AdminNav extends Component {
                             </div>
                             }
 
-                            {/*-------------------------------Payment-------------------------------*/}
-                            {/*{this.state.loading === "Payment" &&*/}
+                            {/*-------------------------------AttendeePayment-------------------------------*/}
+                            {/*{this.state.loading === "AttendeePayment" &&*/}
                             {/*<div className={"dashboard-content"}>*/}
                             {/*    <h5>List of Payments</h5> <br/>*/}
-                            {/*    <Payment/>*/}
+                            {/*    <AttendeePayment/>*/}
                             {/*</div>*/}
                             {/*}*/}
 

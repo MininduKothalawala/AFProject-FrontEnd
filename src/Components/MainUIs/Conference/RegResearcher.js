@@ -88,7 +88,6 @@ class RegResearcher extends Component {
 
         return (
             <Card>
-                <Card.Header>Register</Card.Header>
                 <Card.Body>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Group controlId={"regName"}>

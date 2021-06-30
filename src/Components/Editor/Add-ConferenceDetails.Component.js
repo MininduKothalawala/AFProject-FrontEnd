@@ -3,6 +3,7 @@ import axios from "axios";
 import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import moment from 'moment';
 import Swal from "sweetalert2";
+import AuthenticationService from "../Login/AuthenticationService";
 
 class AddConferenceDetailsComponent extends Component{
 
@@ -23,11 +24,19 @@ class AddConferenceDetailsComponent extends Component{
             description:'',
             startingDate : '',
             endingDate: '',
+            username:'',
             venue : '',
             payment: '',
             status :'Pending',  //initial state is 'pending'
             daylimit: moment().add(10, "days").format('YYYY-MM-DD')
         }
+    }
+
+    componentDidMount() {
+        const loggedUser = AuthenticationService.loggedUserId();
+        this.setState({
+            username: loggedUser
+        });
     }
 
     onChangeID(e){
@@ -81,6 +90,7 @@ class AddConferenceDetailsComponent extends Component{
             description: this.state.description,
             startingDate: moment(this.state.startingDate).format('YYYY-MM-DD'),
             endingDate: moment(this.state.endingDate).format('YYYY-MM-DD'),
+            addedBy: this.state.username,
             venue: this.state.venue,
             status: this.state.status,
             payment: this.state.payment,
