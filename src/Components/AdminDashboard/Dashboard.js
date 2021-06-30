@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {withRouter} from "react-router";
 import './AdminNav.css';
 import AuthenticationService from "../Login/AuthenticationService";
+import ChartComponents from "./ChartComponents";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class Dashboard extends Component {
 
         return (
             <div>
-                <h3>Dashboard</h3>
+                <h3><ChartComponents/></h3>
             </div>
 
         )

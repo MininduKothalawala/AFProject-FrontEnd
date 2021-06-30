@@ -37,7 +37,7 @@ class AdminNav extends Component {
             index: 0,
             classes: '',
             show: true,
-            loading: "Templates",
+            loading: "Dashboard",
             windowWidth: window.innerWidth, //window size
             width: "0",
             mleft: "0",
