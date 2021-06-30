@@ -48,10 +48,6 @@ class TemplatesDataService {
         return axios.delete(`${API_URL}/${id}/${imgId}/${fileId}`)
     }
 
-    validateConferenceId(id) {
-        return axios.get(`http://localhost:8080/api/conference/conferencebyid/${id}`);
-    }
-
 }
 
 export default new TemplatesDataService();

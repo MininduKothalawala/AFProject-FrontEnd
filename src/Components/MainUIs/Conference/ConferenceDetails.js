@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import {Button, Card, CardDeck, Container} from "react-bootstrap";
-import "../Home/Home.css"
+import "./ConferenceMain.css"
 import {withRouter} from "react-router-dom";
 import Header from "../../Header-Footer/Header";
 

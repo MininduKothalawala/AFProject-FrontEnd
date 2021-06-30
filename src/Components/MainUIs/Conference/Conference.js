@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import {Card, Col, Row} from "react-bootstrap";
-import "../Home/Home.css"
+import "./ConferenceMain.css"
 import {withRouter} from "react-router-dom";
 
 class ConferencePage extends Component {
@@ -26,7 +26,7 @@ class ConferencePage extends Component {
             })
     }
 
-    handleSubmit = (id) => {
+    handleClick = (id) => {
         this.props.history.push(`/conference/${id}`)
     }
 
@@ -40,7 +40,8 @@ class ConferencePage extends Component {
                                 {
                                     this.state.conferences.map(event =>
                                         <Col sm={4} className={"card-group mb-4"} key={event.id}>
-                                            <Card className={"conference-card"} style={{width: '30rem'}} key={event.id} onClick={() => this.handleSubmit(event.id)}>
+                                            <Card className={"conference-card"} style={{width: '30rem'}} key={event.id}
+                                                  onClick={() => this.handleClick(event.id)}>
                                                 <Card.Header><b>{event.conferenceName}</b></Card.Header>
                                                 <Card.Body>
                                                     <Card.Text>

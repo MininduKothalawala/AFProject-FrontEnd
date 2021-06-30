@@ -8,5 +8,5 @@
 .conference-card:hover {
     color: #000000;
     text-decoration: none;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }

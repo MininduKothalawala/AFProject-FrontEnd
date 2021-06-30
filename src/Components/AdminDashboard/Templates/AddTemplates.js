@@ -154,7 +154,7 @@ class AddTemplates extends Component {
                                 <Form.Control as={"select"} name={"tempType"} required
                                               value={tempType} onChange={this.handleChange}>
                                     <option value={"choose"}>Choose...</option>
-                                    <option value={"research"}>Research paper Template</option>
+                                    <option value={"research"}>Research Paper Template</option>
                                     <option value={"powerpoint"}>Powerpoint Template</option>
                                     <option value={"workshop"}>Workshop Proposal Template</option>
                                 </Form.Control>

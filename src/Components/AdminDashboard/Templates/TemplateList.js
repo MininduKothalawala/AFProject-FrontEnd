@@ -220,7 +220,7 @@ export default class TemplateList extends Component {
                     </div>
 
 
-                    {/*-------------------------------------------Templates Table-------------------------------------------*/}
+                    {/*-------------------------------------------ResearchTemplates Table-------------------------------------------*/}
 
                     <Table striped responsive hover bordered>
                         <thead>
