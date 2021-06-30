@@ -44,8 +44,8 @@ class TemplatesDataService {
         return axios.put(`${API_URL}/update`, data)
     }
 
-    deleteTemplate(id, fileId) {
-        return axios.delete(`${API_URL}/${id}/${fileId}`)
+    deleteTemplate(id, imgId, fileId) {
+        return axios.delete(`${API_URL}/${id}/${imgId}/${fileId}`)
     }
 
     validateConferenceId(id) {

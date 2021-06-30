@@ -72,7 +72,7 @@ export default class TemplateList extends Component {
         this.setState({show: false})
     }
 
-    handleDelete = (id, fileId) => {
+    handleDelete = (id, imgId, fileId) => {
 
         Swal.fire({
             title: 'Are you sure?',
@@ -86,11 +86,10 @@ export default class TemplateList extends Component {
             cancelButtonText: 'No'
         }).then((result) => {
             if (result.isConfirmed) {
-                TemplatesDataService.deleteTemplate(id, fileId)
+                TemplatesDataService.deleteTemplate(id, imgId, fileId)
                     .then(res => {
 
-                        if (res.status === 200) {
-                            console.log("CREATED");
+                        if (res.status === 204) {
 
                             Swal.fire({
                                 icon: 'success',
@@ -124,15 +123,6 @@ export default class TemplateList extends Component {
                 document.body.appendChild(link);
                 link.click();
                 link.remove();
-            })
-    }
-
-    previewImage = (filename, fid) => {
-        TemplatesDataService.downloadFile(fid)
-            .then(res => {
-                console.log(res.data)
-                this.setState({url: res.config.url})
-                console.log(this.state.url)
             })
     }
 
@@ -247,7 +237,7 @@ export default class TemplateList extends Component {
                         {
                             template.length === 0 ?
                                 <tr align={"center"}>
-                                    <td colSpan={"5"}>No records at the moment</td>
+                                    <td colSpan={"6"}>No records at the moment</td>
                                 </tr>
 
                                 : [
@@ -297,7 +287,7 @@ export default class TemplateList extends Component {
                                                         <FontAwesomeIcon icon={faEdit}/>
                                                     </Button>
                                                     <Button variant={"danger"} type={"submit"}
-                                                            onClick={() => this.handleDelete(temp.id, temp.tempFileId)}>
+                                                            onClick={() => this.handleDelete(temp.id, temp.imgFileId, temp.tempFileId)}>
                                                         <FontAwesomeIcon icon={faTrashAlt}/>
                                                     </Button>
                                                 </ButtonGroup>

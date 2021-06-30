@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Accordion, Button, Card, Form} from "react-bootstrap";
+import {Accordion, Button, Card, Container, Form} from "react-bootstrap";
 import * as Swal from "sweetalert2";
 import TemplatesDataService from "./TemplatesDataService";
 import './Templates.css';
@@ -14,6 +14,7 @@ class EditTemplates extends Component {
             id: props.tempId,
             tempDesc: '',
             tempType: 'choose',
+            imgFile: undefined,
             tempFile: undefined,
             username: '',
             isChecked: false,
@@ -71,25 +72,34 @@ class EditTemplates extends Component {
         })
     }
 
+    handleImgChange = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            imgFile: event.target.files
+        })
+    }
+
     handleUpdate = (e) => {
         e.preventDefault();
 
         const id = this.state.id;
         const desc = this.state.tempDesc;
         const type = this.state.tempType;
-        const user = this.state.username;
-        const file = this.state.tempFile;
+        const addedBy = this.state.username;
+        const tempImg = this.state.imgFile;
+        const tempFile = this.state.tempFile;
 
 
+        //update only description
         if (!this.state.isChecked) {
             console.log("UPDATING...");
 
             const formData = new FormData();
             formData.append('id', id)
             formData.append('desc', desc)
-            formData.append('username', user)
+            formData.append('addedBy', addedBy)
 
-            //update description only
             TemplatesDataService.editDescription(formData)
                 .then( res => {
                     if (res.status === 200) {
@@ -102,22 +112,26 @@ class EditTemplates extends Component {
                             background: '#041c3d',
                             confirmButtonColor: '#3aa2e7',
                             iconColor: '#60e004'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                this.clearData();
+                                window.location.reload();
+                            }
                         })
-
-                        this.clearData();
                     }
                 })
 
         } else {
+            //update all including files
             console.log("UPDATING FILE...");
-            //update all including file
             if (type !== 'choose') {
                 const formData = new FormData();
                 formData.append('id', id)
                 formData.append('desc', desc)
                 formData.append('type', type)
-                formData.append('username', user)
-                formData.append('file', file[0])
+                formData.append('addedBy', addedBy)
+                formData.append('tempImg', tempImg[0])
+                formData.append('tempFile', tempFile[0])
                 const config = {
                     headers: {
                         "Content-Type": "multipart/form-data"
@@ -137,9 +151,12 @@ class EditTemplates extends Component {
                                 background: '#041c3d',
                                 confirmButtonColor: '#3aa2e7',
                                 iconColor: '#60e004'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    this.clearData();
+                                    window.location.reload();
+                                }
                             })
-
-                            this.clearData();
                         } else {
                             Swal.fire({
                                 icon: 'error',
@@ -219,28 +236,52 @@ class EditTemplates extends Component {
 
                                                         <Accordion.Collapse eventKey="0" key={"0"}>
                                                             <Card.Body>
-                                                                <Card.Text className={"text-muted"}>Please upload your document
-                                                                    here</Card.Text>
-                                                                <Form.Group controlId={"templateFile"}>
-                                                                    <Form.File id={"templateUpload"} name={"tempFile"}
-                                                                               accept={".doc, .docx"} required
-                                                                               onChange={this.handleFileChange}
-                                                                    />
-                                                                </Form.Group>
+                                                                <Container>
+                                                                    <Card.Text className={"text-muted"}>Please upload a preview of the document
+                                                                        here</Card.Text>
+                                                                    <Form.Group controlId={"imageFile"}>
+                                                                        <Form.File id={"imageUpload"} name={"imgFile"}
+                                                                                   accept={".jpg, .jpeg, .png"} required
+                                                                                   onChange={this.handleImgChange}
+                                                                        />
+                                                                    </Form.Group>
+                                                                </Container> <hr/>
+                                                                <Container>
+                                                                    <Card.Text className={"text-muted"}>Please upload your document
+                                                                        here</Card.Text>
+                                                                    <Form.Group controlId={"templateFile"}>
+                                                                        <Form.File id={"templateUpload"} name={"tempFile"}
+                                                                                   accept={".doc, .docx"} required
+                                                                                   onChange={this.handleFileChange}
+                                                                        />
+                                                                    </Form.Group>
+                                                                </Container>
                                                             </Card.Body>
                                                         </Accordion.Collapse>
                                                         : [
                                                             tempType === 'powerpoint' ?
                                                                 <Accordion.Collapse eventKey="0" key={"0"}>
                                                                     <Card.Body>
-                                                                        <Card.Text className={"text-muted"}>Please upload your
-                                                                            presentation here</Card.Text>
-                                                                        <Form.Group controlId={"templateFile"}>
-                                                                            <Form.File id={"templateUpload"} name={"tempFile"}
-                                                                                       accept={".pptx, .ppt"} required
-                                                                                       onChange={this.handleFileChange}
-                                                                            />
-                                                                        </Form.Group>
+                                                                        <Container>
+                                                                            <Card.Text className={"text-muted"}>Please upload a preview of the presentation
+                                                                                here</Card.Text>
+                                                                            <Form.Group controlId={"imageFile"}>
+                                                                                <Form.File id={"imageUpload"} name={"imgFile"}
+                                                                                           accept={".jpg, .jpeg, .png"} required
+                                                                                           onChange={this.handleImgChange}
+                                                                                />
+                                                                            </Form.Group>
+                                                                        </Container> <hr/>
+                                                                        <Container>
+                                                                            <Card.Text className={"text-muted"}>Please upload your
+                                                                                presentation here</Card.Text>
+                                                                            <Form.Group controlId={"templateFile"}>
+                                                                                <Form.File id={"templateUpload"} name={"tempFile"}
+                                                                                           accept={".pptx, .ppt"} required
+                                                                                           onChange={this.handleFileChange}
+                                                                                />
+                                                                            </Form.Group>
+                                                                        </Container>
                                                                     </Card.Body>
                                                                 </Accordion.Collapse>
 
@@ -248,14 +289,26 @@ class EditTemplates extends Component {
                                                                     tempType === 'workshop' ?
                                                                         <Accordion.Collapse eventKey="0" key={"0"}>
                                                                             <Card.Body>
-                                                                                <Card.Text className={"text-muted"}>Please upload your document
-                                                                                    file here</Card.Text>
-                                                                                <Form.Group controlId={"templateFile"}>
-                                                                                    <Form.File id={"templateUpload"} name={"tempFile"}
-                                                                                               accept={".docx, .doc"} required
-                                                                                               onChange={this.handleFileChange}
-                                                                                    />
-                                                                                </Form.Group>
+                                                                                <Container>
+                                                                                    <Card.Text className={"text-muted"}>Please upload a preview of the document
+                                                                                        here</Card.Text>
+                                                                                    <Form.Group controlId={"imageFile"}>
+                                                                                        <Form.File id={"imageUpload"} name={"imgFile"}
+                                                                                                   accept={".jpg, .jpeg, .png"} required
+                                                                                                   onChange={this.handleImgChange}
+                                                                                        />
+                                                                                    </Form.Group>
+                                                                                </Container> <hr/>
+                                                                                <Container>
+                                                                                    <Card.Text className={"text-muted"}>Please upload your document
+                                                                                        file here</Card.Text>
+                                                                                    <Form.Group controlId={"templateFile"}>
+                                                                                        <Form.File id={"templateUpload"} name={"tempFile"}
+                                                                                                   accept={".docx, .doc"} required
+                                                                                                   onChange={this.handleFileChange}
+                                                                                        />
+                                                                                    </Form.Group>
+                                                                                </Container>
                                                                             </Card.Body>
                                                                         </Accordion.Collapse>
                                                                         : ''
