@@ -33,7 +33,7 @@ class gettAllUsers extends Component {
 
 
     getAllUsers = () => {
-        axios.get('http://localhost:8080/api/adminuser/alladmin').then(response => {
+        axios.get('https://icaf-backend.azurewebsites.net/api/adminuser/alladmin').then(response => {
             // console.log(response.data)
             this.setState({
                 User: response.data
@@ -55,8 +55,8 @@ class gettAllUsers extends Component {
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    axios.delete('http://localhost:8080/api/adminuser/deleteuser/' + id).then(response => {
-                        // console.log(response.data)
+                    axios.delete('https://icaf-backend.azurewebsites.net/api/adminuser/deleteuser/' + id).then(response => {
+                        console.log(response.data)
                         this.getAllUsers();
                     })
                     swal("Record has been deleted!", {

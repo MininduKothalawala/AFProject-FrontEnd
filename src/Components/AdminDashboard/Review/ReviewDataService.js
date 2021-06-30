@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const R_URL = 'http://localhost:8080/api/researcher';
-const C_URL = 'http://localhost:8080/api/conductor';
+const R_URL = 'https://icaf-backend.azurewebsites.net/api/researcher';
+const C_URL = 'https://icaf-backend.azurewebsites.net/api/conductor';
 
 class ReviewDataService {
 

@@ -2,9 +2,9 @@ import React, {Component} from "react";
 import {withRouter} from "react-router";
 import '../../AdminDashboard/AdminNav.css';
 import AuthenticationService from "../../Login/AuthenticationService";
-import {Badge, Button, ButtonGroup, Card, Form, Table} from "react-bootstrap";
+import {Badge, Button, ButtonGroup, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowAltCircleDown, faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
 import ReviewDataService from "./ReviewDataService";
 
 class PendingProposalReviews extends Component {
@@ -47,7 +47,7 @@ class PendingProposalReviews extends Component {
 
     approveContent = (cid, email) => {
         //sending emails
-        const mail = cid;
+        const mail = email;
         const mailSubject = "Paper Submission Notification" ;
         const mailBody = "Dear Participant,\n\n" +
             "Congratulations! Your proposal has been approved. We will be looking forward to your session.\n\n" +
@@ -65,8 +65,8 @@ class PendingProposalReviews extends Component {
                 this.refreshData();
 
                 //notify users
-                // ReviewDataService.approveNotification(mail, mailSubject, mailBody)
-                //     .then( res => console.log(res.data))
+                ReviewDataService.approveNotification(mail, mailSubject, mailBody)
+                    .then( res => console.log(res.data))
             })
     }
 

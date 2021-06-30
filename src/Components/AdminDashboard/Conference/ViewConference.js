@@ -23,7 +23,7 @@ class ViewConference extends Component {
     refresh = () => {
         const id = this.state.cid
 
-        axios.get(`http://localhost:8080/api/conference/conferencebyid/${id}`)
+        axios.get(`https://icaf-backend.azurewebsites.net/api/conference/conferencebyid/${id}`)
             .then(response => {
                 // console.log(response.data)
                 this.setState({

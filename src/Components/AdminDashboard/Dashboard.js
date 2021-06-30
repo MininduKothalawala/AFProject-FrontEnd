@@ -22,7 +22,7 @@ class Dashboard extends Component {
 
         return (
             <div>
-                <h3><ChartComponents/></h3>
+                {/*<h3><ChartComponents/></h3>*/}
             </div>
 
         )

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Card, Col, Row} from "react-bootstrap";
-import UserService from "../../API/UserService";
+import UserService from "./UserService";
 import * as Swal from "sweetalert2";
 import {withRouter} from "react-router";
 
