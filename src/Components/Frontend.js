@@ -4,22 +4,15 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from './MainUIs/Home/Home';
 import Login from "./Login/Login";
 import AdminNav from "./AdminDashboard/AdminNav";
-import AddTemplates from "./AdminDashboard/Templates/AddTemplates";
-
-import UpdateConferenceDetailsComponent from "./Editor/Update-ConferenceDetails.Component";
-import AddConferenceDetailsComponent from "./Editor/Add-ConferenceDetails.Component";
-
-import ListAllConferenceDetailsComponent from "./AdminDashboard/Conference/List-AllConferenceDetails.Component";
-import ListPendingConferenceDetails from "./AdminDashboard/Conference/List-PendingConferenceDetails.Component";
-import ListApprovedConferenceDetailsComponent from "./AdminDashboard/Conference/List-ApprovedConferenceDetails.Component";
-import TemplateList from "./AdminDashboard/Templates/TemplateList";
 import GettAllUsers from "./AdminDashboard/User/GettAllUsers";
 import SignUp from "./Login/Signup";
 import ConferenceRegistration from "./MainUIs/Conference/ConferenceRegistration";
-import EditTemplate from "./AdminDashboard/Templates/EditTemplates";
-import ConferenceDetails from "./MainUIs/Conference/ConferenceDetails";
-import Templates from "./MainUIs/Templates";
+import ResearchTemplates from "./MainUIs/Templates/ResearchTemplates";
 import AdminProfile from "./AdminDashboard/User/AdminProfile";
+import AttendeePayment from "./MainUIs/Payments/AttendeePayment";
+import ProposalTemplates from "./MainUIs/Templates/ProposalTemplates";
+import PresentationTemplates from "./MainUIs/Templates/PresentationTemplates";
+import ResearcherPayment from "./MainUIs/Payments/ResearcherPayment";
 
 class Frontend extends Component {
 
@@ -27,8 +20,6 @@ class Frontend extends Component {
         return(
             <div>
                 <Router>
-
-                    {/*<Header/>*/}
 
                     <Switch>
                         <Route path="/" exact component={Home}/>
@@ -38,23 +29,17 @@ class Frontend extends Component {
                         <Route path="/user/list" exact component={GettAllUsers}/>
                         <Route path="/admin" exact component={AdminNav}/>
 
-                        <Route path="/updateConference/:id"   component={UpdateConferenceDetailsComponent}/>
-                        <Route path="/addConference" component={AddConferenceDetailsComponent}/>
-                        <Route path= "/listAllConference" component = {ListAllConferenceDetailsComponent} />
-                        <Route path= "/listPendingConference" component = {ListPendingConferenceDetails} />
-                        <Route path= "/listApprovedConference" component = {ListApprovedConferenceDetailsComponent} />
-
                         <Route path= "/conference/reg/:id" component = {ConferenceRegistration} />
-                        <Route path= "/conference/:id" exact component = {ConferenceDetails} />
 
-                        <Route path="/templates" exact component={Templates}/>
-                        <Route path="/admin-template/add/" exact component={AddTemplates}/>
-                        <Route path="/admin-template/edit/:id" exact component={EditTemplate}/>
-                        <Route path="/admin-template/list" exact component={TemplateList}/>
+                        <Route path="/templates/research" exact component={ResearchTemplates}/>
+                        <Route path="/templates/proposal" exact component={ProposalTemplates}/>
+                        <Route path="/templates/presentation" exact component={PresentationTemplates}/>
+
+                        <Route path="/payment/attendee/:phone" exact component={AttendeePayment}/>
+                        <Route path="/payment/researcher/:id" exact component={ResearcherPayment}/>
 
                     </Switch>
 
-                    {/*<Footer/>*/}
                 </Router>
 
 

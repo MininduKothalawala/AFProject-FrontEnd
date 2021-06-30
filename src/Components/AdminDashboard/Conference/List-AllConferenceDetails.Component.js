@@ -273,7 +273,7 @@ class ListAllConferenceDetailsComponent extends Component {
 
                 {/*--------------------------Model Box to Edit Conference--------------------------*/}
 
-                <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal show={this.state.show} onHide={this.handleClose} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Update</Modal.Title>
                     </Modal.Header>

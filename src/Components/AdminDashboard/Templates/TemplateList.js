@@ -1,5 +1,16 @@
 import React, {Component} from "react";
-import {Badge, Button, ButtonGroup, Card, Form, InputGroup, Modal, Table} from "react-bootstrap";
+import {
+    Badge,
+    Button,
+    ButtonGroup,
+    Card,
+    Form,
+    Image,
+    InputGroup,
+    Modal,
+    OverlayTrigger,
+    Table, Tooltip
+} from "react-bootstrap";
 import TemplatesDataService from "./TemplatesDataService";
 import Swal from "sweetalert2";
 import {
@@ -21,6 +32,7 @@ export default class TemplateList extends Component {
             search: '',
             tempId: '',
             show: false,
+            url:''
         }
     }
 
@@ -60,7 +72,7 @@ export default class TemplateList extends Component {
         this.setState({show: false})
     }
 
-    handleDelete = (id, fileId) => {
+    handleDelete = (id, imgId, fileId) => {
 
         Swal.fire({
             title: 'Are you sure?',
@@ -74,11 +86,10 @@ export default class TemplateList extends Component {
             cancelButtonText: 'No'
         }).then((result) => {
             if (result.isConfirmed) {
-                TemplatesDataService.deleteTemplate(id, fileId)
+                TemplatesDataService.deleteTemplate(id, imgId, fileId)
                     .then(res => {
 
-                        if (res.status === 200) {
-                            console.log("CREATED");
+                        if (res.status === 204) {
 
                             Swal.fire({
                                 icon: 'success',
@@ -171,6 +182,7 @@ export default class TemplateList extends Component {
     }
 
     render() {
+
         const {template, search} = this.state;
 
         return (
@@ -208,14 +220,13 @@ export default class TemplateList extends Component {
                     </div>
 
 
-
-
-                    {/*-------------------------------------------Templates Table-------------------------------------------*/}
+                    {/*-------------------------------------------ResearchTemplates Table-------------------------------------------*/}
 
                     <Table striped responsive hover bordered>
                         <thead>
                         <tr>
                             <th className={"text-center"}>Template Type</th>
+                            <th className={"text-center"}>Preview</th>
                             <th className={"text-center"}>Filename</th>
                             <th className={"text-center"}>Description</th>
                             <th className={"text-center"}>Added By</th>
@@ -226,45 +237,57 @@ export default class TemplateList extends Component {
                         {
                             template.length === 0 ?
                                 <tr align={"center"}>
-                                    <td colSpan={"5"}>No records at the moment</td>
+                                    <td colSpan={"6"}>No records at the moment</td>
                                 </tr>
 
                                 : [
                                     template.map(temp =>
                                         <tr key={temp.id}>
                                             <td className={"text-center"} style={{verticalAlign: 'middle'}}>
-                                                {
-                                                    temp.tempType === 'powerpoint' ?
-                                                        <Badge variant="warning" className={"px-3 py-2"}
-                                                               key={"0"}>PRESENTATION</Badge>
-                                                        : [
-                                                            temp.tempType === 'research' ?
-                                                                <Badge variant="success" className={"px-3 py-2"}
-                                                                       key={"0"}>RESEARCH</Badge>
-                                                                : [
-                                                                    temp.tempType === 'workshop' ?
-                                                                        <Badge variant="primary" className={"px-3 py-2"}
-                                                                               key={"0"}>PROPOSOL</Badge> : ''
-                                                                ]
-                                                        ]
+                                                {temp.tempType === 'powerpoint' &&
+                                                <Badge variant="warning" className={"px-3 py-2"}
+                                                       key={"0"}>PRESENTATION</Badge>
+                                                }
+                                                {temp.tempType === 'research' &&
+                                                    <Badge variant="success" className={"px-3 py-2"}
+                                                           key={"0"}>RESEARCH</Badge>
+                                                }
+                                                {temp.tempType === 'workshop' &&
+                                                    <Badge variant="primary" className={"px-3 py-2"}
+                                                           key={"0"}>PROPOSOL</Badge>
                                                 }
                                             </td>
-                                            <td>{temp.filename}</td>
+                                            <td className={"text-center"}>
+                                                <OverlayTrigger placement={"right"} defaultShow={false} delay={{ show: 10, hide: 10 }}
+                                                                overlay={
+                                                    <Tooltip id="tooltip-right" bsPrefix={"template-popover"}>
+                                                        <div>
+                                                            <Image height={"200px"} variant={"top"}
+                                                                   src={`http://localhost:8080/templates/download/${temp.imgFileId}`} />
+                                                        </div>
+                                                    </Tooltip>
+                                                }>
+                                                    <Image variant={"top"} height={"50px"}
+                                                           src={`http://localhost:8080/templates/download/${temp.imgFileId}`} />
+                                                </OverlayTrigger>
+                                            </td>
+                                            <td>{temp.tempFileName}</td>
                                             <td>{temp.tempDesc}</td>
-                                            <td className={"text-center"} style={{verticalAlign: 'middle'}}><Badge
-                                                variant="dark" className={"px-3 py-2"}>{temp.username}</Badge></td>
+                                            <td className={"text-center"} style={{verticalAlign: 'middle'}}>
+                                                <Badge variant="dark" className={"px-3 py-2"}>{temp.addedBy}</Badge></td>
                                             <td className={"text-center"} style={{verticalAlign: 'middle'}}>
                                                 <ButtonGroup>
                                                     <Button variant={"success"} type={"submit"}
-                                                            onClick={(e) => this.handleDownload(e, temp.filename, temp.tempFileId)}>
+                                                            onClick={(e) => this.handleDownload(e, temp.tempFileName, temp.tempFileId)}>
                                                         <FontAwesomeIcon icon={faArrowAltCircleDown}/>
                                                     </Button>
+                                                    {/*TODO: Update*/}
                                                     <Button variant={"warning"} type={"submit"}
                                                             onClick={() => this.handleUpdate(temp.id)}>
                                                         <FontAwesomeIcon icon={faEdit}/>
                                                     </Button>
                                                     <Button variant={"danger"} type={"submit"}
-                                                            onClick={() => this.handleDelete(temp.id, temp.tempFileId)}>
+                                                            onClick={() => this.handleDelete(temp.id, temp.imgFileId, temp.tempFileId)}>
                                                         <FontAwesomeIcon icon={faTrashAlt}/>
                                                     </Button>
                                                 </ButtonGroup>
@@ -277,9 +300,10 @@ export default class TemplateList extends Component {
                     </Table>
                 </Card>
 
-                {/*--------------------------Model Box to Edit Template--------------------------*/}
 
-                <Modal show={this.state.show} onHide={this.handleClose}>
+                {/*--------------------------Modal Box to Edit Template--------------------------*/}
+
+                <Modal show={this.state.show} onHide={this.handleClose} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Update</Modal.Title>
                     </Modal.Header>

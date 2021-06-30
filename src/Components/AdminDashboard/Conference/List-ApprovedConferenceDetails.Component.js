@@ -14,16 +14,15 @@ const Conference = props => (
         <td style={{verticalAlign: 'middle'}}>
             <Badge variant="success" className={"px-3 py-2"} >APPROVED</Badge>
         </td>
+        { props.loggedUser === 'admin' &&
         <td className={"text-center"} style={{verticalAlign: 'middle'}}>
             { props.conference.status === 'Approved' &&
-                <>
-                    { props.loggedUser === 'admin' &&
-                        <Button variant={"secondary"} type={"submit"} style={{fontWeight: '400'}}
-                            onClick={() => props.cancel(props.conference.id, props.conference.conferenceName)}>Cancel</Button>
-                    }
-                </>
+
+            <Button variant={"secondary"} type={"submit"} style={{fontWeight: '400'}}
+                    onClick={() => props.cancel(props.conference.id, props.conference.conferenceName)}>Cancel</Button>
             }
         </td>
+        }
     </tr>
 )
 
@@ -58,14 +57,14 @@ class ListApprovedConferenceDetailsComponent extends Component {
         })
     }
 
-    cancel = (cid, name) => {
+    cancel = (cid, conferenceName) => {
 
         //for the email
         const id = cid;
         const mailSubject = "Cancelled Conference Notification" ;
         const mailBody = "Dear Participant,\n\n" +
             "We regret to inform you that the following conference " +
-            "\"" + name + "\" " + " has been cancelled by due to an unavoidable reason.\n\n" +
+            "\"" + conferenceName + "\" " + " has been cancelled by due to an unavoidable reason.\n\n" +
             "Your payments will be refund withing 2-3 business days.\n" +
             "Regards,\n" +
             "ICAF Support Team";
@@ -98,9 +97,9 @@ class ListApprovedConferenceDetailsComponent extends Component {
                             })
                             this.refreshApprovedList();
 
-                            //send email
-                            // axios.post(`http://localhost:8080/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
-                            //         .then(res => (console.log(res)))
+                            // send email
+                            axios.post(`http://localhost:8080/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
+                                    .then(res => (console.log(res)))
 
 
                         } else {
@@ -121,7 +120,6 @@ class ListApprovedConferenceDetailsComponent extends Component {
 
     }
 
-
     render() {
         return(
             <div>
@@ -135,7 +133,9 @@ class ListApprovedConferenceDetailsComponent extends Component {
                         <th className={"text-center"}>Ending Date</th>
                         <th className={"text-center"}>Venue</th>
                         <th className={"text-center"}>Status</th>
+                        {this.state.loggedUser === 'admin' &&
                         <th className={"text-center"}>Cancel</th>
+                        }
                     </tr>
                     </thead>
 

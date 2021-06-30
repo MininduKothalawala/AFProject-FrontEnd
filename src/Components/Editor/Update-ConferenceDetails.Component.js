@@ -135,15 +135,15 @@ class UpdateConferenceDetailsComponent extends Component {
                         iconColor: '#60e004'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            window.location = '/admin'
+                            //send email
+                            // if (newStatus === 'Updated') {
+                            //     axios.post(`http://localhost:8080/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
+                            //         .then(res => (console.log(res)))
+                            // }
+
+                            window.location.reload();
                         }
                     })
-
-                    //send email
-                    // if (newStatus === 'Updated') {
-                    //     axios.post(`http://localhost:8080/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
-                    //         .then(res => (console.log(res)))
-                    // }
 
                 } else {
                     Swal.fire({

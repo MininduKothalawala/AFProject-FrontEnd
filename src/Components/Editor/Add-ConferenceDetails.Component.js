@@ -3,6 +3,7 @@ import axios from "axios";
 import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import moment from 'moment';
 import Swal from "sweetalert2";
+import AuthenticationService from "../Login/AuthenticationService";
 
 class AddConferenceDetailsComponent extends Component{
 
@@ -23,10 +24,19 @@ class AddConferenceDetailsComponent extends Component{
             description:'',
             startingDate : '',
             endingDate: '',
+            username:'',
             venue : '',
+            payment: '',
             status :'Pending',  //initial state is 'pending'
             daylimit: moment().add(10, "days").format('YYYY-MM-DD')
         }
+    }
+
+    componentDidMount() {
+        const loggedUser = AuthenticationService.loggedUserId();
+        this.setState({
+            username: loggedUser
+        });
     }
 
     onChangeID(e){
@@ -52,14 +62,22 @@ class AddConferenceDetailsComponent extends Component{
             startingDate : e.target.value
         });
     }
+
     onChangeEndingDate(e){
         this.setState({
             endingDate : e.target.value
         });
     }
+
     onChangeVenue(e){
         this.setState({
             venue : e.target.value
+        });
+    }
+
+    onChangePayment(e){
+        this.setState({
+            payment : e.target.value
         });
     }
 
@@ -67,13 +85,15 @@ class AddConferenceDetailsComponent extends Component{
         e.preventDefault();
 
         const conferences = {
-            id: this.state.id,
+            id: this.state.id.toUpperCase(),
             conferenceName: this.state.conferenceName,
             description: this.state.description,
             startingDate: moment(this.state.startingDate).format('YYYY-MM-DD'),
             endingDate: moment(this.state.endingDate).format('YYYY-MM-DD'),
+            addedBy: this.state.username,
             venue: this.state.venue,
             status: this.state.status,
+            payment: this.state.payment,
         }
 
         console.log(conferences);
@@ -173,14 +193,28 @@ class AddConferenceDetailsComponent extends Component{
                             </div>
 
                             <div className = "form-group">
-                                <label>Venue : </label>
-                                <input type = "text"
-                                       required
-                                       className = "form-control"
-                                       value = {this.state.venue}
-                                       onChange = {this.onChangeVenue}
-                                       placeholder={"Enter venue"}
-                                />
+                                <Row>
+                                    <Col>
+                                        <label>Venue : </label>
+                                        <input type = "text"
+                                               required
+                                               className = "form-control"
+                                               value = {this.state.venue}
+                                               onChange = {this.onChangeVenue}
+                                               placeholder={"Enter venue"}
+                                        />
+                                    </Col>
+                                    <Col>
+                                        <label>Payment : </label>
+                                        <input type = "text"
+                                               required
+                                               className = "form-control"
+                                               value = {this.state.payment}
+                                               onChange = {this.onChangePayment}
+                                               placeholder={"Enter payment"}
+                                        />
+                                    </Col>
+                                </Row>
                             </div>
 
                             <div className={"my-4"}>

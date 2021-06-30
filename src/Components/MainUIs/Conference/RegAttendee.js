@@ -58,17 +58,7 @@ class RegAttendee extends Component {
                 if (res.status === 201) {
                     console.log("CREATED");
 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'SUCCESS',
-                        html: '<p>Your have successfully registered!</p>',
-                        background: '#041c3d',
-                        showConfirmButton: false,
-                        iconColor: '#58b7ff',
-                        timer: 1500
-                    });
-
-                    this.props.history.push("/");
+                    this.props.history.push("/payment/attendee/"+this.state.mobile);
                 }
             })
     }
@@ -77,7 +67,6 @@ class RegAttendee extends Component {
         const {name, email, mobile} = this.state;
         return (
             <Card>
-                <Card.Header>Register</Card.Header>
                 <Card.Body>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Group controlId={"regName"}>
@@ -99,11 +88,6 @@ class RegAttendee extends Component {
                                           required maxLength={10} pattern="[0-9]{10}"
                                           value={mobile} onChange={this.handleChange}/>
                         </Form.Group>
-
-                        <hr className={"my-5"}/>
-                        <div>
-                            <h3>Payments</h3>
-                        </div>
 
                         <div className={"my-4"}>
                             <Button variant="primary" className={"mr-3"} type={"submit"}>Submit</Button>

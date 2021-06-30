@@ -1,8 +1,11 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Card, Col, Row} from "react-bootstrap";
-import "../Home/Home.css"
+import {Button, Col, Row} from "react-bootstrap";
+import "./ConferenceMain.css"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {withRouter} from "react-router-dom";
+import {faMapMarkerAlt} from "@fortawesome/free-solid-svg-icons";
+import moment from "moment";
 
 class ConferencePage extends Component {
     constructor(props) {
@@ -26,8 +29,8 @@ class ConferencePage extends Component {
             })
     }
 
-    handleSubmit = (id) => {
-        this.props.history.push(`/conference/${id}`)
+    enroll = (id) => {
+        this.props.history.push(`/conference/reg/${id}`)
     }
 
     render() {
@@ -39,17 +42,32 @@ class ConferencePage extends Component {
                             <Row key={0}>
                                 {
                                     this.state.conferences.map(event =>
-                                        <Col sm={4} className={"card-group mb-4"} key={event.id}>
-                                            <Card className={"conference-card"} style={{width: '30rem'}} key={event.id} onClick={() => this.handleSubmit(event.id)}>
-                                                <Card.Header><b>{event.conferenceName}</b></Card.Header>
-                                                <Card.Body>
-                                                    <Card.Text>
-                                                        Venue: {event.venue} <br/>
-                                                        Start Date: {event.startingDate} <br/>
-                                                        End Date: {event.endingDate}
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
+                                        <Col sm={5} className={"card-group mb-4"} key={event.id}>
+                                            <div className={"conference-card"} key={event.id}>
+                                                <div className={"text-center image-card"}>
+                                                    <img alt={"card"} width={300}
+                                                         src={require('../../../Assets/img2.png').default}/>
+                                                </div>
+                                                <div className={"conference-card-body"}>
+                                                    <h5 className={"text-center"}>{event.conferenceName}</h5>
+                                                    <h6 className={"text-center conference-venue"}><FontAwesomeIcon icon={faMapMarkerAlt} className={"mr-3"}/> {event.venue}</h6>
+                                                    <div className={"date-card-grid"}>
+                                                            <div className={"date-card"}>
+                                                                <h6>Start</h6>
+                                                                <h3>{moment(event.startingDate).format("DD")}</h3>
+                                                                <p>{moment(event.startingDate).format("MMM YYYY")}</p>
+                                                            </div>
+                                                            <div className={"date-card"}>
+                                                                <h6>End</h6>
+                                                                <h3>{moment(event.endingDate).format("DD")}</h3>
+                                                                <p>{moment(event.endingDate).format("MMM YYYY")}</p>
+                                                            </div>
+                                                    </div>
+                                                    <div className={"p-3"}>
+                                                        <Button variant={"primary"} block className={"p-3"} onClick={() => this.enroll(event.id)}>ENROLL</Button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </Col>
                                     )
                                 }

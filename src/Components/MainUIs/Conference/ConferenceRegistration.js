@@ -3,6 +3,7 @@ import {Container, Tab, Tabs} from "react-bootstrap";
 import RegResearcher from "./RegResearcher";
 import RegConductor from "./RegConductor";
 import RegAttendee from "./RegAttendee";
+import Header from "../../Header-Footer/Header";
 
 class ConferenceRegistration extends Component {
     constructor(props) {
@@ -16,21 +17,24 @@ class ConferenceRegistration extends Component {
     render() {
 
         return (
-            <Container>
-                <Tabs defaultActiveKey="research">
-                    <Tab eventKey="research" title="For Researchers">
-                       <RegResearcher id={this.state.conference_id} />
-                    </Tab>
+            <div>
+                <Header/>
+                <Container className={"mt-5 pt-5"}>
+                    <Tabs defaultActiveKey="research">
+                        <Tab eventKey="research" title="For Researchers">
+                            <RegResearcher id={this.state.conference_id} />
+                        </Tab>
 
-                    <Tab eventKey="workshop" title="For Workshop Conductors">
-                        <RegConductor id={this.state.conference_id} />
-                    </Tab>
+                        <Tab eventKey="workshop" title="For Workshop Conductors">
+                            <RegConductor id={this.state.conference_id} />
+                        </Tab>
 
-                    <Tab eventKey="attendee" title="For Attendees">
-                        <RegAttendee id={this.state.conference_id} />
-                    </Tab>
-                </Tabs>
-            </Container>
+                        <Tab eventKey="attendee" title="For Attendees">
+                            <RegAttendee id={this.state.conference_id} />
+                        </Tab>
+                    </Tabs>
+                </Container>
+            </div>
         )
     }
 

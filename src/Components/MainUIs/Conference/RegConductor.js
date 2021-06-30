@@ -87,7 +87,6 @@ class RegResearcher extends Component {
         const {name, email, mobile, filename} = this.state;
         return (
             <Card>
-                <Card.Header>Register</Card.Header>
                 <Card.Body>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Group controlId={"regName"}>

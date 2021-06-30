@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {withRouter} from "react-router";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {Link} from "react-router-dom";
-import {Modal, Nav, Navbar} from "react-bootstrap";
+import {Modal, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 import AuthenticationService from "../Login/AuthenticationService";
 import Login from "../Login/Login";
@@ -38,8 +38,14 @@ class Header extends Component {
                         <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="mr-auto">
                                 <Nav.Link href="/">Home</Nav.Link>
-                                <Nav.Link href="/templates">Templates</Nav.Link>
-                                <Nav.Link href="#">About us</Nav.Link>
+                                <NavDropdown title="Templates" id="basic-nav-dropdown">
+                                    <Link className="dropdown-item" to="/templates/research">Research Paper Templates</Link>
+                                    <NavDropdown.Divider />
+                                    <Link className="dropdown-item" to="/templates/proposal">Workshop Proposal Templates</Link>
+                                    <NavDropdown.Divider />
+                                    <Link className="dropdown-item" to="/templates/presentation">Presentation Templates</Link>
+                                </NavDropdown>
+
                             </Nav>
 
                             {
@@ -57,7 +63,7 @@ class Header extends Component {
                     </Navbar>
                 </div>
 
-                <Modal show={this.state.show} onHide={this.handleClose}>
+                <Modal show={this.state.show} onHide={this.handleClose} centered>
                     <Modal.Header closeButton>
                         <Modal.Title>Login</Modal.Title>
                     </Modal.Header>

@@ -1,0 +1,25 @@
+.template-status {
+    font-weight: 500;
+}
+
+.template-grp {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    margin-bottom: 40px;
+}
+
+.template-card {
+    margin: 20px;
+    color: #3c3c3c;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: box-shadow .2s ease-in-out;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+}
+
+.template-card:hover {
+    color: #000000;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 3px solid #007bff;
+    cursor: pointer;
+}
