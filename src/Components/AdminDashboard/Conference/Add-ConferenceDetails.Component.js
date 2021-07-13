@@ -107,11 +107,13 @@ class AddConferenceDetailsComponent extends Component{
                     Swal.fire({
                         icon: 'success',
                         title: 'Successful',
-                        html: '<p>Your file has been uploaded!!</p>',
+                        html: '<p>Conference added successfully!!</p>',
                         background: '#041c3d',
                         confirmButtonColor: '#3aa2e7',
                         iconColor: '#60e004'
                     })
+                    this.clearData();
+
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -124,6 +126,21 @@ class AddConferenceDetailsComponent extends Component{
                     })
                 }
             });
+    }
+
+    clearData = () => {
+        this.setState({
+            id : '',
+            conferenceName : '',
+            description:'',
+            startingDate : '',
+            endingDate: '',
+            username:'',
+            venue : '',
+            payment: '',
+            status :'Pending',  //initial state is 'pending'
+            daylimit: moment().add(10, "days").format('YYYY-MM-DD')
+        })
     }
 
     render(){

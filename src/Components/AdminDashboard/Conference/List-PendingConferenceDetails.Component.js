@@ -60,6 +60,7 @@ class ListPendingConferenceDetails extends Component{
     }
 
     rejectConference(id){
+
         axios.put(`https://icaf-backend.azurewebsites.net/api/conference/updateStatus/${id}/Rejected`)
             .then( res => {
                 console.log(res.data)

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, Card, Form} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import * as Swal from "sweetalert2";
 import ConferenceRegDataService from "./ConferenceRegDataService";
 import {withRouter} from "react-router-dom";
@@ -73,12 +73,15 @@ class RegResearcher extends Component {
                         title: 'SUCCESS',
                         html: '<p>Your have successfully registered!</p>',
                         background: '#041c3d',
-                        showConfirmButton: false,
-                        iconColor: '#58b7ff',
-                        timer: 1500
+                        showConfirmButton: true,
+                        confirmButtonColor: '#3aa2e7',
+                        iconColor: '#60e004'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.props.history.push("/");
+                        }
                     });
 
-                    this.props.history.push("/");
                 }
             })
     }
@@ -86,25 +89,25 @@ class RegResearcher extends Component {
     render() {
         const {name, email, mobile, filename} = this.state;
         return (
-            <Card>
-                <Card.Body>
+            <div className={"reg-form-main-div"}>
+                <h4 className={"reg-form-title"}>Workshop Conductor Registration</h4>
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Group controlId={"regName"}>
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type={"text"} name={"name"} placeholder={"Enter name"} required
+                            <Form.Label className={"reg-form-label"}>Name</Form.Label>
+                            <Form.Control className={"reg-form-input"} type={"text"} name={"name"} placeholder={"Enter name"} required
                                           value={name} onChange={this.handleChange}/>
                         </Form.Group>
 
                         <Form.Group controlId={"regEmail"}>
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control type={"email"} name={"email"} placeholder={"Enter email"}
+                            <Form.Label className={"reg-form-label"}>Email</Form.Label>
+                            <Form.Control className={"reg-form-input"} type={"email"} name={"email"} placeholder={"Enter email"}
                                           required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                                           value={email} onChange={this.handleChange}/>
                         </Form.Group>
 
                         <Form.Group controlId={"regMobile"}>
-                            <Form.Label>Mobile Number</Form.Label>
-                            <Form.Control type={"text"} name={"mobile"} placeholder={"Enter mobile number"}
+                            <Form.Label className={"reg-form-label"}>Mobile Number</Form.Label>
+                            <Form.Control className={"reg-form-input"} type={"text"} name={"mobile"} placeholder={"Enter mobile number"}
                                           required maxLength={10} pattern="[0-9]{10}"
                                           value={mobile} onChange={this.handleChange}/>
                         </Form.Group>
@@ -113,6 +116,7 @@ class RegResearcher extends Component {
 
                         <Form.Group controlId={"regFile"}>
                             <Form.File id={"fileUpload"} name={"file"} custom label={filename}
+                                       className={"reg-form-fileInput"}
                                        accept={".docx, .doc, .pdf"} required
                                        onChange={this.handleFileChange} />
                             <Form.Text className="text-muted">
@@ -120,14 +124,12 @@ class RegResearcher extends Component {
                             </Form.Text>
                         </Form.Group>
 
-                        <div className={"my-4"}>
-                            <Button variant="primary" className={"mr-3"} type={"submit"}>Submit</Button>
+                        <div className={"text-center"}>
+                            <Button variant="primary" className={"reg-form-submit"} type={"submit"}>Submit</Button>
                         </div>
 
-
                     </Form>
-                </Card.Body>
-            </Card>
+            </div>
         )
     }
 

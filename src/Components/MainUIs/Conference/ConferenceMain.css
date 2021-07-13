@@ -1,82 +1,437 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500&display=swap');
 
+.conference-outer-div {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.conference-card-row {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin-top: 50px;
+}
+
+.conference-card-col {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 15px;
+}
+
 .conference-card {
-    margin: 20px;
     color: #3c3c3c;
-    /*box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);*/
-    transition: box-shadow .3s ease-in-out;
-    width: 400px;
+    width: 350px;
     border: 3px solid rgba(0, 123, 255, 1);
     border-radius: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 .conference-card:hover {
-    text-decoration: none;
-    border: 3px solid #0058bf;
     cursor: pointer;
-    border-radius: 10px;
+    background-color: rgba(0, 123, 255, 0.1);
+    transition: .5s;
+    border: 3px solid rgb(0, 96, 187);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
 }
 
 .conference-card-body h5 {
     font-family: 'Kanit', sans-serif;
     padding: 30px;
-    background-color: #007bff;
-    color: #ffffff;
+    color: #000000;
     margin: 0;
 }
 
-.conference-venue {
+.conference-card-body p {
     font-family: 'Kanit', sans-serif;
-    padding: 20px 30px;
-    font-size: 20px;
-    text-align: center;
-    background-color: #e7e7e7;
-    margin-bottom: 20px;
+    font-weight: 300;
+    color: #5D5D5D;
 }
 
 .image-card {
     background-color: #e3efff;
     border-radius: 10px 10px 0 0;
+    border-bottom: 10px solid #007bff;
+    position: relative;
+    padding-bottom: 20px;
 }
 
-.date-card-grid {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 10px;
-    padding: 0 20px 20px 20px;
+.conference-header {
+    position: relative;
+    z-index: 5;
 }
 
-.date-card {
-    text-align: center;
-    background-color: #e6eef8;
-    padding-top: 10px;
-    border-radius: 20px;
+.conference-bg-img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    object-position: 100% 50%;
+    opacity: 0.2;
+    position: absolute;
+    top: 0;
+    z-index: 0;
 }
 
-.date-card h3 {
+.conference-bg-overlay {
+    width: 100%;
+    height: 600px;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+    background-color: rgba(0, 45, 93, 1);
+}
+
+.conference-title {
+    position: relative;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    color: #ffffff;
+}
+
+.conference-title h1 {
+    font-size: 60px;
     font-weight: 700;
-    font-size: 50px;
-    padding: 0;
 }
 
-.date-card p {
-    font-weight: 500;
+.conference-title h5 {
+    margin-top: 30px;
+    color: #a7c9ff;
 }
 
-.date-card h6 {
-    font-size: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #868686;
+.conference-breadcrumb a{
+    text-decoration: none;
+    color: #b7b7b7;
 }
 
-.submission-div {
+.conference-breadcrumb a:hover {
+    color: #3792E5;
+}
+
+.conf-details-main-div {
+    position: relative;
+    background-color: #f3f3f3;
+    padding: 80px 0;
+}
+
+.conf-details-grid {
     display: grid;
     grid-template-rows: auto auto;
+    grid-template-columns: auto;
     grid-gap: 30px;
 }
 
-.submission-inner-div {
-    padding: 30px 40px;
-    border-radius: 10px;
+.conf-details-card {
     background-color: #ffffff;
+    border-radius: 10px;
+    padding: 40px 0;
+}
+
+.conf-details-card hr {
+    margin: 40px 0;
+    border: 1px solid #e7e7e7ff;
+}
+
+.conf-details-card h5 {
+    margin: 0 50px;
+}
+
+.conf-details-card h5 {
+    font-weight: 700;
+}
+
+.conf-details-card p {
+    text-align: justify;
+    color: #888888;
+}
+
+.conf-details-item h6 {
+    font-weight: 700;
+}
+
+.conf-details-item p {
+    font-weight: 700;
+    color: #888888;
+}
+
+.conf-icon-flex {
+    display: flex;
+    border-bottom: 2px solid #e7e7e7ff;
+    padding: 0 50px;
+}
+
+.conf-details-icons {
+    width: 50px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.conf-details-btn {
+    color: #ffffff;
+    background-color: #007bff;
+    font-weight: 500;
+    font-size: 20px;
+    border-radius: 43px;
+    padding: 20px 0;
+    margin-top: 30px;
+}
+
+.conference-page-img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: 100% 50%;
+    opacity: 0.2;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+}
+
+.conference-page-img-overlay {
+    width: 100%;
+    height: 450px;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+    background-color: rgba(0, 45, 93, 1);
+}
+
+.conference-page-title {
+    position: relative;
+    margin-top: 80px;
+    margin-bottom: 150px;
+    color: #ffffff;
+}
+
+.conference-page-title-h1 {
+    font-size: 60px;
+    font-weight: 700;
+}
+
+.conference-page-title-h5 {
+    margin-top: 30px;
+    color: #a7c9ff;
+}
+
+.reg-main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f3f3f3;
+}
+
+.reg-main-outer-div {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+    background-color: #ffffff;
+    padding: 50px 20px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.1);
+}
+
+.reg-bg-image-div {
+    border-right: 3px solid #007bff;
+    display: flex;
+    height: 100%;
+    align-content: center;
+}
+
+.reg-bg-img {
+    display: block;
+    height: 400px;
+    padding: 0 50px;
+    margin-top: 100px;
+}
+
+.reg-home-div {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 10% auto;
+}
+
+.back-to-home {
+    font-size: 18px;
+    font-weight: 500;
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 50px;
+}
+
+.back-to-home:hover {
+    text-decoration: none;
+    color: #0063c9;
+}
+
+.reg-forms {
+    width: 550px;
+    padding-left: 20px;
+    padding-right: 30px;
+}
+
+.reg-tab-set {
+    font-weight: 500;
+    padding-left: 20px;
+}
+
+.reg-form-main-div {
+    padding: 20px;
+}
+
+.reg-form-title {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    padding: 10px 0 20px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.reg-form-label {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 400;
+    color: rgba(0,0,0,0.5);
+    margin-bottom: 10px;
+}
+
+.reg-form-input {
+    font-weight: 500;
+    color: #000000;
+    border-radius: 10px;
+    padding: 20px 15px;
+    margin-bottom: 30px;
+}
+
+.reg-form-input::placeholder {
+    color: rgba(0,0,0,0.4);
+    font-weight: 400;
+}
+
+.reg-form-fileInput {
+    font-family: 'Kanit', sans-serif;
+}
+
+.reg-form-submit {
+    font-weight: 500;
+    font-size: 20px;
+    margin: 20px 0 10px;
+    padding: 10px 30px;
+    border-radius: 30px;
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------*/
+
+/*600px and down*/
+@media only screen and (max-width: 600px) {
+    .conference-card-row {
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        margin-top: 50px;
+    }
+
+    .conference-card-col {
+        display: grid;
+        grid-template-columns: auto;
+    }
+    .conference-card {
+        width: 300px;
+    }
+    .card-button-div {
+        left: 20%;
+        right: 20%;
+    }
+}
+
+/*600px and up*/
+@media only screen and (min-width: 600px) {
+    .conference-card-row {
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        margin-top: 50px;
+    }
+
+    .conference-card-col {
+        display: grid;
+        grid-template-columns: auto;
+    }
+    .conference-card {
+        width: 400px;
+    }
+    .card-button-div {
+        left: 30%;
+        right: 30%;
+    }
+}
+
+/*768px and up*/
+@media only screen and (min-width: 768px) {
+    .conference-card-row {
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        margin-top: 50px;
+    }
+
+    .conference-card-col {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 10px;
+    }
+    .conference-card {
+        width: 350px;
+    }
+    .card-button-div {
+        left: 30%;
+        right: 30%;
+    }
+}
+
+/*992px and up*/
+@media only screen and (min-width: 992px) {
+    .conference-card-row {
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        margin-top: 50px;
+    }
+
+    .conference-card-col {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 20px;
+    }
+    .conference-card {
+        width: 400px;
+    }
+    .card-button-div {
+        left: 30%;
+        right: 30%;
+    }
+
+}
+
+/*1200px and up*/
+@media only screen and (min-width: 1200px) {
+    .conference-card-row {
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        margin-top: 50px;
+    }
+
+    .conference-card-col {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-gap: 15px;
+    }
+    .conference-card {
+        width: 350px;
+    }
+    .card-button-div {
+        left: 31%;
+        right: 31%;
+    }
 }

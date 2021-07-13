@@ -5,10 +5,6 @@ const R_URL = 'https://icaf-backend.azurewebsites.net/api/researcher';
 
 class PayDataService {
 
-    loadPaymentDetails(url) {
-        return axios.get(`${A_URL}/${url}`)
-    }
-
     getCardDetails(cardNo) {
         return axios.get(`https://icaf-backend.azurewebsites.net/api/payment/getcarddetail/${cardNo}`)
     }
@@ -23,6 +19,14 @@ class PayDataService {
 
     paymentNotification(email, subject, body) {
         return axios.post(`https://icaf-backend.azurewebsites.net/api/sendEmails/Email/${email}/${subject}/${body}`)
+    }
+
+    getResearcherData(id) {
+        return axios.get(`${R_URL}/getresearcher/${id}`)
+    }
+
+    getConferenceDetails(id) {
+        return axios.get(`https://icaf-backend.azurewebsites.net/api/conference/conferencebyid/${id}`)
     }
 
 }

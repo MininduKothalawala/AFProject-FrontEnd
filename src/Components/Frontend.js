@@ -13,7 +13,9 @@ import AttendeePayment from "./MainUIs/Payments/AttendeePayment";
 import ProposalTemplates from "./MainUIs/Templates/ProposalTemplates";
 import PresentationTemplates from "./MainUIs/Templates/PresentationTemplates";
 import ResearcherPayment from "./MainUIs/Payments/ResearcherPayment";
-import ConferenceSubmissions from "./MainUIs/Conference/ConferenceSubmissions";
+import Conference from "./MainUIs/Conference/Conference";
+import ConferenceDetails from "./MainUIs/Conference/ConferenceDetails";
+import NotFound from "./404NotFound/404NotFound";
 
 class Frontend extends Component {
 
@@ -30,15 +32,18 @@ class Frontend extends Component {
                         <Route path="/user/list" exact component={GettAllUsers}/>
                         <Route path="/admin" exact component={AdminNav}/>
 
-                        <Route path= "/conference/reg/:id" component = {ConferenceRegistration} />
-                        <Route path= "/conference/:id" component = {ConferenceSubmissions} />
+                        <Route path= "/conference" exact component={Conference} />
+                        <Route path= "/conference/:id" exact component ={ConferenceDetails} />
+                        <Route path= "/conference/reg/:id" exact component ={ConferenceRegistration} />
 
                         <Route path="/templates/research" exact component={ResearchTemplates}/>
                         <Route path="/templates/proposal" exact component={ProposalTemplates}/>
                         <Route path="/templates/presentation" exact component={PresentationTemplates}/>
 
-                        <Route path="/payment/attendee/:phone" exact component={AttendeePayment}/>
-                        <Route path="/payment/researcher/:id" exact component={ResearcherPayment}/>
+                        <Route path="/payment/attendee" exact component={AttendeePayment}/>
+                        <Route path="/payment/researcher" exact component={ResearcherPayment}/>
+
+                        <Route component={NotFound}/>
 
                     </Switch>
 

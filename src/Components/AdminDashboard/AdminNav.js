@@ -18,7 +18,7 @@ import AddTemplates from "./Templates/AddTemplates";
 import AddConferenceDetailsComponent from "./Conference/Add-ConferenceDetails.Component";
 import ListAllConferenceDetailsComponent from "./Conference/List-AllConferenceDetails.Component";
 import TemplateList from "./Templates/TemplateList";
-import Dashboard from "./Dashboard";
+import Dashboard from "./Dashboard/Dashboard";
 import AdminProfile from "./User/AdminProfile";
 import ListApprovedConferenceDetailsComponent from "./Conference/List-ApprovedConferenceDetails.Component";
 import ListPendingConferenceDetails from "./Conference/List-PendingConferenceDetails.Component";
@@ -27,6 +27,7 @@ import AllResearchPapers from "./Review/AllResearchPapers";
 import AllWorkshopProposals from "./Review/AllWorkshopProposals";
 import PendingProposalReviews from "./Review/PendingProposalReviews";
 import PendingPaperReviews from "./Review/PendingPaperReviews";
+import ListUpdatedConferenceDetails from "./Conference/List-UpdatedConferenceDetails";
 
 class AdminNav extends Component {
     constructor(props) {
@@ -159,6 +160,7 @@ class AdminNav extends Component {
                             <Tab.Container id="list-group-tabs-example" defaultActiveKey="dashboard">
                                 <ListGroup>
                                     {/*-------------------------------Dashboard-------------------------------*/}
+
                                     <ListGroup.Item eventKey="dashboard" onClick={() => this.loadContent("Dashboard")}>
                                         <FontAwesomeIcon className={"mr-3"} icon={faThLarge}/>
                                         Dashboard
@@ -167,6 +169,7 @@ class AdminNav extends Component {
                                     <div>
                                         <hr style={{borderTop: '1px solid rgba(255,255,255,0.3)', margin: 0}}/>
                                     </div>
+
 
                                     {/*-------------------------------Users-------------------------------*/}
                                     {loggedAsAdmin &&
@@ -363,22 +366,27 @@ class AdminNav extends Component {
                             {/*-------------------------------Conference-------------------------------*/}
                             {this.state.loading === "Conference" &&
                             <div className={"dashboard-content"}>
-                                <h5>List of All Conference</h5> <br/>
+                                <h5>List of All Conferences</h5> <br/>
                                 <ListAllConferenceDetailsComponent/>
                             </div>
 
                             }
-
                             {this.state.loading === "Pending Conferences" &&
-                            <div className={"dashboard-content"}>
-                                <h5>List of Pending Conference</h5> <br/>
-                                <ListPendingConferenceDetails/>
+                            <div className={"grid-container-row"}>
+                                <div className={"dashboard-content"}>
+                                    <h5>List of Pending Conferences</h5> <br/>
+                                    <ListPendingConferenceDetails/>
+                                </div>
+                                <div className={"dashboard-content"}>
+                                    <h5>List of Updated Conferences</h5> <br/>
+                                    <ListUpdatedConferenceDetails/>
+                                </div>
                             </div>
                             }
 
                             {this.state.loading === "Approved Conferences" &&
                             <div className={"dashboard-content"}>
-                                <h5>List of Approved Conference</h5> <br/>
+                                <h5>List of Approved Conferences</h5> <br/>
                                 <ListApprovedConferenceDetailsComponent/>
                             </div>
                             }
@@ -410,13 +418,13 @@ class AdminNav extends Component {
                             {/*-------------------------------Review-------------------------------*/}
                             {this.state.loading === "Research Paper Review" &&
                             <div className={"dashboard-content"}>
-                                <h5>List of Paper Submissions</h5> <br/>
+                                <h5>List of All Paper Submissions</h5> <br/>
                                 <AllResearchPapers/>
                             </div>
                             }
                             {this.state.loading === "Workshop Proposal Review" &&
                             <div className={"dashboard-content"}>
-                                <h5>List of Proposal Submissions</h5> <br/>
+                                <h5>List of All Proposal Submissions</h5> <br/>
                                 <AllWorkshopProposals/>
                             </div>
                             }

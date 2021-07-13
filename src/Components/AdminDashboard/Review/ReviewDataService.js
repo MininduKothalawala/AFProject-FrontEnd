@@ -46,7 +46,7 @@ class ReviewDataService {
     }
 
     approveNotification(email, subject, body) {
-        return axios.post(`http://localhost:8080/api/sendEmails/Email/${email}/${subject}/${body}`)
+        return axios.post(`https://icaf-backend.azurewebsites.net/api/sendEmails/Email/${email}/${subject}/${body}`)
     }
 
 }

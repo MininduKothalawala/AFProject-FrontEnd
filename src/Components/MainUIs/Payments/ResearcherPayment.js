@@ -5,7 +5,9 @@ import moment from 'moment';
 import "./Payment.css"
 import PayDataService from "./PayDataService";
 import * as Swal from "sweetalert2";
-import Header from "../../Header-Footer/Header";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft, faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
 
 class ResearcherPayment extends Component {
     constructor(props) {
@@ -13,7 +15,6 @@ class ResearcherPayment extends Component {
 
         this.state = {
             researcherId: '',
-            conferenceId: '',
             researcherName: '',
             researcherEmail: '',
             c_name: '',
@@ -23,11 +24,12 @@ class ResearcherPayment extends Component {
             cvv: '',
             expMonth: '',
             expYear: '',
-            cardPin:'',
-            cardBalance: '',
+            cardPin:'',      //get from DB
+            cardBalance: '', //get from DB
             year: new Date().getFullYear(),
             month: new Date().getMonth() + 1,
             today: moment(new Date()).format('YYYY-MM-DD'),
+            validUser: false
         }
     }
 
@@ -35,22 +37,59 @@ class ResearcherPayment extends Component {
         this.loadPaymentDetails();
     }
 
-    loadPaymentDetails = () => {
-        let str = window.location.href  //get current browser url
-        let url = str.substr(str.indexOf("payment"))
+    loadPaymentDetails = (id) => {
+        if (this.state.researcherId) {
+            console.log(this.state.researcherId)
 
-        PayDataService.loadPaymentDetails(url)
-            .then( res => {
-                // console.log(res.data)
-                this.setState({
-                    researcherId: res.data.researcherId,
-                    conferenceId: res.data.conferenceId,
-                    researcherName: res.data.researcherName,
-                    researcherEmail: res.data.researcherEmail,
-                    c_name: res.data.conferenceName,
-                    amount: res.data.amount
+            //check user availability and get data
+            PayDataService.getResearcherData(id)
+                .then( res => {
+                    if (res.data) {
+                        console.log(res.data)
+
+                        //success alert
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Valid',
+                            html: '<p>You can proceed now</p>',
+                            background: '#041c3d',
+                            confirmButtonColor: '#3aa2e7',
+                            iconColor: '#60e004'
+                        })
+                        this.setState({
+                            validUser:true,
+                            researcherName: res.data.r_name,
+                            researcherEmail: res.data.r_email,
+                        })
+
+            // **********************************************************************************
+
+                        //get conference data
+                        PayDataService.getConferenceDetails(res.data.r_conferenceId)
+                            .then( res => {
+                                console.log(res.data)
+                                this.setState({
+                                    c_name: res.data.conferenceName,
+                                    amount: res.data.payment
+                                })
+                            })
+
+
+
+
+                    } else {
+                        //error alert
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'No Entry',
+                            html: '<p>Please check your ID and try again!</p>',
+                            background: '#041c3d',
+                            confirmButtonColor: '#3aa2e7',
+                            iconColor: '#e00404'
+                        })
+                    }
                 })
-            })
+        }
     }
 
     handleChange = (event) => {
@@ -64,54 +103,106 @@ class ResearcherPayment extends Component {
     handlePayment = (e) => {
         e.preventDefault();
 
-        let cnum = this.state.cardNo;
+        let cnum = this.state.cardNo
         let cvc = this.state.cvv
         let eMonth = this.state.expMonth;
         let eYear = this.state.expYear;
 
-        //check for card validity
-        PayDataService.getCardDetails(cnum)
-            .then( res => {
-                if (res.status === 200) {
-                    console.log(res)
+        // check user validity
+        if (this.state.validUser === true) {
 
-                    this.setState({
-                        cardPin: res.data.pinNo,
-                        cardBalance: res.data.amount
-                    })
+            //check card number is available
+            PayDataService.getCardDetails(cnum)
+                .then( res => {
 
-                    if (this.state.cardPin === cvc) {
-                        //check expiration
-                        if (eMonth >= "01" && eMonth <= "12") {
-                            if (eMonth >= this.state.month && eYear >= this.state.year) {
-                                if (this.state.cardBalance > this.state.amount) {
+                    if (res.data !== null) {
+                            this.setState({
+                                cardPin: res.data.pinNo,
+                                cardBalance: res.data.amount
+                            })
 
-                                    const formData = new FormData();
-                                    formData.append('id', this.state.researcherId)
-                                    formData.append('p_status', "paid")
+                            //check if card pin is matched
+                            if (this.state.cardPin === cvc) {
 
-                                    PayDataService.updatePaymentResearcher(formData)
-                                        .then( res => {
+                                //check input of the month
+                                if (eMonth >= "01" && eMonth <= "12") {
+                                    //check if expired
+                                    if (eMonth >= this.state.month && eYear >= this.state.year) {
+                                        //check for balance
+                                        if (this.state.cardBalance > this.state.amount) {
 
-                                            if (res.status === 200) {
-                                                Swal.fire({
-                                                    icon: 'success',
-                                                    title: 'Successful',
-                                                    html: '<p>Your will receive a confirmation email</p>',
-                                                    background: '#041c3d',
-                                                    confirmButtonColor: '#3aa2e7',
-                                                    iconColor: '#60e004'
+                                            const formData = new FormData();
+                                            formData.append('id', this.state.researcherId)
+                                            formData.append('p_status', "Paid")
+
+                                            PayDataService.updatePaymentResearcher(formData)
+                                                .then( res => {
+
+                                                    if (res.status === 200) {
+                                                        //send email
+                                                        this.notifyViaEmail(this.state.researcherEmail)
+
+                                                        Swal.fire({
+                                                            icon: 'success',
+                                                            title: 'Successful',
+                                                            html: '<p>Your will receive a confirmation email</p>',
+                                                            background: '#041c3d',
+                                                            confirmButtonColor: '#3aa2e7',
+                                                            iconColor: '#60e004'
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                this.setState({
+                                                                    cvv: '',
+                                                                    cardNo: '',
+                                                                    expMonth: '',
+                                                                    expYear: '',
+                                                                    validUser: false
+                                                                })
+
+                                                                this.props.history.push("/")
+                                                            }
+                                                        })
+
+                                                    }
                                                 })
 
-                                                //send email
-                                                this.notifyViaEmail(this.state.attendeeEmail)
-                                            }
+                                        } else {
+                                            Swal.fire({
+                                                icon: 'warning',
+                                                title: 'Insufficient Balance!',
+                                                background: '#041c3d',
+                                                confirmButtonColor: '#3aa2e7',
+                                                iconColor: '#e0b004'
+                                            })
+
+                                            this.setState({
+                                                cvv: '',
+                                                cardNo: '',
+                                                expMonth: '',
+                                                expYear: ''
+                                            })
+                                        }
+                                    } else {
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Expired Card!',
+                                            background: '#041c3d',
+                                            confirmButtonColor: '#3aa2e7',
+                                            iconColor: '#e0b004'
                                         })
 
+                                        this.setState({
+                                            cvv: '',
+                                            cardNo: '',
+                                            expMonth: '',
+                                            expYear: ''
+                                        })
+                                    }
                                 } else {
                                     Swal.fire({
                                         icon: 'warning',
-                                        title: 'Insufficient Balance!',
+                                        title: 'Wrong Input!',
+                                        html: '<p>Please enter a valid number for month</p>',
                                         background: '#041c3d',
                                         confirmButtonColor: '#3aa2e7',
                                         iconColor: '#e0b004'
@@ -127,7 +218,7 @@ class ResearcherPayment extends Component {
                             } else {
                                 Swal.fire({
                                     icon: 'warning',
-                                    title: 'Expired Card!',
+                                    title: 'Incorrect CVV',
                                     background: '#041c3d',
                                     confirmButtonColor: '#3aa2e7',
                                     iconColor: '#e0b004'
@@ -140,27 +231,10 @@ class ResearcherPayment extends Component {
                                     expYear: ''
                                 })
                             }
-                        } else {
-                            Swal.fire({
-                                icon: 'warning',
-                                title: 'Wrong Input!',
-                                html: '<p>Please enter a valid number for month</p>',
-                                background: '#041c3d',
-                                confirmButtonColor: '#3aa2e7',
-                                iconColor: '#e0b004'
-                            })
-
-                            this.setState({
-                                cvv: '',
-                                cardNo: '',
-                                expMonth: '',
-                                expYear: ''
-                            })
-                        }
                     } else {
                         Swal.fire({
                             icon: 'warning',
-                            title: 'Incorrect CVV',
+                            title: 'Invalid Card Number',
                             background: '#041c3d',
                             confirmButtonColor: '#3aa2e7',
                             iconColor: '#e0b004'
@@ -173,33 +247,27 @@ class ResearcherPayment extends Component {
                             expYear: ''
                         })
                     }
-                } else {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Invalid Card Number',
-                        background: '#041c3d',
-                        confirmButtonColor: '#3aa2e7',
-                        iconColor: '#e0b004'
-                    })
+                })
 
-                    this.setState({
-                        cvv: '',
-                        cardNo: '',
-                        expMonth: '',
-                        expYear: ''
-                    })
-                }
+
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Validate Your ID',
+                background: '#041c3d',
+                confirmButtonColor: '#3aa2e7',
+                iconColor: '#e0b004'
             })
+        }
+
+
 
     }
 
     notifyViaEmail = (email) => {
         const mail = email;
         const mailSubject = "Payment Notification" ;
-        const mailBody = "Dear Participant,\n\n" +
-            "Thank you! Your payment has been received.\n\n" +
-            "Regards,\n" +
-            "ICAF Support Team";
+        const mailBody = "Thank you! Your payment has been received.";
 
         PayDataService.paymentNotification(mail, mailSubject, mailBody)
             .then( res => console.log(res.data))
@@ -207,11 +275,10 @@ class ResearcherPayment extends Component {
 
     render() {
 
-        const {researcherName, researcherEmail, c_name, amount, cardHolderName, cardNo, cvv, expMonth, expYear, today} = this.state;
+        const {researcherId, researcherName, researcherEmail, c_name, amount, cardHolderName, cardNo, cvv, expMonth, expYear, today} = this.state;
 
         return (
             <div>
-                <Header />
                 <div className={"outer-div-center"}>
                     <div className={"payment-group"}>
                         <div className={"pay-summary-div"}>
@@ -225,9 +292,9 @@ class ResearcherPayment extends Component {
                                 <h6>Participant Email</h6>
                                 <p>{researcherEmail}</p>
                             </div>
-                            <div className={"pay-summary-content"}>
+                            <div className={"pay-summary-content"} style={{wordWrap:'break-word'}}>
                                 <h6>Conference Name</h6>
-                                <p>{c_name}</p>
+                                <p >{c_name}</p>
                             </div>
                             <div className={"pay-summary-content"}>
                                 <h6>Date</h6>
@@ -236,11 +303,30 @@ class ResearcherPayment extends Component {
                             <div className={"payment-content"}>
                                 <h6>Amount To Be paid</h6>
                                 <div>LKR {amount}.00</div>
+                                <Link className="back-home" to="/"><FontAwesomeIcon icon={faArrowLeft} className={"mr-3"}/>Back to Home</Link>
                             </div>
 
                         </div>
                         <div className={"pay-form-div"}>
                             <Form onSubmit={this.handlePayment}>
+                                <Form.Group controlId={"formCardName"} className={"pay-form-content"}>
+                                    <Form.Label className={"pay-form-label"}>Your ID</Form.Label>
+                                    <Row>
+                                        <Col>
+                                            <Form.Control type={"text"} name={"researcherId"}
+                                                          className={"pay-input"} required
+                                                          placeholder={"This was sent to you by mail"}
+                                                          value={researcherId} onChange={this.handleChange}/>
+                                        </Col>
+                                        <Col sm={3}>
+                                            <Button variant={"outline-success"} style={{borderWidth:'2px'}}
+                                            onClick={() => this.loadPaymentDetails(researcherId)}>
+                                                <FontAwesomeIcon icon={faCheckCircle}/>
+                                            </Button>
+                                        </Col>
+                                    </Row>
+                                </Form.Group>
+
                                 <Form.Group controlId={"formCardName"} className={"pay-form-content"}>
                                     <Form.Label className={"pay-form-label"}>Card Holder's Name</Form.Label>
                                     <Form.Control type={"text"} name={"cardHolderName"}

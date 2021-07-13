@@ -5,7 +5,9 @@ import moment from 'moment';
 import "./Payment.css"
 import PayDataService from "./PayDataService";
 import * as Swal from "sweetalert2";
-import Header from "../../Header-Footer/Header";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
 
 class AttendeePayment extends Component {
     constructor(props) {
@@ -36,21 +38,19 @@ class AttendeePayment extends Component {
     }
 
     loadPaymentDetails = () => {
-        let str = window.location.href  //get current browser url
-        let url = str.substr(str.indexOf("payment"))
 
-        PayDataService.loadPaymentDetails(url)
-            .then( res => {
-                console.log(res.data)
-                this.setState({
-                    attendeeId: res.data.attendeeId,
-                    conferenceId: res.data.conferenceId,
-                    attendeeName: res.data.attendeeName,
-                    attendeeEmail: res.data.attendeeEmail,
-                    c_name: res.data.conferenceName,
-                    amount: res.data.amount
-                })
-            })
+        // PayDataService.loadPaymentDetails(url)
+        //     .then( res => {
+        //         console.log(res.data)
+        //         this.setState({
+        //             attendeeId: res.data.attendeeId,
+        //             conferenceId: res.data.conferenceId,
+        //             attendeeName: res.data.attendeeName,
+        //             attendeeEmail: res.data.attendeeEmail,
+        //             c_name: res.data.conferenceName,
+        //             amount: res.data.amount
+        //         })
+        //     })
     }
 
     handleChange = (event) => {
@@ -208,14 +208,14 @@ class AttendeePayment extends Component {
 
     render() {
 
-        const {attendeeName, attendeeEmail, c_name, amount, cardHolderName, cardNo, cvv, expMonth, expYear, today} = this.state;
+        const {attendeeId, attendeeName, attendeeEmail, c_name, amount, cardHolderName, cardNo, cvv, expMonth, expYear, today} = this.state;
 
         return (
             <div>
-                <Header />
                 <div className={"outer-div-center"}>
                     <div className={"payment-group"}>
                         <div className={"pay-summary-div"}>
+
                             <h3>PAYMENT SUMMARY</h3>
 
                             <div className={"pay-summary-content"}>
@@ -237,11 +237,20 @@ class AttendeePayment extends Component {
                             <div className={"payment-content"}>
                                 <h6>Amount To Be paid</h6>
                                 <div>LKR {amount}.00</div>
+                                <Link className="back-home" to="/"><FontAwesomeIcon icon={faArrowLeft} className={"mr-3"}/>Back to Home</Link>
                             </div>
 
                         </div>
                         <div className={"pay-form-div"}>
                             <Form onSubmit={this.handlePayment}>
+                                <Form.Group controlId={"formCardName"} className={"pay-form-content"}>
+                                    <Form.Label className={"pay-form-label"}>Your ID</Form.Label>
+                                    <Form.Control type={"text"} name={"cardHolderName"}
+                                                  className={"pay-input"} required
+                                                  placeholder={"This was sent to you by mail"}
+                                                  value={attendeeId} onChange={this.handleChange}/>
+                                </Form.Group>
+
                                 <Form.Group controlId={"formCardName"} className={"pay-form-content"}>
                                     <Form.Label className={"pay-form-label"}>Card Holder's Name</Form.Label>
                                     <Form.Control type={"text"} name={"cardHolderName"}

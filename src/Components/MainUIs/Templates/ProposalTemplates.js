@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import {Card, Col, Container, Row} from "react-bootstrap";
+import {Card, Col, Container, Image, Row} from "react-bootstrap";
 import Header from "../../Header-Footer/Header";
 import TemplatesDataService from "../../AdminDashboard/Templates/TemplatesDataService";
 import "./TemplateMain.css"
+import bgImg from "../../../Assets/templates-bg-img.jpg";
+import Footer from "../../Header-Footer/Footer";
 
 class ProposalTemplates extends Component {
     constructor(props) {
@@ -25,37 +27,81 @@ class ProposalTemplates extends Component {
             })
     }
 
+    downloadTemplate = (e, filename, fid) => {
+        e.preventDefault();
+
+        TemplatesDataService.downloadFile(fid)
+            .then(res => {
+                console.log(res)
+                const downloadUrl = window.URL.createObjectURL(new Blob([res.data]));
+                const link = document.createElement("a");
+                link.href = downloadUrl;
+                link.setAttribute('download', filename);
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            })
+    }
+
     render() {
         const { templates } = this.state
         return(
             <div>
-                <Header/>
+                {/*-----------------------------------------------Header---------------------------------------------*/}
+                <div>
+                    <div className={"templates-header"}>
+                        <Header/>
+                    </div>
+                    <div className={"templates-page-img-overlay"}>
+                        <Image className={"templates-page-img"} src={bgImg} alt="background image"/>
+                    </div>
+                    <Container className={"templates-page-title"}>
+                        <h1 className={"templates-page-title-h1"}>Workshop Proposal Templates</h1>
+                        <div className={"templates-breadcrumb"}>
+                            <h5 className={"templates-page-title-h5"}>
+                                <a href={"/"} >Home > </a>
+                                Workshop Proposal Templates
+                            </h5>
+                        </div>
+                    </Container>
+                </div>
 
-                <Container className={"my-5"}>
+                {/*----------------------------------------Main Content----------------------------------------------*/}
+                <div >
+                    <Container>
 
-                    <h3 className={"text-center my-5"}>Workshop Proposal Templates</h3>
 
-                    {
-                        templates.length > 0 ?
-                            [
-                                <Row key={0}>
-                                    {
-                                        templates.map(template =>
-                                            <Col sm={4} className={"card-group mb-4"} key={template.id}>
-                                                <Card className={"template-card"} style={{width: '30rem'}} key={template.id}
-                                                      onClick={(e) => this.downloadTemplate(e, template.tempFileName, template.tempFileId)}>
-                                                    <Card.Img variant={"top"} width={"100px"} src={`https://icaf-backend.azurewebsites.net/templates/download/${template.imgFileId}`} />
-                                                </Card>
-                                            </Col>
-                                        )
-                                    }
-                                </Row>
-                            ]
-                            : <Container>
-                                <h3 className={"text-center my-5"}>No Templates Available</h3>
-                            </Container>
-                    }
-                </Container>
+                        <div className={"templates-outer-div"}>
+                            {
+                                templates.length > 0 ?
+                                    [
+                                        <Row key={0}>
+                                            {
+                                                templates.map(template =>
+                                                    <Col sm={4} className={"card-group mb-4"} key={template.id}>
+                                                        <Card className={"template-card"} style={{width: '30rem'}} key={template.id}
+                                                              onClick={(e) => this.downloadTemplate(e, template.tempFileName, template.tempFileId)}>
+                                                            <Card.Img variant={"top"} width={"100px"} src={`https://icaf-backend.azurewebsites.net/templates/download/${template.imgFileId}`} />
+                                                        </Card>
+                                                    </Col>
+                                                )
+                                            }
+                                        </Row>
+                                    ]
+                                    : <Container>
+                                        <h1 className={"text-center my-5"}>No Templates Available</h1>
+                                    </Container>
+                            }
+                        </div>
+
+
+                    </Container>
+                </div>
+
+                {/*-----------------------------------------------Footer---------------------------------------------*/}
+                <div>
+                    <Footer />
+                </div>
             </div>
         )
     }

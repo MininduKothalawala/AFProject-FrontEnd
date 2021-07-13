@@ -1,0 +1,65 @@
+.pie-chart-div {
+    width: 300px;
+}
+
+.dash-board-div {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 50px;
+}
+
+.dash-card-main {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 10px;
+    justify-content: center;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+    padding: 30px;
+}
+
+.dash-card-img {
+    width: 100px;
+    margin-right: 50px;
+}
+
+.dash-card-count {
+    font-size: 50px;
+    font-weight: 700;
+    color: #007bff;
+    text-align: center;
+}
+
+.dash-card-title {
+    font-weight: 500;
+    color: #888888;
+    text-align: center;
+}
+
+.dash-board-charts-div {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 30px;
+    margin-top: 50px;
+}
+.dash-chart-card-main {
+    display: flex;
+    justify-content: center;
+}
+
+.dash-chart-card {
+    border-radius: 30px;
+    padding: 30px;
+    width: 350px;
+    text-align: center;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dash-chart-title {
+    font-size: 25px;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 30px;
+}

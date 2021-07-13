@@ -281,7 +281,6 @@ export default class TemplateList extends Component {
                                                             onClick={(e) => this.handleDownload(e, temp.tempFileName, temp.tempFileId)}>
                                                         <FontAwesomeIcon icon={faArrowAltCircleDown}/>
                                                     </Button>
-                                                    {/*TODO: Update*/}
                                                     <Button variant={"warning"} type={"submit"}
                                                             onClick={() => this.handleUpdate(temp.id)}>
                                                         <FontAwesomeIcon icon={faEdit}/>

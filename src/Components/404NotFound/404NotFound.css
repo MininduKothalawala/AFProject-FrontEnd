@@ -1,0 +1,30 @@
+.not-found-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.not-found-img {
+    height: 800px;
+}
+
+.not-found-btn-div {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.not-found-home {
+    color: #007bff;
+    border: 3px solid #007bff;
+    background-color: #ffffff;
+    padding: 20px 50px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.not-found-home:hover {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #007bff;
+}
