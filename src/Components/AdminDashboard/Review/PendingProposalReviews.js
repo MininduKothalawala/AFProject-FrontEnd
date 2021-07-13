@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router";
 import '../../AdminDashboard/AdminNav.css';
-import AuthenticationService from "../../Login/AuthenticationService";
 import {Badge, Button, ButtonGroup, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
@@ -49,10 +48,7 @@ class PendingProposalReviews extends Component {
         //sending emails
         const mail = email;
         const mailSubject = "Paper Submission Notification" ;
-        const mailBody = "Dear Participant,\n\n" +
-            "Congratulations! Your proposal has been approved. We will be looking forward to your session.\n\n" +
-            "Regards,\n" +
-            "ICAF Support Team";
+        const mailBody = "Congratulations! Your submission has been approved.";
 
 
         const formData = new FormData();
@@ -70,7 +66,11 @@ class PendingProposalReviews extends Component {
             })
     }
 
-    rejectContent = (cid) => {
+    rejectContent = (cid, email) => {
+        const mail = email;
+        const mailSubject = "Paper Submission Notification" ;
+        const mailBody = "Sorry! Your submission has been rejected.";
+
         const formData = new FormData();
         formData.append('id', cid)
         formData.append('s_status', "Rejected")
@@ -79,21 +79,15 @@ class PendingProposalReviews extends Component {
             .then( res => {
                 console.log(res.data)
                 this.refreshData();
+
+                //notify users
+                ReviewDataService.approveNotification(mail, mailSubject, mailBody)
+                    .then( res => console.log(res.data))
+
             })
     }
 
     render() {
-        const loggedUserRole = AuthenticationService.loggedUserRole();
-        let loggedAsAdmin = false;
-        let loggedAsReviewer = false;
-
-        if (loggedUserRole != null && loggedUserRole === 'admin') {
-            loggedAsAdmin = true;
-        }
-        if (loggedUserRole != null && loggedUserRole === 'reviewer') {
-            loggedAsReviewer = true;
-        }
-
         const {proposals} = this.state;
 
         return (
@@ -123,7 +117,7 @@ class PendingProposalReviews extends Component {
                                             <td style={{verticalAlign: 'middle'}}>{proposals.c_name}</td>
                                             <td style={{verticalAlign: 'middle'}}>{proposals.c_email}</td>
                                             <td style={{verticalAlign: 'middle'}}>{proposals.c_conferenceId}</td>
-                                            <td style={{verticalAlign: 'middle'}}><Badge variant="warning" className={"px-3 py-2"} key={"0"}>PENDING</Badge></td>
+                                            <td style={{verticalAlign: 'middle'}} className={"text-center"}><Badge variant="warning" className={"px-3 py-2"} key={"0"}>PENDING</Badge></td>
                                             <td className={"text-center"} style={{verticalAlign: 'middle'}}>
                                                 <Button variant={"dark"} type={"submit"} style={{fontWeight:'500'}}
                                                         onClick={(e) => this.downloadProposals(e, proposals.c_filename, proposals.c_fileId)}>
@@ -136,7 +130,7 @@ class PendingProposalReviews extends Component {
                                                         <FontAwesomeIcon icon={faCheck}/>
                                                     </Button>
                                                     <Button variant={"danger"} type={"submit"}
-                                                            onClick={() => this.rejectContent(proposals.c_id)}>
+                                                            onClick={() => this.rejectContent(proposals.c_id,proposals.c_email)}>
                                                         <FontAwesomeIcon icon={faTimes}/>
                                                     </Button>
                                                 </ButtonGroup>

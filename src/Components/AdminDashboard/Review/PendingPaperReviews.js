@@ -45,20 +45,15 @@ class PendingPaperReviews extends Component {
             })
     }
 
-    approveContent = (cid, email) => {
+    approveContent = (id, email) => {
         //sending emails
         const mail = email;
         const mailSubject = "Paper Submission Notification" ;
-        const mailBody = "Dear Participant,\n\n" +
-            "Congratulations! Your submission has been approved.\n\n" +
-            "Visit the link below to proceed with payment.\n" +
-            "https://www.google.lk\n" +
-            "Regards,\n" +
-            "ICAF Support Team";
+        const mailBody = "Congratulations! Your submission has been approved. Use this ID: "+ id +", to proceed with payment";
 
 
         const formData = new FormData();
-        formData.append('id', cid)
+        formData.append('id', id)
         formData.append('s_status', "Approved")
 
         ReviewDataService.updatePaperSubmissionStatus(formData)
@@ -72,15 +67,23 @@ class PendingPaperReviews extends Component {
             })
     }
 
-    rejectContent = (cid) => {
+    rejectContent = (id, email) => {
+        const mail = email;
+        const mailSubject = "Paper Submission Notification" ;
+        const mailBody = "Sorry! Your submission has been rejected.";
+
         const formData = new FormData();
-        formData.append('id', cid)
+        formData.append('id', id)
         formData.append('s_status', "Rejected")
 
         ReviewDataService.updatePaperSubmissionStatus(formData)
             .then( res => {
                 console.log(res.data)
                 this.refreshData();
+
+                //notify users
+                ReviewDataService.approveNotification(mail, mailSubject, mailBody)
+                    .then( res => console.log(res.data))
             })
     }
 
@@ -125,7 +128,7 @@ class PendingPaperReviews extends Component {
                                             <td style={{verticalAlign: 'middle'}}>{papers.r_name}</td>
                                             <td style={{verticalAlign: 'middle'}}>{papers.r_email}</td>
                                             <td style={{verticalAlign: 'middle'}}>{papers.r_conferenceId}</td>
-                                            <td style={{verticalAlign: 'middle'}}><Badge variant="warning" className={"px-3 py-2"} key={"0"}>PENDING</Badge></td>
+                                            <td style={{verticalAlign: 'middle'}} className={"text-center"}><Badge variant="warning" className={"px-3 py-2"} key={"0"}>PENDING</Badge></td>
                                             <td className={"text-center"} style={{verticalAlign: 'middle'}}>
                                                 <Button variant={"dark"} type={"submit"} style={{fontWeight:'500'}}
                                                         onClick={(e) => this.downloadPapers(e, papers.r_filename, papers.r_fileId)}>
@@ -138,7 +141,7 @@ class PendingPaperReviews extends Component {
                                                         <FontAwesomeIcon icon={faCheck}/>
                                                     </Button>
                                                     <Button variant={"danger"} type={"submit"}
-                                                            onClick={() => this.rejectContent(papers.r_id)}>
+                                                            onClick={() => this.rejectContent(papers.r_id, papers.r_email)}>
                                                         <FontAwesomeIcon icon={faTimes}/>
                                                     </Button>
 

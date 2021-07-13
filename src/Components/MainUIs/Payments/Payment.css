@@ -3,21 +3,25 @@
 .outer-div-center {
     display: flex;
     height: 100vh;
-    margin: 20px;
+
     justify-content: center;
     align-items: center;
     font-family: 'Kanit', sans-serif;
+    background-color: #f3f3f3;
 }
 
 .payment-group {
     display: grid;
     grid-template-columns: 50% 50%;
+    background-color: #ffffff;
+    border-radius: 0 10px 10px 0;
 }
 
 .pay-summary-div {
     padding: 60px;
     background-color: #3792E5;
     color: #ffffff;
+    border-radius: 10px 0 0 10px;
 }
 
 div.pay-summary-div h3 {
@@ -59,7 +63,7 @@ div.payment-content h6{
 }
 
 .pay-btn {
-    background-color: #3792E5;
+    background-color: #007bff;
     color: #ffffff;
     border-radius: 30px;
     padding: 15px 50px;
@@ -88,7 +92,6 @@ div.payment-content h6{
 }
 
 .pay-input:focus {
-    /*border-radius: 20px;*/
     box-shadow: none;
     border-bottom: 2px solid rgba(0,0,0,0.9);
 }
@@ -96,4 +99,16 @@ div.payment-content h6{
 .pay-form-label {
     font-weight: 400;
     color: rgba(0,0,0,0.5);
+}
+
+.back-home {
+    font-size: 18px;
+    font-weight: 500;
+    color: #b8dcff;
+    text-decoration: none;
+}
+
+.back-home:hover {
+    text-decoration: none;
+    color: #0063c9;
 }

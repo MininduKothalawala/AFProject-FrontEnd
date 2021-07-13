@@ -16,6 +16,7 @@ class UpdateConferenceDetailsComponent extends Component {
         this.onChangeStartingDate = this.onChangeStartingDate.bind(this);
         this.onChangeEndingDate = this.onChangeEndingDate.bind(this);
         this.onChangeVenue = this.onChangeVenue.bind(this);
+        this.onChangePayment = this.onChangePayment.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
@@ -46,7 +47,7 @@ class UpdateConferenceDetailsComponent extends Component {
                     description: response.data.description,
                     startingDate: moment(response.data.startingDate).format('YYYY-MM-DD'),
                     endingDate: moment(response.data.endingDate).format('YYYY-MM-DD'),
-                    username: loggedUser,
+                    username: loggedUser, //current user
                     venue: response.data.venue,
                     payment:response.data.payment,
                     status: response.data.status
@@ -126,17 +127,6 @@ class UpdateConferenceDetailsComponent extends Component {
             status: newStatus,
         }
 
-        //for the email
-        const id = this.state.id;
-        const mailSubject = "Conference Update Notification" ;
-        const mailBody = "Dear Participant,\n\n" +
-            "This is to inform you that there has been a change in details of the following conference" +
-            "\"" + this.state.conferenceName + "\"" + ".\n\n" +
-            "Click the link below to see the update.\n" +
-            "http://localhost:3000\n\n" +
-            "Regards,\n" +
-            "ICAF Support Team";
-
         console.log(conferences);
 
         axios.put('https://icaf-backend.azurewebsites.net/api/conference/updateConference', conferences)
@@ -153,13 +143,7 @@ class UpdateConferenceDetailsComponent extends Component {
                         iconColor: '#60e004'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            //send email
-                            if (newStatus === 'Updated') {
-                                axios.post(`https://icaf-backend.azurewebsites.net/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
-                                    .then(res => (console.log(res)))
-                            }
-
-                            window.location.reload();
+                            this.componentDidMount()
                         }
                     })
 

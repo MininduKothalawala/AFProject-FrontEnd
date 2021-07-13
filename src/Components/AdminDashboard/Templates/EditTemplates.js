@@ -115,7 +115,7 @@ class EditTemplates extends Component {
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 this.clearData();
-                                window.location.reload();
+                                this.props.history.push('/admin')
                             }
                         })
                     }

@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500&display=swap');
+
+.brand-logo-name {
+    font-family: 'Kanit', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.icaf-header {
+    background-color: transparent;
+}
+
+.icaf-header:hover {
+    background-color: #002D5D;
+}
+
+.icaf-header .nav-link {
+    color: rgba(255,255,255,1) !important;
+    font-size: 16px;
+    margin: 0 25px;
+}
+
+.icaf-nav-img {
+    margin: 0 5px;
+}
+
+.footer-div {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 50px 0 30px;
+}
+
+.footer-div hr {
+    background-color: #007bff;
+    border-width: 3px;
+}
+
+.footer-div h5, span {
+    font-weight: 700;
+}
+
+.sub-footer {
+    margin-top: 50px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+}

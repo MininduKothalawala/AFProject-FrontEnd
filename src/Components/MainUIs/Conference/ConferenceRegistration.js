@@ -1,9 +1,13 @@
 import React, {Component} from "react";
-import {Container, Tab, Tabs} from "react-bootstrap";
+import {Image, Tab, Tabs} from "react-bootstrap";
 import RegResearcher from "./RegResearcher";
 import RegConductor from "./RegConductor";
 import RegAttendee from "./RegAttendee";
-import Header from "../../Header-Footer/Header";
+import {Link} from "react-router-dom";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import "./ConferenceMain.css"
+import regImg from "../../../Assets/sign-up-img.png";
 
 class ConferenceRegistration extends Component {
     constructor(props) {
@@ -18,22 +22,37 @@ class ConferenceRegistration extends Component {
 
         return (
             <div>
-                <Header/>
-                <Container className={"mt-5 pt-5"}>
-                    <Tabs defaultActiveKey="research">
-                        <Tab eventKey="research" title="For Researchers">
-                            <RegResearcher id={this.state.conference_id} />
-                        </Tab>
 
-                        <Tab eventKey="workshop" title="For Workshop Conductors">
-                            <RegConductor id={this.state.conference_id} />
-                        </Tab>
+                    {/*----------------------------------------Main Content----------------------------------------------*/}
+                    <div>
+                        <div className={"reg-main-container"}>
+                            <div className={"reg-main-outer-div"}>
+                                <div className={"reg-bg-image-div"}>
+                                    <div className={"reg-home-div"}>
+                                        <Link className="back-to-home" to="/"><FontAwesomeIcon icon={faArrowLeft} className={"mr-3"}/>Back to Home</Link>
+                                        <Image className={"reg-bg-img"} src={regImg} alt="register-page-image"/>
+                                    </div>
+                                </div>
+                                <div className={"reg-forms"}>
+                                    <Tabs defaultActiveKey="research" variant={"pills"} className={"reg-tab-set"}>
+                                        <Tab eventKey="research" title="Researchers">
+                                            <RegResearcher id={this.state.conference_id} />
+                                        </Tab>
 
-                        <Tab eventKey="attendee" title="For Attendees">
-                            <RegAttendee id={this.state.conference_id} />
-                        </Tab>
-                    </Tabs>
-                </Container>
+                                        <Tab eventKey="workshop" title="Workshop Conductors">
+                                            <RegConductor id={this.state.conference_id} />
+                                        </Tab>
+
+                                        <Tab eventKey="attendee" title="Attendees">
+                                            <RegAttendee id={this.state.conference_id} />
+                                        </Tab>
+                                    </Tabs>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
             </div>
         )
     }

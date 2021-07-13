@@ -18,6 +18,7 @@ const Conference = props => (
             <td>{props.conference.startingDate}</td>
             <td>{props.conference.endingDate}</td>
             <td>{props.conference.venue}</td>
+            <td>LKR {props.conference.payment}.00</td>
             <td className={"text-center"} style={{verticalAlign: 'middle'}}>
                 { props.conference.status === 'Approved' &&
                 <Badge variant="success" className={"px-3 py-2"}>APPROVED</Badge>
@@ -258,6 +259,7 @@ class ListAllConferenceDetailsComponent extends Component {
                         <th className={"text-center"}>Starting Date</th>
                         <th className={"text-center"}>Ending Date</th>
                         <th className={"text-center"}>Venue</th>
+                        <th className={"text-center"}>Payment</th>
                         <th className={"text-center"}>Status</th>
                         {this.state.loggedUser === 'editor' &&
                         <th className={"text-center"}>Action</th>
