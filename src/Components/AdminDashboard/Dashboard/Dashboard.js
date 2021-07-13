@@ -29,19 +29,19 @@ class Dashboard extends Component {
     }
 
     getResearcherCount() {
-        axios.get("https://icaf-backend.azurewebsites.net/api/information/getResearcherCount").then(res => {
+        axios.get("http://localhost:8080/api/information/getResearcherCount").then(res => {
             this.setState({researcher: res.data});
         });
     }
 
     getConductorCount() {
-        axios.get("https://icaf-backend.azurewebsites.net/api/information/getConductorCount").then(res => {
+        axios.get("http://localhost:8080/api/information/getConductorCount").then(res => {
             this.setState({conductors: res.data});
         });
     }
 
     getRAttendeeCount() {
-        axios.get("https://icaf-backend.azurewebsites.net/api/information/getAttendeeCount").then(res => {
+        axios.get("http://localhost:8080/api/information/getAttendeeCount").then(res => {
             this.setState({attendee: res.data});
         });
     }

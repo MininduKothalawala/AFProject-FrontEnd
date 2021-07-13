@@ -18,7 +18,7 @@ class ConferenceChart extends Component {
     }
 
     getChartDataforConfference() {
-        axios.get("https://icaf-backend.azurewebsites.net/api/information/getConferenceStatus").then(res => {
+        axios.get("http://localhost:8080/api/information/getConferenceStatus").then(res => {
             this.setState({confStat: res.data});
         });
         console.log(this.state.confStat)

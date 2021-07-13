@@ -38,7 +38,7 @@ class UpdateConferenceDetailsComponent extends Component {
         const loggedUser = AuthenticationService.loggedUserId();
         
 
-        axios.get('https://icaf-backend.azurewebsites.net/api/conference/conferencebyid/' + this.state.id)
+        axios.get('http://localhost:8080/api/conference/conferencebyid/' + this.state.id)
 
             .then(response => {
                 this.setState({
@@ -129,7 +129,7 @@ class UpdateConferenceDetailsComponent extends Component {
 
         console.log(conferences);
 
-        axios.put('https://icaf-backend.azurewebsites.net/api/conference/updateConference', conferences)
+        axios.put('http://localhost:8080/api/conference/updateConference', conferences)
             .then(res => {
                 console.log(res)
                 if (res.status === 200) {

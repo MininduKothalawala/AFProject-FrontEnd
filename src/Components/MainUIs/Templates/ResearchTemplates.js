@@ -81,7 +81,7 @@ class ResearchTemplates extends Component {
                                                     <Col sm={4} className={"card-group mb-4"} key={template.id}>
                                                         <Card className={"template-card"} style={{width: '30rem'}} key={template.id}
                                                               onClick={(e) => this.downloadTemplate(e, template.tempFileName, template.tempFileId)}>
-                                                            <Card.Img variant={"top"} width={"100px"} src={`https://icaf-backend.azurewebsites.net/templates/download/${template.imgFileId}`} />
+                                                            <Card.Img variant={"top"} width={"100px"} src={`http://localhost:8080/templates/download/${template.imgFileId}`} />
                                                         </Card>
                                                     </Col>
                                                 )

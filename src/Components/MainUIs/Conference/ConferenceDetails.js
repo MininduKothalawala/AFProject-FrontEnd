@@ -29,7 +29,7 @@ class ConferenceDetails extends Component {
     }
 
     componentDidMount() {
-        axios.get(`https://icaf-backend.azurewebsites.net/api/conference/conferencebyid/`+this.state.id)
+        axios.get(`http://localhost:8080/api/conference/conferencebyid/`+this.state.id)
             .then(response => {
                 console.log(response.data)
                 this.setState({

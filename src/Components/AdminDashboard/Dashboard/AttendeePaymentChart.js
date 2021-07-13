@@ -17,7 +17,7 @@ class AttendeePaymentChart extends Component {
     }
 
     getDataforAttendeePayment() {
-        axios.get("https://icaf-backend.azurewebsites.net/api/information/getAttendeePaymentStatus").then(res => {
+        axios.get("http://localhost:8080/api/information/getAttendeePaymentStatus").then(res => {
             this.setState({resStat: res.data});
         });
         console.log(this.state.resStat)

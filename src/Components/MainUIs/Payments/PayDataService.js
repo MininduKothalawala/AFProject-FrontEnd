@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const A_URL = 'https://icaf-backend.azurewebsites.net/api/attendee';
-const R_URL = 'https://icaf-backend.azurewebsites.net/api/researcher';
+const A_URL = 'http://localhost:8080/api/attendee';
+const R_URL = 'http://localhost:8080/api/researcher';
 
 class PayDataService {
 
     getCardDetails(cardNo) {
-        return axios.get(`https://icaf-backend.azurewebsites.net/api/payment/getcarddetail/${cardNo}`)
+        return axios.get(`http://localhost:8080/api/payment/getcarddetail/${cardNo}`)
     }
 
     updatePaymentAttendee(data) {
@@ -18,7 +18,7 @@ class PayDataService {
     }
 
     paymentNotification(email, subject, body) {
-        return axios.post(`https://icaf-backend.azurewebsites.net/api/sendEmails/Email/${email}/${subject}/${body}`)
+        return axios.post(`http://localhost:8080/api/sendEmails/Email/${email}/${subject}/${body}`)
     }
 
     getResearcherData(id) {
@@ -26,7 +26,7 @@ class PayDataService {
     }
 
     getConferenceDetails(id) {
-        return axios.get(`https://icaf-backend.azurewebsites.net/api/conference/conferencebyid/${id}`)
+        return axios.get(`http://localhost:8080/api/conference/conferencebyid/${id}`)
     }
 
 }

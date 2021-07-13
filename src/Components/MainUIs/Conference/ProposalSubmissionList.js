@@ -18,7 +18,7 @@ class ProposalSubmissionList extends Component {
     }
 
     loadWorkshopProposals = () => {
-        axios.get('https://icaf-backend.azurewebsites.net/api/conductor/search/conference/' + this.state.cid)
+        axios.get('http://localhost:8080/api/conductor/search/conference/' + this.state.cid)
             .then(res => {
                 console.log(res.data)
                 this.setState({

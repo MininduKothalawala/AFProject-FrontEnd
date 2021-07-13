@@ -27,7 +27,7 @@ class ListUpdatedConferenceDetails extends Component{
     }
 
     refreshList() {
-        axios.get('https://icaf-backend.azurewebsites.net/api/conference/editedConference/Updated')
+        axios.get('http://localhost:8080/api/conference/editedConference/Updated')
             .then(response => {
                 this.setState({conferences: response.data})
             })
@@ -55,12 +55,12 @@ class ListUpdatedConferenceDetails extends Component{
 
         console.log(conferences);
 
-        axios.put(`https://icaf-backend.azurewebsites.net/api/conference/updateStatus/${id}/Approved`)
+        axios.put(`http://localhost:8080/api/conference/updateStatus/${id}/Approved`)
             .then( res => {
                 console.log(res.data)
                 this.refreshList()
 
-                axios.post(`https://icaf-backend.azurewebsites.net/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
+                axios.post(`http://localhost:8080/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
                     .then(res => (console.log(res)))
 
             })
@@ -73,12 +73,12 @@ class ListUpdatedConferenceDetails extends Component{
         const mailSubject = "Conference Update Notification" ;
         const mailBody = "This is to inform you that the following conference" + cid + " has been cancelled";
 
-        axios.put(`https://icaf-backend.azurewebsites.net/api/conference/updateStatus/${id}/Rejected`)
+        axios.put(`http://localhost:8080/api/conference/updateStatus/${id}/Rejected`)
             .then( res => {
                 console.log(res.data)
                 this.refreshList()
 
-                axios.post(`https://icaf-backend.azurewebsites.net/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
+                axios.post(`http://localhost:8080/api/sendEmails/Emails/${id}/${mailSubject}/${mailBody}`)
                     .then(res => (console.log(res)))
 
             })

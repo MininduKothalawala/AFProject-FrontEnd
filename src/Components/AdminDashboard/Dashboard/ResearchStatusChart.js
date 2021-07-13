@@ -18,7 +18,7 @@ class ResearchStatusChart extends Component {
     }
 
     getChartDataforResearch() {
-        axios.get("https://icaf-backend.azurewebsites.net/api/information/getResearchStatus").then(res => {
+        axios.get("http://localhost:8080/api/information/getResearchStatus").then(res => {
             this.setState({resStat: res.data});
         });
         console.log(this.state.resStat)

@@ -83,7 +83,7 @@ class RegAttendee extends Component {
         const mailSubject = "Registration Notification" ;
         const mailBody = "Congratulations! Your registration is successful."
 
-        axios.post(`https://icaf-backend.azurewebsites.net/api/sendEmails/Email/${mailAddress}/${mailSubject}/${mailBody}`)
+        axios.post(`http://localhost:8080/api/sendEmails/Email/${mailAddress}/${mailSubject}/${mailBody}`)
             .then( res => console.log(res.data))
     }
 

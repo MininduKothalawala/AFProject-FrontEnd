@@ -27,7 +27,7 @@ class ListPendingConferenceDetails extends Component{
     }
 
     refreshList() {
-        axios.get('https://icaf-backend.azurewebsites.net/api/conference/pendingConference/Pending')
+        axios.get('http://localhost:8080/api/conference/pendingConference/Pending')
             .then(response => {
                 this.setState({conferences: response.data})
             })
@@ -51,7 +51,7 @@ class ListPendingConferenceDetails extends Component{
 
         console.log(conferences);
 
-        axios.put(`https://icaf-backend.azurewebsites.net/api/conference/updateStatus/${id}/Approved`)
+        axios.put(`http://localhost:8080/api/conference/updateStatus/${id}/Approved`)
             .then( res => {
                 console.log(res.data)
                 this.refreshList()
@@ -61,7 +61,7 @@ class ListPendingConferenceDetails extends Component{
 
     rejectConference(id){
 
-        axios.put(`https://icaf-backend.azurewebsites.net/api/conference/updateStatus/${id}/Rejected`)
+        axios.put(`http://localhost:8080/api/conference/updateStatus/${id}/Rejected`)
             .then( res => {
                 console.log(res.data)
                 this.refreshList()

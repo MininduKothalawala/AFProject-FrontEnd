@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const R_URL = 'https://icaf-backend.azurewebsites.net/api/researcher';
-const C_URL = 'https://icaf-backend.azurewebsites.net/api/conductor';
+const R_URL = 'http://localhost:8080/api/researcher';
+const C_URL = 'http://localhost:8080/api/conductor';
 
 class ReviewDataService {
 
@@ -14,11 +14,11 @@ class ReviewDataService {
     }
 
     downloadPaper(id) {
-        return axios.get(`https://icaf-backend.azurewebsites.net/templates/download/${id}`, {responseType: 'blob'})
+        return axios.get(`http://localhost:8080/templates/download/${id}`, {responseType: 'blob'})
     }
 
     downloadProposol(id) {
-        return axios.get(`https://icaf-backend.azurewebsites.net/templates/download/${id}`, {responseType: 'blob'})
+        return axios.get(`http://localhost:8080/templates/download/${id}`, {responseType: 'blob'})
     }
 
     updatePaperSubmissionStatus(data) {
@@ -46,7 +46,7 @@ class ReviewDataService {
     }
 
     approveNotification(email, subject, body) {
-        return axios.post(`https://icaf-backend.azurewebsites.net/api/sendEmails/Email/${email}/${subject}/${body}`)
+        return axios.post(`http://localhost:8080/api/sendEmails/Email/${email}/${subject}/${body}`)
     }
 
 }
